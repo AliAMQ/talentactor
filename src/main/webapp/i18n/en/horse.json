@@ -1,0 +1,23 @@
+
+{
+    "talentactorApp": {
+        "horse" : {
+            "home": {
+                "title": "Horses",
+                "createLabel": "Create a new Horse",
+                "createOrEditLabel": "Create or edit a Horse"
+            },
+            "created": "A new Horse is created with identifier {{ param }}",
+            "updated": "A Horse is updated with identifier {{ param }}",
+            "deleted": "A Horse is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Horse {{ id }}?"
+            },
+            "detail": {
+                "title": "Horse"
+            },
+            "title": "Title",
+            "profile": "Profile"
+        }
+    }
+}

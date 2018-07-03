@@ -1,0 +1,189 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-profile-heading" jhiTranslate="talentactorApp.profile.home.createOrEditLabel">Create or edit a Profile</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!profile.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="profile.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.state" for="field_state">State</label>
+                    <input type="text" class="form-control" name="state" id="field_state"
+                        [(ngModel)]="profile.state" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="profile.city" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                        [(ngModel)]="profile.address" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.phone" for="field_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        [(ngModel)]="profile.phone" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.since" for="field_since">Since</label>
+                    <div class="input-group">
+                        <input id="field_since" type="text" class="form-control" name="since" ngbDatepicker  #sinceDp="ngbDatepicker" [(ngModel)]="profile.since"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="sinceDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.image" for="field_image">Image</label>
+                    <div>
+                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-height: 100px;" *ngIf="profile.image" alt="profile image"/>
+                        <div *ngIf="profile.image" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{profile.imageContentType}}, {{byteSize(profile.image)}}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, profile, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                        [(ngModel)]="profile.image" />
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                        [(ngModel)]="profile.imageContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.video" for="field_video">Video</label>
+                    <div>
+                        <div *ngIf="profile.video" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{profile.videoContentType}}, {{byteSize(profile.video)}}</span>
+                            <button type="button" (click)="profile.video=null;profile.videoContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_video" (change)="setFileData($event, profile, 'video', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="video" id="field_video"
+                        [(ngModel)]="profile.video" />
+                    <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
+                        [(ngModel)]="profile.videoContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.audio" for="field_audio">Audio</label>
+                    <div>
+                        <div *ngIf="profile.audio" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{profile.audioContentType}}, {{byteSize(profile.audio)}}</span>
+                            <button type="button" (click)="profile.audio=null;profile.audioContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_audio" (change)="setFileData($event, profile, 'audio', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="audio" id="field_audio"
+                        [(ngModel)]="profile.audio" />
+                    <input type="hidden" class="form-control" name="audioContentType" id="field_audioContentType"
+                        [(ngModel)]="profile.audioContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.imagepath" for="field_imagepath">Imagepath</label>
+                    <input type="text" class="form-control" name="imagepath" id="field_imagepath"
+                        [(ngModel)]="profile.imagepath" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.videopath" for="field_videopath">Videopath</label>
+                    <input type="text" class="form-control" name="videopath" id="field_videopath"
+                        [(ngModel)]="profile.videopath" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.audiopath" for="field_audiopath">Audiopath</label>
+                    <input type="text" class="form-control" name="audiopath" id="field_audiopath"
+                        [(ngModel)]="profile.audiopath" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="profile.userId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.skill" for="field_skill">Skill</label>
+                    <select class="form-control" id="field_skill" multiple name="skill" [(ngModel)]="profile.skills">
+                        <option [ngValue]="getSelected(profile.skills, skillOption)" *ngFor="let skillOption of skills; trackBy: trackSkillById">{{skillOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.sport" for="field_sport">Sport</label>
+                    <select class="form-control" id="field_sport" multiple name="sport" [(ngModel)]="profile.sports">
+                        <option [ngValue]="getSelected(profile.sports, sportOption)" *ngFor="let sportOption of sports; trackBy: trackSportById">{{sportOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.swimming" for="field_swimming">Swimming</label>
+                    <select class="form-control" id="field_swimming" multiple name="swimming" [(ngModel)]="profile.swimmings">
+                        <option [ngValue]="getSelected(profile.swimmings, swimmingOption)" *ngFor="let swimmingOption of swimmings; trackBy: trackSwimmingById">{{swimmingOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.combat" for="field_combat">Combat</label>
+                    <select class="form-control" id="field_combat" multiple name="combat" [(ngModel)]="profile.combats">
+                        <option [ngValue]="getSelected(profile.combats, combatOption)" *ngFor="let combatOption of combats; trackBy: trackCombatById">{{combatOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.language" for="field_language">Language</label>
+                    <select class="form-control" id="field_language" multiple name="language" [(ngModel)]="profile.languages">
+                        <option [ngValue]="getSelected(profile.languages, languageOption)" *ngFor="let languageOption of languages; trackBy: trackLanguageById">{{languageOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.instrument" for="field_instrument">Instrument</label>
+                    <select class="form-control" id="field_instrument" multiple name="instrument" [(ngModel)]="profile.instruments">
+                        <option [ngValue]="getSelected(profile.instruments, instrumentOption)" *ngFor="let instrumentOption of instruments; trackBy: trackInstrumentById">{{instrumentOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.weapon" for="field_weapon">Weapon</label>
+                    <select class="form-control" id="field_weapon" multiple name="weapon" [(ngModel)]="profile.weapons">
+                        <option [ngValue]="getSelected(profile.weapons, weaponOption)" *ngFor="let weaponOption of weapons; trackBy: trackWeaponById">{{weaponOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.cycling" for="field_cycling">Cycling</label>
+                    <select class="form-control" id="field_cycling" multiple name="cycling" [(ngModel)]="profile.cyclings">
+                        <option [ngValue]="getSelected(profile.cyclings, cyclingOption)" *ngFor="let cyclingOption of cyclings; trackBy: trackCyclingById">{{cyclingOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.circus" for="field_circus">Circus</label>
+                    <select class="form-control" id="field_circus" multiple name="circus" [(ngModel)]="profile.circuses">
+                        <option [ngValue]="getSelected(profile.circuses, circusOption)" *ngFor="let circusOption of circuses; trackBy: trackCircusById">{{circusOption.title}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="talentactorApp.profile.horse" for="field_horse">Horse</label>
+                    <select class="form-control" id="field_horse" multiple name="horse" [(ngModel)]="profile.horses">
+                        <option [ngValue]="getSelected(profile.horses, horseOption)" *ngFor="let horseOption of horses; trackBy: trackHorseById">{{horseOption.title}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

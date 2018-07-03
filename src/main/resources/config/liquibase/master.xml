@@ -5,6 +5,35 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175243_added_entity_Profile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175244_added_entity_Skill.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175245_added_entity_Film.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175246_added_entity_Television.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175247_added_entity_Internet.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175248_added_entity_Commercial.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175249_added_entity_Print.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175250_added_entity_Theater.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175251_added_entity_Voice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175252_added_entity_Project.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175253_added_entity_Role.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175254_added_entity_Sport.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175255_added_entity_Swimming.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175256_added_entity_Combat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175257_added_entity_Language.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175258_added_entity_Instrument.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175259_added_entity_Weapon.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175300_added_entity_Cycling.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175301_added_entity_Circus.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175302_added_entity_Horse.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20180703175243_added_entity_constraints_Profile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175245_added_entity_constraints_Film.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175246_added_entity_constraints_Television.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175247_added_entity_constraints_Internet.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175248_added_entity_constraints_Commercial.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175249_added_entity_constraints_Print.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175250_added_entity_constraints_Theater.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175251_added_entity_constraints_Voice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180703175253_added_entity_constraints_Role.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

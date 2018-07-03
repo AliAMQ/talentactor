@@ -1,0 +1,83 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="talentactorApp.print.home.title">Prints</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-print" [routerLink]="['/print/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="talentactorApp.print.home.createLabel">
+            Create new Print
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="prints">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="title"><span jhiTranslate="talentactorApp.print.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="photographer"><span jhiTranslate="talentactorApp.print.photographer">Photographer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="hair"><span jhiTranslate="talentactorApp.print.hair">Hair</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.print.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.print.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.print.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.print.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let print of prints ;trackBy: trackId">
+                <td><a [routerLink]="['/print', print.id, 'view' ]">{{print.id}}</a></td>
+                <td>{{print.title}}</td>
+                <td>{{print.photographer}}</td>
+                <td>{{print.hair}}</td>
+                <td>{{print.link}}</td>
+                <td>
+                    <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
+                        <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
+                    </a>
+                    <span *ngIf="print.image">{{print.imageContentType}}, {{byteSize(print.image)}}</span>
+                </td>
+                <td>{{print.imagepath}}</td>
+                <td>
+                    <div *ngIf="print.profileId">
+                        <a [routerLink]="['../profile', print.profileId , 'view' ]" >{{print.profileId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/print', print.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/print', print.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'print/'+ print.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="prints && prints.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

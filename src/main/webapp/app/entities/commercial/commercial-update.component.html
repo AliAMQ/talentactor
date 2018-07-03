@@ -1,0 +1,102 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-commercial-heading" jhiTranslate="talentactorApp.commercial.home.createOrEditLabel">Create or edit a Commercial</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!commercial.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="commercial.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.title" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                        [(ngModel)]="commercial.title" required/>
+                    <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.director" for="field_director">Director</label>
+                    <input type="text" class="form-control" name="director" id="field_director"
+                        [(ngModel)]="commercial.director" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.cameraman" for="field_cameraman">Cameraman</label>
+                    <input type="text" class="form-control" name="cameraman" id="field_cameraman"
+                        [(ngModel)]="commercial.cameraman" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.link" for="field_link">Link</label>
+                    <input type="text" class="form-control" name="link" id="field_link"
+                        [(ngModel)]="commercial.link" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.image" for="field_image">Image</label>
+                    <div>
+                        <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 100px;" *ngIf="commercial.image" alt="commercial image"/>
+                        <div *ngIf="commercial.image" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{commercial.imageContentType}}, {{byteSize(commercial.image)}}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, commercial, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                        [(ngModel)]="commercial.image" />
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                        [(ngModel)]="commercial.imageContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.video" for="field_video">Video</label>
+                    <div>
+                        <div *ngIf="commercial.video" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
+                            <button type="button" (click)="commercial.video=null;commercial.videoContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_video" (change)="setFileData($event, commercial, 'video', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="video" id="field_video"
+                        [(ngModel)]="commercial.video" />
+                    <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
+                        [(ngModel)]="commercial.videoContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.imagepath" for="field_imagepath">Imagepath</label>
+                    <input type="text" class="form-control" name="imagepath" id="field_imagepath"
+                        [(ngModel)]="commercial.imagepath" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.videopath" for="field_videopath">Videopath</label>
+                    <input type="text" class="form-control" name="videopath" id="field_videopath"
+                        [(ngModel)]="commercial.videopath" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.commercial.profile" for="field_profile">Profile</label>
+                    <select class="form-control" id="field_profile" name="profile" [(ngModel)]="commercial.profileId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Profile.
+    -->
+    <changeSet id="20180703175243-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="profile"
+                                 constraintName="fk_profile_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_skill"
+                                 constraintName="fk_profile_skill_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="skills_id"
+                                 baseTableName="profile_skill"
+                                 constraintName="fk_profile_skill_skills_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="skill"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_sport"
+                                 constraintName="fk_profile_sport_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="sports_id"
+                                 baseTableName="profile_sport"
+                                 constraintName="fk_profile_sport_sports_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sport"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_swimming"
+                                 constraintName="fk_profile_swimming_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="swimmings_id"
+                                 baseTableName="profile_swimming"
+                                 constraintName="fk_profile_swimming_swimmings_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="swimming"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_combat"
+                                 constraintName="fk_profile_combat_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="combats_id"
+                                 baseTableName="profile_combat"
+                                 constraintName="fk_profile_combat_combats_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="combat"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_language"
+                                 constraintName="fk_profile_language_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="languages_id"
+                                 baseTableName="profile_language"
+                                 constraintName="fk_profile_language_languages_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="language"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_instrument"
+                                 constraintName="fk_profile_instrument_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="instruments_id"
+                                 baseTableName="profile_instrument"
+                                 constraintName="fk_profile_instrument_instruments_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="instrument"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_weapon"
+                                 constraintName="fk_profile_weapon_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="weapons_id"
+                                 baseTableName="profile_weapon"
+                                 constraintName="fk_profile_weapon_weapons_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="weapon"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_cycling"
+                                 constraintName="fk_profile_cycling_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="cyclings_id"
+                                 baseTableName="profile_cycling"
+                                 constraintName="fk_profile_cycling_cyclings_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cycling"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_circus"
+                                 constraintName="fk_profile_circus_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="circuses_id"
+                                 baseTableName="profile_circus"
+                                 constraintName="fk_profile_circus_circuses_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="circus"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_horse"
+                                 constraintName="fk_profile_horse_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="horses_id"
+                                 baseTableName="profile_horse"
+                                 constraintName="fk_profile_horse_horses_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="horse"/>
+        
+    </changeSet>
+</databaseChangeLog>

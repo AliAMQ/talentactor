@@ -1,0 +1,23 @@
+
+{
+    "talentactorApp": {
+        "cycling" : {
+            "home": {
+                "title": "Cyclings",
+                "createLabel": "Create a new Cycling",
+                "createOrEditLabel": "Create or edit a Cycling"
+            },
+            "created": "A new Cycling is created with identifier {{ param }}",
+            "updated": "A Cycling is updated with identifier {{ param }}",
+            "deleted": "A Cycling is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Cycling {{ id }}?"
+            },
+            "detail": {
+                "title": "Cycling"
+            },
+            "title": "Title",
+            "profile": "Profile"
+        }
+    }
+}

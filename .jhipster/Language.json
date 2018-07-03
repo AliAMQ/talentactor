@@ -1,0 +1,30 @@
+{
+    "name": "Language",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "profile",
+            "otherEntityName": "profile",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "language"
+        }
+    ],
+    "changelogDate": "20180703175257",
+    "entityTableName": "language",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

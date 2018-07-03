@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="film">
+            <h2><span jhiTranslate="talentactorApp.film.detail.title">Film</span> {{film.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.film.title">Title</span></dt>
+                <dd>
+                    <span>{{film.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.director">Director</span></dt>
+                <dd>
+                    <span>{{film.director}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span></dt>
+                <dd>
+                    <span>{{film.cameraman}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.link">Link</span></dt>
+                <dd>
+                    <span>{{film.link}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="film.image">
+                        <a (click)="openFile(film.imageContentType, film.image)">
+                            <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-width: 100%;" alt="film image"/>
+                        </a>
+                        {{film.imageContentType}}, {{byteSize(film.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.video">Video</span></dt>
+                <dd>
+                    <div *ngIf="film.video">
+                        <a (click)="openFile(film.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
+                        {{film.videoContentType}}, {{byteSize(film.video)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span></dt>
+                <dd>
+                    <span>{{film.imagepath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.videopath">Videopath</span></dt>
+                <dd>
+                    <span>{{film.videopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.film.profile">Profile</span></dt>
+                <dd>
+                    <div *ngIf="film.profileId">
+                        <a [routerLink]="['/profile', film.profileId, 'view']">{{film.profileId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/film', film.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

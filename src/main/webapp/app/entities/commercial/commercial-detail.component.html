@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="commercial">
+            <h2><span jhiTranslate="talentactorApp.commercial.detail.title">Commercial</span> {{commercial.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.commercial.title">Title</span></dt>
+                <dd>
+                    <span>{{commercial.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.director">Director</span></dt>
+                <dd>
+                    <span>{{commercial.director}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span></dt>
+                <dd>
+                    <span>{{commercial.cameraman}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.link">Link</span></dt>
+                <dd>
+                    <span>{{commercial.link}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="commercial.image">
+                        <a (click)="openFile(commercial.imageContentType, commercial.image)">
+                            <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-width: 100%;" alt="commercial image"/>
+                        </a>
+                        {{commercial.imageContentType}}, {{byteSize(commercial.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.video">Video</span></dt>
+                <dd>
+                    <div *ngIf="commercial.video">
+                        <a (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
+                        {{commercial.videoContentType}}, {{byteSize(commercial.video)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.imagepath">Imagepath</span></dt>
+                <dd>
+                    <span>{{commercial.imagepath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.videopath">Videopath</span></dt>
+                <dd>
+                    <span>{{commercial.videopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.commercial.profile">Profile</span></dt>
+                <dd>
+                    <div *ngIf="commercial.profileId">
+                        <a [routerLink]="['/profile', commercial.profileId, 'view']">{{commercial.profileId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/commercial', commercial.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

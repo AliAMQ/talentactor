@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="voice">
+            <h2><span jhiTranslate="talentactorApp.voice.detail.title">Voice</span> {{voice.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.voice.title">Title</span></dt>
+                <dd>
+                    <span>{{voice.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.director">Director</span></dt>
+                <dd>
+                    <span>{{voice.director}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.link">Link</span></dt>
+                <dd>
+                    <span>{{voice.link}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.video">Video</span></dt>
+                <dd>
+                    <div *ngIf="voice.video">
+                        <a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>
+                        {{voice.videoContentType}}, {{byteSize(voice.video)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.audio">Audio</span></dt>
+                <dd>
+                    <div *ngIf="voice.audio">
+                        <a (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>
+                        {{voice.audioContentType}}, {{byteSize(voice.audio)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span></dt>
+                <dd>
+                    <span>{{voice.videopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.audiopath">Audiopath</span></dt>
+                <dd>
+                    <span>{{voice.audiopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.profile">Profile</span></dt>
+                <dd>
+                    <div *ngIf="voice.profileId">
+                        <a [routerLink]="['/profile', voice.profileId, 'view']">{{voice.profileId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/voice', voice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

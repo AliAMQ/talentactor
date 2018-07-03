@@ -1,0 +1,29 @@
+
+{
+    "talentactorApp": {
+        "theater" : {
+            "home": {
+                "title": "Theaters",
+                "createLabel": "Create a new Theater",
+                "createOrEditLabel": "Create or edit a Theater"
+            },
+            "created": "A new Theater is created with identifier {{ param }}",
+            "updated": "A Theater is updated with identifier {{ param }}",
+            "deleted": "A Theater is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Theater {{ id }}?"
+            },
+            "detail": {
+                "title": "Theater"
+            },
+            "title": "Title",
+            "director": "Director",
+            "link": "Link",
+            "image": "Image",
+            "video": "Video",
+            "imagepath": "Imagepath",
+            "videopath": "Videopath",
+            "profile": "Profile"
+        }
+    }
+}

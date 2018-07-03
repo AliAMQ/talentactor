@@ -1,0 +1,28 @@
+
+{
+    "talentactorApp": {
+        "print" : {
+            "home": {
+                "title": "Prints",
+                "createLabel": "Create a new Print",
+                "createOrEditLabel": "Create or edit a Print"
+            },
+            "created": "A new Print is created with identifier {{ param }}",
+            "updated": "A Print is updated with identifier {{ param }}",
+            "deleted": "A Print is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Print {{ id }}?"
+            },
+            "detail": {
+                "title": "Print"
+            },
+            "title": "Title",
+            "photographer": "Photographer",
+            "hair": "Hair",
+            "link": "Link",
+            "image": "Image",
+            "imagepath": "Imagepath",
+            "profile": "Profile"
+        }
+    }
+}

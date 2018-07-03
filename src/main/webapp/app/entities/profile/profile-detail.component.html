@@ -1,0 +1,142 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="profile">
+            <h2><span jhiTranslate="talentactorApp.profile.detail.title">Profile</span> {{profile.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>
+                <dd>
+                    <span>{{profile.state}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>
+                <dd>
+                    <span>{{profile.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.address">Address</span></dt>
+                <dd>
+                    <span>{{profile.address}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.phone">Phone</span></dt>
+                <dd>
+                    <span>{{profile.phone}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
+                <dd>
+                    <span>{{profile.since}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="profile.image">
+                        <a (click)="openFile(profile.imageContentType, profile.image)">
+                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
+                        </a>
+                        {{profile.imageContentType}}, {{byteSize(profile.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>
+                <dd>
+                    <div *ngIf="profile.video">
+                        <a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
+                        {{profile.videoContentType}}, {{byteSize(profile.video)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
+                <dd>
+                    <div *ngIf="profile.audio">
+                        <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
+                        {{profile.audioContentType}}, {{byteSize(profile.audio)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span></dt>
+                <dd>
+                    <span>{{profile.imagepath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.videopath">Videopath</span></dt>
+                <dd>
+                    <span>{{profile.videopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.audiopath">Audiopath</span></dt>
+                <dd>
+                    <span>{{profile.audiopath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.user">User</span></dt>
+                <dd>
+                    {{profile.userId}}
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.skill">Skill</span></dt>
+                <dd>
+                    <span *ngFor="let skill of profile.skills; let last = last">
+                        <a [routerLink]="['/skill', skill?.id, 'view' ]">{{skill.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
+                <dd>
+                    <span *ngFor="let sport of profile.sports; let last = last">
+                        <a [routerLink]="['/sport', sport?.id, 'view' ]">{{sport.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.swimming">Swimming</span></dt>
+                <dd>
+                    <span *ngFor="let swimming of profile.swimmings; let last = last">
+                        <a [routerLink]="['/swimming', swimming?.id, 'view' ]">{{swimming.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.combat">Combat</span></dt>
+                <dd>
+                    <span *ngFor="let combat of profile.combats; let last = last">
+                        <a [routerLink]="['/combat', combat?.id, 'view' ]">{{combat.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.language">Language</span></dt>
+                <dd>
+                    <span *ngFor="let language of profile.languages; let last = last">
+                        <a [routerLink]="['/language', language?.id, 'view' ]">{{language.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.instrument">Instrument</span></dt>
+                <dd>
+                    <span *ngFor="let instrument of profile.instruments; let last = last">
+                        <a [routerLink]="['/instrument', instrument?.id, 'view' ]">{{instrument.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.weapon">Weapon</span></dt>
+                <dd>
+                    <span *ngFor="let weapon of profile.weapons; let last = last">
+                        <a [routerLink]="['/weapon', weapon?.id, 'view' ]">{{weapon.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.cycling">Cycling</span></dt>
+                <dd>
+                    <span *ngFor="let cycling of profile.cyclings; let last = last">
+                        <a [routerLink]="['/cycling', cycling?.id, 'view' ]">{{cycling.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.circus">Circus</span></dt>
+                <dd>
+                    <span *ngFor="let circus of profile.circuses; let last = last">
+                        <a [routerLink]="['/circus', circus?.id, 'view' ]">{{circus.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.horse">Horse</span></dt>
+                <dd>
+                    <span *ngFor="let horse of profile.horses; let last = last">
+                        <a [routerLink]="['/horse', horse?.id, 'view' ]">{{horse.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/profile', profile.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

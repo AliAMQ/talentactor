@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="print">
+            <h2><span jhiTranslate="talentactorApp.print.detail.title">Print</span> {{print.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.print.title">Title</span></dt>
+                <dd>
+                    <span>{{print.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.photographer">Photographer</span></dt>
+                <dd>
+                    <span>{{print.photographer}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.hair">Hair</span></dt>
+                <dd>
+                    <span>{{print.hair}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.link">Link</span></dt>
+                <dd>
+                    <span>{{print.link}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="print.image">
+                        <a (click)="openFile(print.imageContentType, print.image)">
+                            <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-width: 100%;" alt="print image"/>
+                        </a>
+                        {{print.imageContentType}}, {{byteSize(print.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.imagepath">Imagepath</span></dt>
+                <dd>
+                    <span>{{print.imagepath}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.print.profile">Profile</span></dt>
+                <dd>
+                    <div *ngIf="print.profileId">
+                        <a [routerLink]="['/profile', print.profileId, 'view']">{{print.profileId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/print', print.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

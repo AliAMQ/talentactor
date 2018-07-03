@@ -1,0 +1,29 @@
+
+{
+    "talentactorApp": {
+        "voice" : {
+            "home": {
+                "title": "Voices",
+                "createLabel": "Create a new Voice",
+                "createOrEditLabel": "Create or edit a Voice"
+            },
+            "created": "A new Voice is created with identifier {{ param }}",
+            "updated": "A Voice is updated with identifier {{ param }}",
+            "deleted": "A Voice is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Voice {{ id }}?"
+            },
+            "detail": {
+                "title": "Voice"
+            },
+            "title": "Title",
+            "director": "Director",
+            "link": "Link",
+            "video": "Video",
+            "audio": "Audio",
+            "videopath": "Videopath",
+            "audiopath": "Audiopath",
+            "profile": "Profile"
+        }
+    }
+}

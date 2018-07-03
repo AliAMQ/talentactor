@@ -1,0 +1,30 @@
+
+{
+    "talentactorApp": {
+        "commercial" : {
+            "home": {
+                "title": "Commercials",
+                "createLabel": "Create a new Commercial",
+                "createOrEditLabel": "Create or edit a Commercial"
+            },
+            "created": "A new Commercial is created with identifier {{ param }}",
+            "updated": "A Commercial is updated with identifier {{ param }}",
+            "deleted": "A Commercial is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Commercial {{ id }}?"
+            },
+            "detail": {
+                "title": "Commercial"
+            },
+            "title": "Title",
+            "director": "Director",
+            "cameraman": "Cameraman",
+            "link": "Link",
+            "image": "Image",
+            "video": "Video",
+            "imagepath": "Imagepath",
+            "videopath": "Videopath",
+            "profile": "Profile"
+        }
+    }
+}

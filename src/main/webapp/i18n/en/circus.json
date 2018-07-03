@@ -1,0 +1,23 @@
+
+{
+    "talentactorApp": {
+        "circus" : {
+            "home": {
+                "title": "Circuses",
+                "createLabel": "Create a new Circus",
+                "createOrEditLabel": "Create or edit a Circus"
+            },
+            "created": "A new Circus is created with identifier {{ param }}",
+            "updated": "A Circus is updated with identifier {{ param }}",
+            "deleted": "A Circus is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Circus {{ id }}?"
+            },
+            "detail": {
+                "title": "Circus"
+            },
+            "title": "Title",
+            "profile": "Profile"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="role">
+            <h2><span jhiTranslate="talentactorApp.role.detail.title">Role</span> {{role.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="talentactorApp.role.title">Title</span></dt>
+                <dd>
+                    <span>{{role.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.role.description">Description</span></dt>
+                <dd>
+                    <span>{{role.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.role.profile">Profile</span></dt>
+                <dd>
+                    <div *ngIf="role.profileId">
+                        <a [routerLink]="['/profile', role.profileId, 'view']">{{role.profileId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.role.project">Project</span></dt>
+                <dd>
+                    <div *ngIf="role.projectId">
+                        <a [routerLink]="['/project', role.projectId, 'view']">{{role.projectId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/role', role.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

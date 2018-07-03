@@ -1,0 +1,102 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-television-heading" jhiTranslate="talentactorApp.television.home.createOrEditLabel">Create or edit a Television</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!television.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="television.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.title" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                        [(ngModel)]="television.title" required/>
+                    <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.director" for="field_director">Director</label>
+                    <input type="text" class="form-control" name="director" id="field_director"
+                        [(ngModel)]="television.director" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.cameraman" for="field_cameraman">Cameraman</label>
+                    <input type="text" class="form-control" name="cameraman" id="field_cameraman"
+                        [(ngModel)]="television.cameraman" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.link" for="field_link">Link</label>
+                    <input type="text" class="form-control" name="link" id="field_link"
+                        [(ngModel)]="television.link" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.image" for="field_image">Image</label>
+                    <div>
+                        <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 100px;" *ngIf="television.image" alt="television image"/>
+                        <div *ngIf="television.image" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{television.imageContentType}}, {{byteSize(television.image)}}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, television, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                        [(ngModel)]="television.image" />
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                        [(ngModel)]="television.imageContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.video" for="field_video">Video</label>
+                    <div>
+                        <div *ngIf="television.video" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(television.videoContentType, television.video)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{television.videoContentType}}, {{byteSize(television.video)}}</span>
+                            <button type="button" (click)="television.video=null;television.videoContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_video" (change)="setFileData($event, television, 'video', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="video" id="field_video"
+                        [(ngModel)]="television.video" />
+                    <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
+                        [(ngModel)]="television.videoContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.imagepath" for="field_imagepath">Imagepath</label>
+                    <input type="text" class="form-control" name="imagepath" id="field_imagepath"
+                        [(ngModel)]="television.imagepath" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.videopath" for="field_videopath">Videopath</label>
+                    <input type="text" class="form-control" name="videopath" id="field_videopath"
+                        [(ngModel)]="television.videopath" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.television.profile" for="field_profile">Profile</label>
+                    <select class="form-control" id="field_profile" name="profile" [(ngModel)]="television.profileId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

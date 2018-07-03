@@ -1,0 +1,199 @@
+{
+    "name": "Profile",
+    "fields": [
+        {
+            "fieldName": "state",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "since",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "video",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "audio",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "imagepath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "videopath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "audiopath",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "role",
+            "otherEntityName": "role",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "film",
+            "otherEntityName": "film",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "television",
+            "otherEntityName": "television",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "internet",
+            "otherEntityName": "internet",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "commercial",
+            "otherEntityName": "commercial",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "print",
+            "otherEntityName": "print",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "theater",
+            "otherEntityName": "theater",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "voice",
+            "otherEntityName": "voice",
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "skill",
+            "otherEntityName": "skill",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "sport",
+            "otherEntityName": "sport",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "swimming",
+            "otherEntityName": "swimming",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "combat",
+            "otherEntityName": "combat",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "language",
+            "otherEntityName": "language",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "instrument",
+            "otherEntityName": "instrument",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "weapon",
+            "otherEntityName": "weapon",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "cycling",
+            "otherEntityName": "cycling",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "circus",
+            "otherEntityName": "circus",
+            "otherEntityField": "title",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "profile",
+            "relationshipName": "horse",
+            "otherEntityName": "horse",
+            "otherEntityField": "title",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20180703175243",
+    "entityTableName": "profile",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

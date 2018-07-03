@@ -1,0 +1,30 @@
+
+{
+    "talentactorApp": {
+        "internet" : {
+            "home": {
+                "title": "Internets",
+                "createLabel": "Create a new Internet",
+                "createOrEditLabel": "Create or edit a Internet"
+            },
+            "created": "A new Internet is created with identifier {{ param }}",
+            "updated": "A Internet is updated with identifier {{ param }}",
+            "deleted": "A Internet is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Internet {{ id }}?"
+            },
+            "detail": {
+                "title": "Internet"
+            },
+            "title": "Title",
+            "director": "Director",
+            "cameraman": "Cameraman",
+            "link": "Link",
+            "image": "Image",
+            "video": "Video",
+            "imagepath": "Imagepath",
+            "videopath": "Videopath",
+            "profile": "Profile"
+        }
+    }
+}

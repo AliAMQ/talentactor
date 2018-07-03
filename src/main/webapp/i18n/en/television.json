@@ -1,0 +1,30 @@
+
+{
+    "talentactorApp": {
+        "television" : {
+            "home": {
+                "title": "Televisions",
+                "createLabel": "Create a new Television",
+                "createOrEditLabel": "Create or edit a Television"
+            },
+            "created": "A new Television is created with identifier {{ param }}",
+            "updated": "A Television is updated with identifier {{ param }}",
+            "deleted": "A Television is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Television {{ id }}?"
+            },
+            "detail": {
+                "title": "Television"
+            },
+            "title": "Title",
+            "director": "Director",
+            "cameraman": "Cameraman",
+            "link": "Link",
+            "image": "Image",
+            "video": "Video",
+            "imagepath": "Imagepath",
+            "videopath": "Videopath",
+            "profile": "Profile"
+        }
+    }
+}

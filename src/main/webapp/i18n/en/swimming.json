@@ -1,0 +1,23 @@
+
+{
+    "talentactorApp": {
+        "swimming" : {
+            "home": {
+                "title": "Swimmings",
+                "createLabel": "Create a new Swimming",
+                "createOrEditLabel": "Create or edit a Swimming"
+            },
+            "created": "A new Swimming is created with identifier {{ param }}",
+            "updated": "A Swimming is updated with identifier {{ param }}",
+            "deleted": "A Swimming is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Swimming {{ id }}?"
+            },
+            "detail": {
+                "title": "Swimming"
+            },
+            "title": "Title",
+            "profile": "Profile"
+        }
+    }
+}
