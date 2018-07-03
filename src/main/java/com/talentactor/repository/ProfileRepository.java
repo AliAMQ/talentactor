@@ -27,4 +27,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
     @Query("select profile from Profile profile left join fetch profile.skills left join fetch profile.sports left join fetch profile.swimmings left join fetch profile.combats left join fetch profile.languages left join fetch profile.instruments left join fetch profile.weapons left join fetch profile.cyclings left join fetch profile.circuses left join fetch profile.horses where profile.id =:id")
     Optional<Profile> findOneWithEagerRelationships(@Param("id") Long id);
 
+    @Query("select profile from Profile profile left join fetch profile.skills left join fetch profile.sports left join fetch profile.swimmings left join fetch profile.combats left join fetch profile.languages left join fetch profile.instruments left join fetch profile.weapons left join fetch profile.cyclings left join fetch profile.circuses left join fetch profile.horses where profile.user.id =:userId")
+    Optional<Profile> findOneByUserIdWithEagerRelationships(@Param("userId") Long userId);
+
 }
