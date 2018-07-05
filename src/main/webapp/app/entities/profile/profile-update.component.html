@@ -11,8 +11,58 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.state" for="field_state">State</label>
-                    <input type="text" class="form-control" name="state" id="field_state"
-                        [(ngModel)]="profile.state" />
+                    <select class="form-control" name="state" [(ngModel)]="profile.state" id="field_state" >
+                        <option value="AK">{{'talentactorApp.State.AK' | translate}}</option>
+                        <option value="AL">{{'talentactorApp.State.AL' | translate}}</option>
+                        <option value="AZ">{{'talentactorApp.State.AZ' | translate}}</option>
+                        <option value="AR">{{'talentactorApp.State.AR' | translate}}</option>
+                        <option value="CA">{{'talentactorApp.State.CA' | translate}}</option>
+                        <option value="CO">{{'talentactorApp.State.CO' | translate}}</option>
+                        <option value="CT">{{'talentactorApp.State.CT' | translate}}</option>
+                        <option value="DE">{{'talentactorApp.State.DE' | translate}}</option>
+                        <option value="FL">{{'talentactorApp.State.FL' | translate}}</option>
+                        <option value="GA">{{'talentactorApp.State.GA' | translate}}</option>
+                        <option value="HI">{{'talentactorApp.State.HI' | translate}}</option>
+                        <option value="ID">{{'talentactorApp.State.ID' | translate}}</option>
+                        <option value="IL">{{'talentactorApp.State.IL' | translate}}</option>
+                        <option value="IN">{{'talentactorApp.State.IN' | translate}}</option>
+                        <option value="IA">{{'talentactorApp.State.IA' | translate}}</option>
+                        <option value="KS">{{'talentactorApp.State.KS' | translate}}</option>
+                        <option value="KY">{{'talentactorApp.State.KY' | translate}}</option>
+                        <option value="LA">{{'talentactorApp.State.LA' | translate}}</option>
+                        <option value="ME">{{'talentactorApp.State.ME' | translate}}</option>
+                        <option value="MD">{{'talentactorApp.State.MD' | translate}}</option>
+                        <option value="MA">{{'talentactorApp.State.MA' | translate}}</option>
+                        <option value="MI">{{'talentactorApp.State.MI' | translate}}</option>
+                        <option value="MN">{{'talentactorApp.State.MN' | translate}}</option>
+                        <option value="MS">{{'talentactorApp.State.MS' | translate}}</option>
+                        <option value="MO">{{'talentactorApp.State.MO' | translate}}</option>
+                        <option value="MT">{{'talentactorApp.State.MT' | translate}}</option>
+                        <option value="NE">{{'talentactorApp.State.NE' | translate}}</option>
+                        <option value="NV">{{'talentactorApp.State.NV' | translate}}</option>
+                        <option value="NH">{{'talentactorApp.State.NH' | translate}}</option>
+                        <option value="NJ">{{'talentactorApp.State.NJ' | translate}}</option>
+                        <option value="NM">{{'talentactorApp.State.NM' | translate}}</option>
+                        <option value="NY">{{'talentactorApp.State.NY' | translate}}</option>
+                        <option value="NC">{{'talentactorApp.State.NC' | translate}}</option>
+                        <option value="ND">{{'talentactorApp.State.ND' | translate}}</option>
+                        <option value="OH">{{'talentactorApp.State.OH' | translate}}</option>
+                        <option value="OK">{{'talentactorApp.State.OK' | translate}}</option>
+                        <option value="OR">{{'talentactorApp.State.OR' | translate}}</option>
+                        <option value="PA">{{'talentactorApp.State.PA' | translate}}</option>
+                        <option value="RI">{{'talentactorApp.State.RI' | translate}}</option>
+                        <option value="SC">{{'talentactorApp.State.SC' | translate}}</option>
+                        <option value="SD">{{'talentactorApp.State.SD' | translate}}</option>
+                        <option value="TN">{{'talentactorApp.State.TN' | translate}}</option>
+                        <option value="TX">{{'talentactorApp.State.TX' | translate}}</option>
+                        <option value="UT">{{'talentactorApp.State.UT' | translate}}</option>
+                        <option value="VT">{{'talentactorApp.State.VT' | translate}}</option>
+                        <option value="VA">{{'talentactorApp.State.VA' | translate}}</option>
+                        <option value="WA">{{'talentactorApp.State.WA' | translate}}</option>
+                        <option value="WV">{{'talentactorApp.State.WV' | translate}}</option>
+                        <option value="WI">{{'talentactorApp.State.WI' | translate}}</option>
+                        <option value="WY">{{'talentactorApp.State.WY' | translate}}</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.city" for="field_city">City</label>

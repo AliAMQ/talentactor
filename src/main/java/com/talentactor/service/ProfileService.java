@@ -34,7 +34,7 @@ public interface ProfileService {
      * @return the list of entities
      */
     Page<ProfileDTO> findAllWithEagerRelationships(Pageable pageable);
-
+    
     /**
      * Get the "id" profile.
      *
@@ -42,14 +42,6 @@ public interface ProfileService {
      * @return the entity
      */
     Optional<ProfileDTO> findOne(Long id);
-
-    /**
-     * Get the "userId" Profile.
-     *
-     * @param userId the id of the entity
-     * @return the entity
-     */
-    Optional<ProfileDTO> findOneByUserId(Long userId);
 
     /**
      * Delete the "id" profile.

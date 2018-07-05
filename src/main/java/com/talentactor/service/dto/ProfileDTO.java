@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
+import com.talentactor.domain.enumeration.State;
 
 /**
  * A DTO for the Profile entity.
@@ -14,7 +15,7 @@ public class ProfileDTO implements Serializable {
 
     private Long id;
 
-    private String state;
+    private State state;
 
     private String city;
 
@@ -72,11 +73,11 @@ public class ProfileDTO implements Serializable {
         this.id = id;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 

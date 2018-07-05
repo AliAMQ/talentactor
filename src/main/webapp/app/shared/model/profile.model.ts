@@ -18,9 +18,62 @@ import { ICycling } from 'app/shared/model//cycling.model';
 import { ICircus } from 'app/shared/model//circus.model';
 import { IHorse } from 'app/shared/model//horse.model';
 
+export const enum State {
+    AK = 'AK',
+    AL = 'AL',
+    AZ = 'AZ',
+    AR = 'AR',
+    CA = 'CA',
+    CO = 'CO',
+    CT = 'CT',
+    DE = 'DE',
+    FL = 'FL',
+    GA = 'GA',
+    HI = 'HI',
+    ID = 'ID',
+    IL = 'IL',
+    IN = 'IN',
+    IA = 'IA',
+    KS = 'KS',
+    KY = 'KY',
+    LA = 'LA',
+    ME = 'ME',
+    MD = 'MD',
+    MA = 'MA',
+    MI = 'MI',
+    MN = 'MN',
+    MS = 'MS',
+    MO = 'MO',
+    MT = 'MT',
+    NE = 'NE',
+    NV = 'NV',
+    NH = 'NH',
+    NJ = 'NJ',
+    NM = 'NM',
+    NY = 'NY',
+    NC = 'NC',
+    ND = 'ND',
+    OH = 'OH',
+    OK = 'OK',
+    OR = 'OR',
+    PA = 'PA',
+    RI = 'RI',
+    SC = 'SC',
+    SD = 'SD',
+    TN = 'TN',
+    TX = 'TX',
+    UT = 'UT',
+    VT = 'VT',
+    VA = 'VA',
+    WA = 'WA',
+    WV = 'WV',
+    WI = 'WI',
+    WY = 'WY'
+}
+
 export interface IProfile {
     id?: number;
-    state?: string;
+    state?: State;
     city?: string;
     address?: string;
     phone?: string;
@@ -58,7 +111,7 @@ export interface IProfile {
 export class Profile implements IProfile {
     constructor(
         public id?: number,
-        public state?: string,
+        public state?: State,
         public city?: string,
         public address?: string,
         public phone?: string,

@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import com.talentactor.domain.enumeration.State;
+
 /**
  * A Profile.
  */
@@ -26,8 +28,9 @@ public class Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "state")
-    private String state;
+    private State state;
 
     @Column(name = "city")
     private String city;
@@ -186,16 +189,16 @@ public class Profile implements Serializable {
         this.id = id;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public Profile state(String state) {
+    public Profile state(State state) {
         this.state = state;
         return this;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 
