@@ -1,9 +1,11 @@
 package com.talentactor.service;
 
 import com.talentactor.domain.Authority;
+import com.talentactor.domain.Profile;
 import com.talentactor.domain.User;
 import com.talentactor.repository.AuthorityRepository;
 import com.talentactor.config.Constants;
+import com.talentactor.repository.ProfileRepository;
 import com.talentactor.repository.UserRepository;
 import com.talentactor.security.AuthoritiesConstants;
 import com.talentactor.security.SecurityUtils;
@@ -43,11 +45,14 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final ProfileRepository profileRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, ProfileRepository profileRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.profileRepository= profileRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -108,6 +113,13 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
+
+        // Alireza- Create a profile for the new user
+        Profile profile = new Profile();
+        profile.setUser(newUser);
+        profileRepository.save(profile);
+
+
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
