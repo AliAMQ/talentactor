@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IProfile[]>;
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
     private resourceUrl = SERVER_API_URL + 'api/profiles';
+    private resourceUrl2 = SERVER_API_URL + '/api/user-profiles-by-userid';
 
     constructor(private http: HttpClient) {}
 
@@ -34,6 +35,12 @@ export class ProfileService {
     find(id: number): Observable<EntityResponseType> {
         return this.http
             .get<IProfile>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertDateFromServer(res));
+    }
+
+    findByUserId(userId: number): Observable<EntityResponseType> {
+        return this.http
+            .get<IProfile>(`${this.resourceUrl2}/${userId}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertDateFromServer(res));
     }
 

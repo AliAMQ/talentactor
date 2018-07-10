@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal, AccountService, JhiLanguageHelper } from 'app/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/index';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { IProfile, Profile } from 'app/shared/model/profile.model';
+import { ProfileService } from '../../entities/profile/profile.service';
 
 @Component({
     selector: 'jhi-settings',
@@ -12,12 +17,14 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
+    profileid: number;
 
     constructor(
         private account: AccountService,
         private principal: Principal,
         private languageService: JhiLanguageService,
-        private languageHelper: JhiLanguageHelper
+        private languageHelper: JhiLanguageHelper,
+        private profileService: ProfileService
     ) {}
 
     ngOnInit() {
@@ -27,6 +34,8 @@ export class SettingsComponent implements OnInit {
         this.languageHelper.getAll().then(languages => {
             this.languages = languages;
         });
+
+        this.findProfileByUserId();
     }
 
     save() {
@@ -60,5 +69,11 @@ export class SettingsComponent implements OnInit {
             login: account.login,
             imageUrl: account.imageUrl
         };
+    }
+
+    findProfileByUserId() {
+        this.profileService
+            .findByUserId(this.principal.userIdentity.id)
+            .subscribe((res: HttpResponse<IProfile>) => (this.profileid = res.body.id));
     }
 }

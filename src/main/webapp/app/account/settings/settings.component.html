@@ -81,6 +81,9 @@
                 </div>
                 -->
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
+                <a routerLink="../profile/{{profileid}}/view">
+                    <span jhiTranslate="global.menu.entities.profile">Profile</span>
+                </a>
             </form>
         </div>
     </div>
