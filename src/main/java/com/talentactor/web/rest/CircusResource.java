@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.CircusDTO;
+import com.talentactor.service.dto.CircusCriteria;
+import com.talentactor.service.CircusQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class CircusResource {
 
     private final CircusService circusService;
 
-    public CircusResource(CircusService circusService) {
+    private final CircusQueryService circusQueryService;
+
+    public CircusResource(CircusService circusService, CircusQueryService circusQueryService) {
         this.circusService = circusService;
+        this.circusQueryService = circusQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class CircusResource {
      * GET  /circuses : get all the circuses.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of circuses in body
      */
     @GetMapping("/circuses")
     @Timed
-    public ResponseEntity<List<CircusDTO>> getAllCircuses(Pageable pageable) {
-        log.debug("REST request to get a page of Circuses");
-        Page<CircusDTO> page = circusService.findAll(pageable);
+    public ResponseEntity<List<CircusDTO>> getAllCircuses(CircusCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Circuses by criteria: {}", criteria);
+        Page<CircusDTO> page = circusQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/circuses");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

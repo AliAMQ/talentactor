@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Weapon;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.WeaponRepository;
 import com.talentactor.service.WeaponService;
 import com.talentactor.service.dto.WeaponDTO;
 import com.talentactor.service.mapper.WeaponMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.WeaponCriteria;
+import com.talentactor.service.WeaponQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class WeaponResourceIntTest {
     private WeaponService weaponService;
 
     @Autowired
+    private WeaponQueryService weaponQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class WeaponResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final WeaponResource weaponResource = new WeaponResource(weaponService);
+        final WeaponResource weaponResource = new WeaponResource(weaponService, weaponQueryService);
         this.restWeaponMockMvc = MockMvcBuilders.standaloneSetup(weaponResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class WeaponResourceIntTest {
             .andExpect(jsonPath("$.id").value(weapon.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllWeaponsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        weaponRepository.saveAndFlush(weapon);
+
+        // Get all the weaponList where title equals to DEFAULT_TITLE
+        defaultWeaponShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the weaponList where title equals to UPDATED_TITLE
+        defaultWeaponShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeaponsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        weaponRepository.saveAndFlush(weapon);
+
+        // Get all the weaponList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultWeaponShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the weaponList where title equals to UPDATED_TITLE
+        defaultWeaponShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeaponsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        weaponRepository.saveAndFlush(weapon);
+
+        // Get all the weaponList where title is not null
+        defaultWeaponShouldBeFound("title.specified=true");
+
+        // Get all the weaponList where title is null
+        defaultWeaponShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllWeaponsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        weapon.addProfile(profile);
+        weaponRepository.saveAndFlush(weapon);
+        Long profileId = profile.getId();
+
+        // Get all the weaponList where profile equals to profileId
+        defaultWeaponShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the weaponList where profile equals to profileId + 1
+        defaultWeaponShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultWeaponShouldBeFound(String filter) throws Exception {
+        restWeaponMockMvc.perform(get("/api/weapons?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(weapon.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultWeaponShouldNotBeFound(String filter) throws Exception {
+        restWeaponMockMvc.perform(get("/api/weapons?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingWeapon() throws Exception {

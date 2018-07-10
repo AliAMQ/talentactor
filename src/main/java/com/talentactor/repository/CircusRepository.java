@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface CircusRepository extends JpaRepository<Circus, Long> {
+public interface CircusRepository extends JpaRepository<Circus, Long>, JpaSpecificationExecutor<Circus> {
 
 }

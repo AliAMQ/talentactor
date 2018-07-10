@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Skill;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.SkillRepository;
 import com.talentactor.service.SkillService;
 import com.talentactor.service.dto.SkillDTO;
 import com.talentactor.service.mapper.SkillMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.SkillCriteria;
+import com.talentactor.service.SkillQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class SkillResourceIntTest {
     private SkillService skillService;
 
     @Autowired
+    private SkillQueryService skillQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class SkillResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SkillResource skillResource = new SkillResource(skillService);
+        final SkillResource skillResource = new SkillResource(skillService, skillQueryService);
         this.restSkillMockMvc = MockMvcBuilders.standaloneSetup(skillResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class SkillResourceIntTest {
             .andExpect(jsonPath("$.id").value(skill.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllSkillsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        skillRepository.saveAndFlush(skill);
+
+        // Get all the skillList where title equals to DEFAULT_TITLE
+        defaultSkillShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the skillList where title equals to UPDATED_TITLE
+        defaultSkillShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSkillsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        skillRepository.saveAndFlush(skill);
+
+        // Get all the skillList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultSkillShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the skillList where title equals to UPDATED_TITLE
+        defaultSkillShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSkillsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        skillRepository.saveAndFlush(skill);
+
+        // Get all the skillList where title is not null
+        defaultSkillShouldBeFound("title.specified=true");
+
+        // Get all the skillList where title is null
+        defaultSkillShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllSkillsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        skill.addProfile(profile);
+        skillRepository.saveAndFlush(skill);
+        Long profileId = profile.getId();
+
+        // Get all the skillList where profile equals to profileId
+        defaultSkillShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the skillList where profile equals to profileId + 1
+        defaultSkillShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultSkillShouldBeFound(String filter) throws Exception {
+        restSkillMockMvc.perform(get("/api/skills?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(skill.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultSkillShouldNotBeFound(String filter) throws Exception {
+        restSkillMockMvc.perform(get("/api/skills?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingSkill() throws Exception {

@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.TelevisionDTO;
+import com.talentactor.service.dto.TelevisionCriteria;
+import com.talentactor.service.TelevisionQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class TelevisionResource {
 
     private final TelevisionService televisionService;
 
-    public TelevisionResource(TelevisionService televisionService) {
+    private final TelevisionQueryService televisionQueryService;
+
+    public TelevisionResource(TelevisionService televisionService, TelevisionQueryService televisionQueryService) {
         this.televisionService = televisionService;
+        this.televisionQueryService = televisionQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class TelevisionResource {
      * GET  /televisions : get all the televisions.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of televisions in body
      */
     @GetMapping("/televisions")
     @Timed
-    public ResponseEntity<List<TelevisionDTO>> getAllTelevisions(Pageable pageable) {
-        log.debug("REST request to get a page of Televisions");
-        Page<TelevisionDTO> page = televisionService.findAll(pageable);
+    public ResponseEntity<List<TelevisionDTO>> getAllTelevisions(TelevisionCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Televisions by criteria: {}", criteria);
+        Page<TelevisionDTO> page = televisionQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/televisions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

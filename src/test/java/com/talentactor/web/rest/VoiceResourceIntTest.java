@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Voice;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.VoiceRepository;
 import com.talentactor.service.VoiceService;
 import com.talentactor.service.dto.VoiceDTO;
 import com.talentactor.service.mapper.VoiceMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.VoiceCriteria;
+import com.talentactor.service.VoiceQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -80,6 +83,9 @@ public class VoiceResourceIntTest {
     private VoiceService voiceService;
 
     @Autowired
+    private VoiceQueryService voiceQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -98,7 +104,7 @@ public class VoiceResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final VoiceResource voiceResource = new VoiceResource(voiceService);
+        final VoiceResource voiceResource = new VoiceResource(voiceService, voiceQueryService);
         this.restVoiceMockMvc = MockMvcBuilders.standaloneSetup(voiceResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -241,6 +247,250 @@ public class VoiceResourceIntTest {
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()))
             .andExpect(jsonPath("$.audiopath").value(DEFAULT_AUDIOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where title equals to DEFAULT_TITLE
+        defaultVoiceShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the voiceList where title equals to UPDATED_TITLE
+        defaultVoiceShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultVoiceShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the voiceList where title equals to UPDATED_TITLE
+        defaultVoiceShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where title is not null
+        defaultVoiceShouldBeFound("title.specified=true");
+
+        // Get all the voiceList where title is null
+        defaultVoiceShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where director equals to DEFAULT_DIRECTOR
+        defaultVoiceShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the voiceList where director equals to UPDATED_DIRECTOR
+        defaultVoiceShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultVoiceShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the voiceList where director equals to UPDATED_DIRECTOR
+        defaultVoiceShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where director is not null
+        defaultVoiceShouldBeFound("director.specified=true");
+
+        // Get all the voiceList where director is null
+        defaultVoiceShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where link equals to DEFAULT_LINK
+        defaultVoiceShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the voiceList where link equals to UPDATED_LINK
+        defaultVoiceShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultVoiceShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the voiceList where link equals to UPDATED_LINK
+        defaultVoiceShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where link is not null
+        defaultVoiceShouldBeFound("link.specified=true");
+
+        // Get all the voiceList where link is null
+        defaultVoiceShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where videopath equals to DEFAULT_VIDEOPATH
+        defaultVoiceShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the voiceList where videopath equals to UPDATED_VIDEOPATH
+        defaultVoiceShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultVoiceShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the voiceList where videopath equals to UPDATED_VIDEOPATH
+        defaultVoiceShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where videopath is not null
+        defaultVoiceShouldBeFound("videopath.specified=true");
+
+        // Get all the voiceList where videopath is null
+        defaultVoiceShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByAudiopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where audiopath equals to DEFAULT_AUDIOPATH
+        defaultVoiceShouldBeFound("audiopath.equals=" + DEFAULT_AUDIOPATH);
+
+        // Get all the voiceList where audiopath equals to UPDATED_AUDIOPATH
+        defaultVoiceShouldNotBeFound("audiopath.equals=" + UPDATED_AUDIOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByAudiopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where audiopath in DEFAULT_AUDIOPATH or UPDATED_AUDIOPATH
+        defaultVoiceShouldBeFound("audiopath.in=" + DEFAULT_AUDIOPATH + "," + UPDATED_AUDIOPATH);
+
+        // Get all the voiceList where audiopath equals to UPDATED_AUDIOPATH
+        defaultVoiceShouldNotBeFound("audiopath.in=" + UPDATED_AUDIOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByAudiopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        voiceRepository.saveAndFlush(voice);
+
+        // Get all the voiceList where audiopath is not null
+        defaultVoiceShouldBeFound("audiopath.specified=true");
+
+        // Get all the voiceList where audiopath is null
+        defaultVoiceShouldNotBeFound("audiopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVoicesByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        voice.setProfile(profile);
+        voiceRepository.saveAndFlush(voice);
+        Long profileId = profile.getId();
+
+        // Get all the voiceList where profile equals to profileId
+        defaultVoiceShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the voiceList where profile equals to profileId + 1
+        defaultVoiceShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultVoiceShouldBeFound(String filter) throws Exception {
+        restVoiceMockMvc.perform(get("/api/voices?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(voice.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].audioContentType").value(hasItem(DEFAULT_AUDIO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].audio").value(hasItem(Base64Utils.encodeToString(DEFAULT_AUDIO))))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())))
+            .andExpect(jsonPath("$.[*].audiopath").value(hasItem(DEFAULT_AUDIOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultVoiceShouldNotBeFound(String filter) throws Exception {
+        restVoiceMockMvc.perform(get("/api/voices?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingVoice() throws Exception {

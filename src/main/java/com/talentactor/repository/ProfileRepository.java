@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ProfileRepository extends JpaRepository<Profile, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, Long>, JpaSpecificationExecutor<Profile> {
 
     @Query(value = "select distinct profile from Profile profile left join fetch profile.skills left join fetch profile.sports left join fetch profile.swimmings left join fetch profile.combats left join fetch profile.languages left join fetch profile.instruments left join fetch profile.weapons left join fetch profile.cyclings left join fetch profile.circuses left join fetch profile.horses",
         countQuery = "select count(distinct profile) from Profile profile")

@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.InternetDTO;
+import com.talentactor.service.dto.InternetCriteria;
+import com.talentactor.service.InternetQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class InternetResource {
 
     private final InternetService internetService;
 
-    public InternetResource(InternetService internetService) {
+    private final InternetQueryService internetQueryService;
+
+    public InternetResource(InternetService internetService, InternetQueryService internetQueryService) {
         this.internetService = internetService;
+        this.internetQueryService = internetQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class InternetResource {
      * GET  /internets : get all the internets.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of internets in body
      */
     @GetMapping("/internets")
     @Timed
-    public ResponseEntity<List<InternetDTO>> getAllInternets(Pageable pageable) {
-        log.debug("REST request to get a page of Internets");
-        Page<InternetDTO> page = internetService.findAll(pageable);
+    public ResponseEntity<List<InternetDTO>> getAllInternets(InternetCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Internets by criteria: {}", criteria);
+        Page<InternetDTO> page = internetQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/internets");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

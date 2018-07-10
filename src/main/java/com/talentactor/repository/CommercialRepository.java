@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface CommercialRepository extends JpaRepository<Commercial, Long> {
+public interface CommercialRepository extends JpaRepository<Commercial, Long>, JpaSpecificationExecutor<Commercial> {
 
 }

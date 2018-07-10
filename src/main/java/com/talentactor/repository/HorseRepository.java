@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface HorseRepository extends JpaRepository<Horse, Long> {
+public interface HorseRepository extends JpaRepository<Horse, Long>, JpaSpecificationExecutor<Horse> {
 
 }

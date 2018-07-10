@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Commercial;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.CommercialRepository;
 import com.talentactor.service.CommercialService;
 import com.talentactor.service.dto.CommercialDTO;
 import com.talentactor.service.mapper.CommercialMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.CommercialCriteria;
+import com.talentactor.service.CommercialQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +86,9 @@ public class CommercialResourceIntTest {
     private CommercialService commercialService;
 
     @Autowired
+    private CommercialQueryService commercialQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -101,7 +107,7 @@ public class CommercialResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CommercialResource commercialResource = new CommercialResource(commercialService);
+        final CommercialResource commercialResource = new CommercialResource(commercialService, commercialQueryService);
         this.restCommercialMockMvc = MockMvcBuilders.standaloneSetup(commercialResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -248,6 +254,290 @@ public class CommercialResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where title equals to DEFAULT_TITLE
+        defaultCommercialShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the commercialList where title equals to UPDATED_TITLE
+        defaultCommercialShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultCommercialShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the commercialList where title equals to UPDATED_TITLE
+        defaultCommercialShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where title is not null
+        defaultCommercialShouldBeFound("title.specified=true");
+
+        // Get all the commercialList where title is null
+        defaultCommercialShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where director equals to DEFAULT_DIRECTOR
+        defaultCommercialShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the commercialList where director equals to UPDATED_DIRECTOR
+        defaultCommercialShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultCommercialShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the commercialList where director equals to UPDATED_DIRECTOR
+        defaultCommercialShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where director is not null
+        defaultCommercialShouldBeFound("director.specified=true");
+
+        // Get all the commercialList where director is null
+        defaultCommercialShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByCameramanIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where cameraman equals to DEFAULT_CAMERAMAN
+        defaultCommercialShouldBeFound("cameraman.equals=" + DEFAULT_CAMERAMAN);
+
+        // Get all the commercialList where cameraman equals to UPDATED_CAMERAMAN
+        defaultCommercialShouldNotBeFound("cameraman.equals=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByCameramanIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where cameraman in DEFAULT_CAMERAMAN or UPDATED_CAMERAMAN
+        defaultCommercialShouldBeFound("cameraman.in=" + DEFAULT_CAMERAMAN + "," + UPDATED_CAMERAMAN);
+
+        // Get all the commercialList where cameraman equals to UPDATED_CAMERAMAN
+        defaultCommercialShouldNotBeFound("cameraman.in=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByCameramanIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where cameraman is not null
+        defaultCommercialShouldBeFound("cameraman.specified=true");
+
+        // Get all the commercialList where cameraman is null
+        defaultCommercialShouldNotBeFound("cameraman.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where link equals to DEFAULT_LINK
+        defaultCommercialShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the commercialList where link equals to UPDATED_LINK
+        defaultCommercialShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultCommercialShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the commercialList where link equals to UPDATED_LINK
+        defaultCommercialShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where link is not null
+        defaultCommercialShouldBeFound("link.specified=true");
+
+        // Get all the commercialList where link is null
+        defaultCommercialShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultCommercialShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the commercialList where imagepath equals to UPDATED_IMAGEPATH
+        defaultCommercialShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultCommercialShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the commercialList where imagepath equals to UPDATED_IMAGEPATH
+        defaultCommercialShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where imagepath is not null
+        defaultCommercialShouldBeFound("imagepath.specified=true");
+
+        // Get all the commercialList where imagepath is null
+        defaultCommercialShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where videopath equals to DEFAULT_VIDEOPATH
+        defaultCommercialShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the commercialList where videopath equals to UPDATED_VIDEOPATH
+        defaultCommercialShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultCommercialShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the commercialList where videopath equals to UPDATED_VIDEOPATH
+        defaultCommercialShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        commercialRepository.saveAndFlush(commercial);
+
+        // Get all the commercialList where videopath is not null
+        defaultCommercialShouldBeFound("videopath.specified=true");
+
+        // Get all the commercialList where videopath is null
+        defaultCommercialShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCommercialsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        commercial.setProfile(profile);
+        commercialRepository.saveAndFlush(commercial);
+        Long profileId = profile.getId();
+
+        // Get all the commercialList where profile equals to profileId
+        defaultCommercialShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the commercialList where profile equals to profileId + 1
+        defaultCommercialShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultCommercialShouldBeFound(String filter) throws Exception {
+        restCommercialMockMvc.perform(get("/api/commercials?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(commercial.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].cameraman").value(hasItem(DEFAULT_CAMERAMAN.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultCommercialShouldNotBeFound(String filter) throws Exception {
+        restCommercialMockMvc.perform(get("/api/commercials?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingCommercial() throws Exception {

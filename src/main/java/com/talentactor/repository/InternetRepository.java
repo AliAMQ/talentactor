@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface InternetRepository extends JpaRepository<Internet, Long> {
+public interface InternetRepository extends JpaRepository<Internet, Long>, JpaSpecificationExecutor<Internet> {
 
 }

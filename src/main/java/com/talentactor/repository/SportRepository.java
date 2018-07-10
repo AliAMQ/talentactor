@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SportRepository extends JpaRepository<Sport, Long> {
+public interface SportRepository extends JpaRepository<Sport, Long>, JpaSpecificationExecutor<Sport> {
 
 }

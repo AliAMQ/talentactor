@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.PrintDTO;
+import com.talentactor.service.dto.PrintCriteria;
+import com.talentactor.service.PrintQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class PrintResource {
 
     private final PrintService printService;
 
-    public PrintResource(PrintService printService) {
+    private final PrintQueryService printQueryService;
+
+    public PrintResource(PrintService printService, PrintQueryService printQueryService) {
         this.printService = printService;
+        this.printQueryService = printQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class PrintResource {
      * GET  /prints : get all the prints.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of prints in body
      */
     @GetMapping("/prints")
     @Timed
-    public ResponseEntity<List<PrintDTO>> getAllPrints(Pageable pageable) {
-        log.debug("REST request to get a page of Prints");
-        Page<PrintDTO> page = printService.findAll(pageable);
+    public ResponseEntity<List<PrintDTO>> getAllPrints(PrintCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Prints by criteria: {}", criteria);
+        Page<PrintDTO> page = printQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/prints");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

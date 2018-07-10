@@ -14,7 +14,7 @@ type EntityArrayResponseType = HttpResponse<IProfile[]>;
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
     private resourceUrl = SERVER_API_URL + 'api/profiles';
-    private resourceUrl2 = SERVER_API_URL + '/api/user-profiles-by-userid';
+    private resourceUrl2 = SERVER_API_URL + '/api/profiles-by-userid';
 
     constructor(private http: HttpClient) {}
 

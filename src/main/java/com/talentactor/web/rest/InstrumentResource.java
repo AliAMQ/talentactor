@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.InstrumentDTO;
+import com.talentactor.service.dto.InstrumentCriteria;
+import com.talentactor.service.InstrumentQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class InstrumentResource {
 
     private final InstrumentService instrumentService;
 
-    public InstrumentResource(InstrumentService instrumentService) {
+    private final InstrumentQueryService instrumentQueryService;
+
+    public InstrumentResource(InstrumentService instrumentService, InstrumentQueryService instrumentQueryService) {
         this.instrumentService = instrumentService;
+        this.instrumentQueryService = instrumentQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class InstrumentResource {
      * GET  /instruments : get all the instruments.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of instruments in body
      */
     @GetMapping("/instruments")
     @Timed
-    public ResponseEntity<List<InstrumentDTO>> getAllInstruments(Pageable pageable) {
-        log.debug("REST request to get a page of Instruments");
-        Page<InstrumentDTO> page = instrumentService.findAll(pageable);
+    public ResponseEntity<List<InstrumentDTO>> getAllInstruments(InstrumentCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Instruments by criteria: {}", criteria);
+        Page<InstrumentDTO> page = instrumentQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/instruments");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

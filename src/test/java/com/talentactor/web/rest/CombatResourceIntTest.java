@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Combat;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.CombatRepository;
 import com.talentactor.service.CombatService;
 import com.talentactor.service.dto.CombatDTO;
 import com.talentactor.service.mapper.CombatMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.CombatCriteria;
+import com.talentactor.service.CombatQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class CombatResourceIntTest {
     private CombatService combatService;
 
     @Autowired
+    private CombatQueryService combatQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class CombatResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CombatResource combatResource = new CombatResource(combatService);
+        final CombatResource combatResource = new CombatResource(combatService, combatQueryService);
         this.restCombatMockMvc = MockMvcBuilders.standaloneSetup(combatResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class CombatResourceIntTest {
             .andExpect(jsonPath("$.id").value(combat.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllCombatsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        combatRepository.saveAndFlush(combat);
+
+        // Get all the combatList where title equals to DEFAULT_TITLE
+        defaultCombatShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the combatList where title equals to UPDATED_TITLE
+        defaultCombatShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCombatsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        combatRepository.saveAndFlush(combat);
+
+        // Get all the combatList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultCombatShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the combatList where title equals to UPDATED_TITLE
+        defaultCombatShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCombatsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        combatRepository.saveAndFlush(combat);
+
+        // Get all the combatList where title is not null
+        defaultCombatShouldBeFound("title.specified=true");
+
+        // Get all the combatList where title is null
+        defaultCombatShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCombatsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        combat.addProfile(profile);
+        combatRepository.saveAndFlush(combat);
+        Long profileId = profile.getId();
+
+        // Get all the combatList where profile equals to profileId
+        defaultCombatShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the combatList where profile equals to profileId + 1
+        defaultCombatShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultCombatShouldBeFound(String filter) throws Exception {
+        restCombatMockMvc.perform(get("/api/combats?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(combat.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultCombatShouldNotBeFound(String filter) throws Exception {
+        restCombatMockMvc.perform(get("/api/combats?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingCombat() throws Exception {

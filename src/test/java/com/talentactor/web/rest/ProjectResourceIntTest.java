@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Project;
+import com.talentactor.domain.Role;
 import com.talentactor.repository.ProjectRepository;
 import com.talentactor.service.ProjectService;
 import com.talentactor.service.dto.ProjectDTO;
 import com.talentactor.service.mapper.ProjectMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.ProjectCriteria;
+import com.talentactor.service.ProjectQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -82,6 +85,9 @@ public class ProjectResourceIntTest {
     private ProjectService projectService;
 
     @Autowired
+    private ProjectQueryService projectQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -100,7 +106,7 @@ public class ProjectResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ProjectResource projectResource = new ProjectResource(projectService);
+        final ProjectResource projectResource = new ProjectResource(projectService, projectQueryService);
         this.restProjectMockMvc = MockMvcBuilders.standaloneSetup(projectResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -243,6 +249,277 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where title equals to DEFAULT_TITLE
+        defaultProjectShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the projectList where title equals to UPDATED_TITLE
+        defaultProjectShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultProjectShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the projectList where title equals to UPDATED_TITLE
+        defaultProjectShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where title is not null
+        defaultProjectShouldBeFound("title.specified=true");
+
+        // Get all the projectList where title is null
+        defaultProjectShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where code equals to DEFAULT_CODE
+        defaultProjectShouldBeFound("code.equals=" + DEFAULT_CODE);
+
+        // Get all the projectList where code equals to UPDATED_CODE
+        defaultProjectShouldNotBeFound("code.equals=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where code in DEFAULT_CODE or UPDATED_CODE
+        defaultProjectShouldBeFound("code.in=" + DEFAULT_CODE + "," + UPDATED_CODE);
+
+        // Get all the projectList where code equals to UPDATED_CODE
+        defaultProjectShouldNotBeFound("code.in=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where code is not null
+        defaultProjectShouldBeFound("code.specified=true");
+
+        // Get all the projectList where code is null
+        defaultProjectShouldNotBeFound("code.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where date equals to DEFAULT_DATE
+        defaultProjectShouldBeFound("date.equals=" + DEFAULT_DATE);
+
+        // Get all the projectList where date equals to UPDATED_DATE
+        defaultProjectShouldNotBeFound("date.equals=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where date in DEFAULT_DATE or UPDATED_DATE
+        defaultProjectShouldBeFound("date.in=" + DEFAULT_DATE + "," + UPDATED_DATE);
+
+        // Get all the projectList where date equals to UPDATED_DATE
+        defaultProjectShouldNotBeFound("date.in=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where date is not null
+        defaultProjectShouldBeFound("date.specified=true");
+
+        // Get all the projectList where date is null
+        defaultProjectShouldNotBeFound("date.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByDateIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where date greater than or equals to DEFAULT_DATE
+        defaultProjectShouldBeFound("date.greaterOrEqualThan=" + DEFAULT_DATE);
+
+        // Get all the projectList where date greater than or equals to UPDATED_DATE
+        defaultProjectShouldNotBeFound("date.greaterOrEqualThan=" + UPDATED_DATE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByDateIsLessThanSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where date less than or equals to DEFAULT_DATE
+        defaultProjectShouldNotBeFound("date.lessThan=" + DEFAULT_DATE);
+
+        // Get all the projectList where date less than or equals to UPDATED_DATE
+        defaultProjectShouldBeFound("date.lessThan=" + UPDATED_DATE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllProjectsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultProjectShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the projectList where imagepath equals to UPDATED_IMAGEPATH
+        defaultProjectShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultProjectShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the projectList where imagepath equals to UPDATED_IMAGEPATH
+        defaultProjectShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where imagepath is not null
+        defaultProjectShouldBeFound("imagepath.specified=true");
+
+        // Get all the projectList where imagepath is null
+        defaultProjectShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where videopath equals to DEFAULT_VIDEOPATH
+        defaultProjectShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the projectList where videopath equals to UPDATED_VIDEOPATH
+        defaultProjectShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultProjectShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the projectList where videopath equals to UPDATED_VIDEOPATH
+        defaultProjectShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        projectRepository.saveAndFlush(project);
+
+        // Get all the projectList where videopath is not null
+        defaultProjectShouldBeFound("videopath.specified=true");
+
+        // Get all the projectList where videopath is null
+        defaultProjectShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProjectsByRoleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Role role = RoleResourceIntTest.createEntity(em);
+        em.persist(role);
+        em.flush();
+        project.addRole(role);
+        projectRepository.saveAndFlush(project);
+        Long roleId = role.getId();
+
+        // Get all the projectList where role equals to roleId
+        defaultProjectShouldBeFound("roleId.equals=" + roleId);
+
+        // Get all the projectList where role equals to roleId + 1
+        defaultProjectShouldNotBeFound("roleId.equals=" + (roleId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultProjectShouldBeFound(String filter) throws Exception {
+        restProjectMockMvc.perform(get("/api/projects?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(project.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultProjectShouldNotBeFound(String filter) throws Exception {
+        restProjectMockMvc.perform(get("/api/projects?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingProject() throws Exception {

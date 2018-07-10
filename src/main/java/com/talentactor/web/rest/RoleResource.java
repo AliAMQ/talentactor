@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.RoleDTO;
+import com.talentactor.service.dto.RoleCriteria;
+import com.talentactor.service.RoleQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class RoleResource {
 
     private final RoleService roleService;
 
-    public RoleResource(RoleService roleService) {
+    private final RoleQueryService roleQueryService;
+
+    public RoleResource(RoleService roleService, RoleQueryService roleQueryService) {
         this.roleService = roleService;
+        this.roleQueryService = roleQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class RoleResource {
      * GET  /roles : get all the roles.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of roles in body
      */
     @GetMapping("/roles")
     @Timed
-    public ResponseEntity<List<RoleDTO>> getAllRoles(Pageable pageable) {
-        log.debug("REST request to get a page of Roles");
-        Page<RoleDTO> page = roleService.findAll(pageable);
+    public ResponseEntity<List<RoleDTO>> getAllRoles(RoleCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Roles by criteria: {}", criteria);
+        Page<RoleDTO> page = roleQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/roles");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

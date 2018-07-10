@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Television;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.TelevisionRepository;
 import com.talentactor.service.TelevisionService;
 import com.talentactor.service.dto.TelevisionDTO;
 import com.talentactor.service.mapper.TelevisionMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.TelevisionCriteria;
+import com.talentactor.service.TelevisionQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +86,9 @@ public class TelevisionResourceIntTest {
     private TelevisionService televisionService;
 
     @Autowired
+    private TelevisionQueryService televisionQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -101,7 +107,7 @@ public class TelevisionResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TelevisionResource televisionResource = new TelevisionResource(televisionService);
+        final TelevisionResource televisionResource = new TelevisionResource(televisionService, televisionQueryService);
         this.restTelevisionMockMvc = MockMvcBuilders.standaloneSetup(televisionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -248,6 +254,290 @@ public class TelevisionResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where title equals to DEFAULT_TITLE
+        defaultTelevisionShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the televisionList where title equals to UPDATED_TITLE
+        defaultTelevisionShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultTelevisionShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the televisionList where title equals to UPDATED_TITLE
+        defaultTelevisionShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where title is not null
+        defaultTelevisionShouldBeFound("title.specified=true");
+
+        // Get all the televisionList where title is null
+        defaultTelevisionShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where director equals to DEFAULT_DIRECTOR
+        defaultTelevisionShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the televisionList where director equals to UPDATED_DIRECTOR
+        defaultTelevisionShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultTelevisionShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the televisionList where director equals to UPDATED_DIRECTOR
+        defaultTelevisionShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where director is not null
+        defaultTelevisionShouldBeFound("director.specified=true");
+
+        // Get all the televisionList where director is null
+        defaultTelevisionShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByCameramanIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where cameraman equals to DEFAULT_CAMERAMAN
+        defaultTelevisionShouldBeFound("cameraman.equals=" + DEFAULT_CAMERAMAN);
+
+        // Get all the televisionList where cameraman equals to UPDATED_CAMERAMAN
+        defaultTelevisionShouldNotBeFound("cameraman.equals=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByCameramanIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where cameraman in DEFAULT_CAMERAMAN or UPDATED_CAMERAMAN
+        defaultTelevisionShouldBeFound("cameraman.in=" + DEFAULT_CAMERAMAN + "," + UPDATED_CAMERAMAN);
+
+        // Get all the televisionList where cameraman equals to UPDATED_CAMERAMAN
+        defaultTelevisionShouldNotBeFound("cameraman.in=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByCameramanIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where cameraman is not null
+        defaultTelevisionShouldBeFound("cameraman.specified=true");
+
+        // Get all the televisionList where cameraman is null
+        defaultTelevisionShouldNotBeFound("cameraman.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where link equals to DEFAULT_LINK
+        defaultTelevisionShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the televisionList where link equals to UPDATED_LINK
+        defaultTelevisionShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultTelevisionShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the televisionList where link equals to UPDATED_LINK
+        defaultTelevisionShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where link is not null
+        defaultTelevisionShouldBeFound("link.specified=true");
+
+        // Get all the televisionList where link is null
+        defaultTelevisionShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultTelevisionShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the televisionList where imagepath equals to UPDATED_IMAGEPATH
+        defaultTelevisionShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultTelevisionShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the televisionList where imagepath equals to UPDATED_IMAGEPATH
+        defaultTelevisionShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where imagepath is not null
+        defaultTelevisionShouldBeFound("imagepath.specified=true");
+
+        // Get all the televisionList where imagepath is null
+        defaultTelevisionShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where videopath equals to DEFAULT_VIDEOPATH
+        defaultTelevisionShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the televisionList where videopath equals to UPDATED_VIDEOPATH
+        defaultTelevisionShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultTelevisionShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the televisionList where videopath equals to UPDATED_VIDEOPATH
+        defaultTelevisionShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        televisionRepository.saveAndFlush(television);
+
+        // Get all the televisionList where videopath is not null
+        defaultTelevisionShouldBeFound("videopath.specified=true");
+
+        // Get all the televisionList where videopath is null
+        defaultTelevisionShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTelevisionsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        television.setProfile(profile);
+        televisionRepository.saveAndFlush(television);
+        Long profileId = profile.getId();
+
+        // Get all the televisionList where profile equals to profileId
+        defaultTelevisionShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the televisionList where profile equals to profileId + 1
+        defaultTelevisionShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultTelevisionShouldBeFound(String filter) throws Exception {
+        restTelevisionMockMvc.perform(get("/api/televisions?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(television.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].cameraman").value(hasItem(DEFAULT_CAMERAMAN.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultTelevisionShouldNotBeFound(String filter) throws Exception {
+        restTelevisionMockMvc.perform(get("/api/televisions?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingTelevision() throws Exception {

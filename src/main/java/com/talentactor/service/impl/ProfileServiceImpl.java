@@ -86,7 +86,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     /**
-     * Get one profile by id.
+     * Get one profile by userId.
      *
      * @param userId the id of the entity
      * @return the entity

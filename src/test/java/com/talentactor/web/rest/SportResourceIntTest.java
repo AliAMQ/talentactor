@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Sport;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.SportRepository;
 import com.talentactor.service.SportService;
 import com.talentactor.service.dto.SportDTO;
 import com.talentactor.service.mapper.SportMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.SportCriteria;
+import com.talentactor.service.SportQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class SportResourceIntTest {
     private SportService sportService;
 
     @Autowired
+    private SportQueryService sportQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class SportResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SportResource sportResource = new SportResource(sportService);
+        final SportResource sportResource = new SportResource(sportService, sportQueryService);
         this.restSportMockMvc = MockMvcBuilders.standaloneSetup(sportResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class SportResourceIntTest {
             .andExpect(jsonPath("$.id").value(sport.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllSportsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sportRepository.saveAndFlush(sport);
+
+        // Get all the sportList where title equals to DEFAULT_TITLE
+        defaultSportShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the sportList where title equals to UPDATED_TITLE
+        defaultSportShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSportsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        sportRepository.saveAndFlush(sport);
+
+        // Get all the sportList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultSportShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the sportList where title equals to UPDATED_TITLE
+        defaultSportShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSportsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sportRepository.saveAndFlush(sport);
+
+        // Get all the sportList where title is not null
+        defaultSportShouldBeFound("title.specified=true");
+
+        // Get all the sportList where title is null
+        defaultSportShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllSportsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        sport.addProfile(profile);
+        sportRepository.saveAndFlush(sport);
+        Long profileId = profile.getId();
+
+        // Get all the sportList where profile equals to profileId
+        defaultSportShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the sportList where profile equals to profileId + 1
+        defaultSportShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultSportShouldBeFound(String filter) throws Exception {
+        restSportMockMvc.perform(get("/api/sports?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(sport.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultSportShouldNotBeFound(String filter) throws Exception {
+        restSportMockMvc.perform(get("/api/sports?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingSport() throws Exception {

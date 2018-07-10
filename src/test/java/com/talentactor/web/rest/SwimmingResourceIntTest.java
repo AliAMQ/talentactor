@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Swimming;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.SwimmingRepository;
 import com.talentactor.service.SwimmingService;
 import com.talentactor.service.dto.SwimmingDTO;
 import com.talentactor.service.mapper.SwimmingMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.SwimmingCriteria;
+import com.talentactor.service.SwimmingQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class SwimmingResourceIntTest {
     private SwimmingService swimmingService;
 
     @Autowired
+    private SwimmingQueryService swimmingQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class SwimmingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SwimmingResource swimmingResource = new SwimmingResource(swimmingService);
+        final SwimmingResource swimmingResource = new SwimmingResource(swimmingService, swimmingQueryService);
         this.restSwimmingMockMvc = MockMvcBuilders.standaloneSetup(swimmingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class SwimmingResourceIntTest {
             .andExpect(jsonPath("$.id").value(swimming.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllSwimmingsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        swimmingRepository.saveAndFlush(swimming);
+
+        // Get all the swimmingList where title equals to DEFAULT_TITLE
+        defaultSwimmingShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the swimmingList where title equals to UPDATED_TITLE
+        defaultSwimmingShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSwimmingsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        swimmingRepository.saveAndFlush(swimming);
+
+        // Get all the swimmingList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultSwimmingShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the swimmingList where title equals to UPDATED_TITLE
+        defaultSwimmingShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllSwimmingsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        swimmingRepository.saveAndFlush(swimming);
+
+        // Get all the swimmingList where title is not null
+        defaultSwimmingShouldBeFound("title.specified=true");
+
+        // Get all the swimmingList where title is null
+        defaultSwimmingShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllSwimmingsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        swimming.addProfile(profile);
+        swimmingRepository.saveAndFlush(swimming);
+        Long profileId = profile.getId();
+
+        // Get all the swimmingList where profile equals to profileId
+        defaultSwimmingShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the swimmingList where profile equals to profileId + 1
+        defaultSwimmingShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultSwimmingShouldBeFound(String filter) throws Exception {
+        restSwimmingMockMvc.perform(get("/api/swimmings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(swimming.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultSwimmingShouldNotBeFound(String filter) throws Exception {
+        restSwimmingMockMvc.perform(get("/api/swimmings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingSwimming() throws Exception {

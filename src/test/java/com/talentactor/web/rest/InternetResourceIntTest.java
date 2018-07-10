@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Internet;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.InternetRepository;
 import com.talentactor.service.InternetService;
 import com.talentactor.service.dto.InternetDTO;
 import com.talentactor.service.mapper.InternetMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.InternetCriteria;
+import com.talentactor.service.InternetQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +86,9 @@ public class InternetResourceIntTest {
     private InternetService internetService;
 
     @Autowired
+    private InternetQueryService internetQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -101,7 +107,7 @@ public class InternetResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final InternetResource internetResource = new InternetResource(internetService);
+        final InternetResource internetResource = new InternetResource(internetService, internetQueryService);
         this.restInternetMockMvc = MockMvcBuilders.standaloneSetup(internetResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -248,6 +254,290 @@ public class InternetResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where title equals to DEFAULT_TITLE
+        defaultInternetShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the internetList where title equals to UPDATED_TITLE
+        defaultInternetShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultInternetShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the internetList where title equals to UPDATED_TITLE
+        defaultInternetShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where title is not null
+        defaultInternetShouldBeFound("title.specified=true");
+
+        // Get all the internetList where title is null
+        defaultInternetShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where director equals to DEFAULT_DIRECTOR
+        defaultInternetShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the internetList where director equals to UPDATED_DIRECTOR
+        defaultInternetShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultInternetShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the internetList where director equals to UPDATED_DIRECTOR
+        defaultInternetShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where director is not null
+        defaultInternetShouldBeFound("director.specified=true");
+
+        // Get all the internetList where director is null
+        defaultInternetShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByCameramanIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where cameraman equals to DEFAULT_CAMERAMAN
+        defaultInternetShouldBeFound("cameraman.equals=" + DEFAULT_CAMERAMAN);
+
+        // Get all the internetList where cameraman equals to UPDATED_CAMERAMAN
+        defaultInternetShouldNotBeFound("cameraman.equals=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByCameramanIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where cameraman in DEFAULT_CAMERAMAN or UPDATED_CAMERAMAN
+        defaultInternetShouldBeFound("cameraman.in=" + DEFAULT_CAMERAMAN + "," + UPDATED_CAMERAMAN);
+
+        // Get all the internetList where cameraman equals to UPDATED_CAMERAMAN
+        defaultInternetShouldNotBeFound("cameraman.in=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByCameramanIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where cameraman is not null
+        defaultInternetShouldBeFound("cameraman.specified=true");
+
+        // Get all the internetList where cameraman is null
+        defaultInternetShouldNotBeFound("cameraman.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where link equals to DEFAULT_LINK
+        defaultInternetShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the internetList where link equals to UPDATED_LINK
+        defaultInternetShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultInternetShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the internetList where link equals to UPDATED_LINK
+        defaultInternetShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where link is not null
+        defaultInternetShouldBeFound("link.specified=true");
+
+        // Get all the internetList where link is null
+        defaultInternetShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultInternetShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the internetList where imagepath equals to UPDATED_IMAGEPATH
+        defaultInternetShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultInternetShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the internetList where imagepath equals to UPDATED_IMAGEPATH
+        defaultInternetShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where imagepath is not null
+        defaultInternetShouldBeFound("imagepath.specified=true");
+
+        // Get all the internetList where imagepath is null
+        defaultInternetShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where videopath equals to DEFAULT_VIDEOPATH
+        defaultInternetShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the internetList where videopath equals to UPDATED_VIDEOPATH
+        defaultInternetShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultInternetShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the internetList where videopath equals to UPDATED_VIDEOPATH
+        defaultInternetShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        internetRepository.saveAndFlush(internet);
+
+        // Get all the internetList where videopath is not null
+        defaultInternetShouldBeFound("videopath.specified=true");
+
+        // Get all the internetList where videopath is null
+        defaultInternetShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInternetsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        internet.setProfile(profile);
+        internetRepository.saveAndFlush(internet);
+        Long profileId = profile.getId();
+
+        // Get all the internetList where profile equals to profileId
+        defaultInternetShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the internetList where profile equals to profileId + 1
+        defaultInternetShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultInternetShouldBeFound(String filter) throws Exception {
+        restInternetMockMvc.perform(get("/api/internets?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(internet.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].cameraman").value(hasItem(DEFAULT_CAMERAMAN.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultInternetShouldNotBeFound(String filter) throws Exception {
+        restInternetMockMvc.perform(get("/api/internets?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingInternet() throws Exception {

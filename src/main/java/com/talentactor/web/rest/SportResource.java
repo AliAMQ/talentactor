@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.SportDTO;
+import com.talentactor.service.dto.SportCriteria;
+import com.talentactor.service.SportQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class SportResource {
 
     private final SportService sportService;
 
-    public SportResource(SportService sportService) {
+    private final SportQueryService sportQueryService;
+
+    public SportResource(SportService sportService, SportQueryService sportQueryService) {
         this.sportService = sportService;
+        this.sportQueryService = sportQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class SportResource {
      * GET  /sports : get all the sports.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of sports in body
      */
     @GetMapping("/sports")
     @Timed
-    public ResponseEntity<List<SportDTO>> getAllSports(Pageable pageable) {
-        log.debug("REST request to get a page of Sports");
-        Page<SportDTO> page = sportService.findAll(pageable);
+    public ResponseEntity<List<SportDTO>> getAllSports(SportCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Sports by criteria: {}", criteria);
+        Page<SportDTO> page = sportQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sports");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Film;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.FilmRepository;
 import com.talentactor.service.FilmService;
 import com.talentactor.service.dto.FilmDTO;
 import com.talentactor.service.mapper.FilmMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.FilmCriteria;
+import com.talentactor.service.FilmQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +86,9 @@ public class FilmResourceIntTest {
     private FilmService filmService;
 
     @Autowired
+    private FilmQueryService filmQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -101,7 +107,7 @@ public class FilmResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FilmResource filmResource = new FilmResource(filmService);
+        final FilmResource filmResource = new FilmResource(filmService, filmQueryService);
         this.restFilmMockMvc = MockMvcBuilders.standaloneSetup(filmResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -248,6 +254,290 @@ public class FilmResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where title equals to DEFAULT_TITLE
+        defaultFilmShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the filmList where title equals to UPDATED_TITLE
+        defaultFilmShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultFilmShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the filmList where title equals to UPDATED_TITLE
+        defaultFilmShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where title is not null
+        defaultFilmShouldBeFound("title.specified=true");
+
+        // Get all the filmList where title is null
+        defaultFilmShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where director equals to DEFAULT_DIRECTOR
+        defaultFilmShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the filmList where director equals to UPDATED_DIRECTOR
+        defaultFilmShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultFilmShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the filmList where director equals to UPDATED_DIRECTOR
+        defaultFilmShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where director is not null
+        defaultFilmShouldBeFound("director.specified=true");
+
+        // Get all the filmList where director is null
+        defaultFilmShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByCameramanIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where cameraman equals to DEFAULT_CAMERAMAN
+        defaultFilmShouldBeFound("cameraman.equals=" + DEFAULT_CAMERAMAN);
+
+        // Get all the filmList where cameraman equals to UPDATED_CAMERAMAN
+        defaultFilmShouldNotBeFound("cameraman.equals=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByCameramanIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where cameraman in DEFAULT_CAMERAMAN or UPDATED_CAMERAMAN
+        defaultFilmShouldBeFound("cameraman.in=" + DEFAULT_CAMERAMAN + "," + UPDATED_CAMERAMAN);
+
+        // Get all the filmList where cameraman equals to UPDATED_CAMERAMAN
+        defaultFilmShouldNotBeFound("cameraman.in=" + UPDATED_CAMERAMAN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByCameramanIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where cameraman is not null
+        defaultFilmShouldBeFound("cameraman.specified=true");
+
+        // Get all the filmList where cameraman is null
+        defaultFilmShouldNotBeFound("cameraman.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where link equals to DEFAULT_LINK
+        defaultFilmShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the filmList where link equals to UPDATED_LINK
+        defaultFilmShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultFilmShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the filmList where link equals to UPDATED_LINK
+        defaultFilmShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where link is not null
+        defaultFilmShouldBeFound("link.specified=true");
+
+        // Get all the filmList where link is null
+        defaultFilmShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultFilmShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the filmList where imagepath equals to UPDATED_IMAGEPATH
+        defaultFilmShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultFilmShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the filmList where imagepath equals to UPDATED_IMAGEPATH
+        defaultFilmShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where imagepath is not null
+        defaultFilmShouldBeFound("imagepath.specified=true");
+
+        // Get all the filmList where imagepath is null
+        defaultFilmShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where videopath equals to DEFAULT_VIDEOPATH
+        defaultFilmShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the filmList where videopath equals to UPDATED_VIDEOPATH
+        defaultFilmShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultFilmShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the filmList where videopath equals to UPDATED_VIDEOPATH
+        defaultFilmShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        filmRepository.saveAndFlush(film);
+
+        // Get all the filmList where videopath is not null
+        defaultFilmShouldBeFound("videopath.specified=true");
+
+        // Get all the filmList where videopath is null
+        defaultFilmShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllFilmsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        film.setProfile(profile);
+        filmRepository.saveAndFlush(film);
+        Long profileId = profile.getId();
+
+        // Get all the filmList where profile equals to profileId
+        defaultFilmShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the filmList where profile equals to profileId + 1
+        defaultFilmShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultFilmShouldBeFound(String filter) throws Exception {
+        restFilmMockMvc.perform(get("/api/films?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(film.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].cameraman").value(hasItem(DEFAULT_CAMERAMAN.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultFilmShouldNotBeFound(String filter) throws Exception {
+        restFilmMockMvc.perform(get("/api/films?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingFilm() throws Exception {

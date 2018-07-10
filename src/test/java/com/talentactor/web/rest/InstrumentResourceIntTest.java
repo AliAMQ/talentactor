@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Instrument;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.InstrumentRepository;
 import com.talentactor.service.InstrumentService;
 import com.talentactor.service.dto.InstrumentDTO;
 import com.talentactor.service.mapper.InstrumentMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.InstrumentCriteria;
+import com.talentactor.service.InstrumentQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class InstrumentResourceIntTest {
     private InstrumentService instrumentService;
 
     @Autowired
+    private InstrumentQueryService instrumentQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class InstrumentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final InstrumentResource instrumentResource = new InstrumentResource(instrumentService);
+        final InstrumentResource instrumentResource = new InstrumentResource(instrumentService, instrumentQueryService);
         this.restInstrumentMockMvc = MockMvcBuilders.standaloneSetup(instrumentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class InstrumentResourceIntTest {
             .andExpect(jsonPath("$.id").value(instrument.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllInstrumentsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        instrumentRepository.saveAndFlush(instrument);
+
+        // Get all the instrumentList where title equals to DEFAULT_TITLE
+        defaultInstrumentShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the instrumentList where title equals to UPDATED_TITLE
+        defaultInstrumentShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInstrumentsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        instrumentRepository.saveAndFlush(instrument);
+
+        // Get all the instrumentList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultInstrumentShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the instrumentList where title equals to UPDATED_TITLE
+        defaultInstrumentShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInstrumentsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        instrumentRepository.saveAndFlush(instrument);
+
+        // Get all the instrumentList where title is not null
+        defaultInstrumentShouldBeFound("title.specified=true");
+
+        // Get all the instrumentList where title is null
+        defaultInstrumentShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllInstrumentsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        instrument.addProfile(profile);
+        instrumentRepository.saveAndFlush(instrument);
+        Long profileId = profile.getId();
+
+        // Get all the instrumentList where profile equals to profileId
+        defaultInstrumentShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the instrumentList where profile equals to profileId + 1
+        defaultInstrumentShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultInstrumentShouldBeFound(String filter) throws Exception {
+        restInstrumentMockMvc.perform(get("/api/instruments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(instrument.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultInstrumentShouldNotBeFound(String filter) throws Exception {
+        restInstrumentMockMvc.perform(get("/api/instruments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingInstrument() throws Exception {

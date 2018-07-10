@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Horse;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.HorseRepository;
 import com.talentactor.service.HorseService;
 import com.talentactor.service.dto.HorseDTO;
 import com.talentactor.service.mapper.HorseMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.HorseCriteria;
+import com.talentactor.service.HorseQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class HorseResourceIntTest {
     private HorseService horseService;
 
     @Autowired
+    private HorseQueryService horseQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class HorseResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HorseResource horseResource = new HorseResource(horseService);
+        final HorseResource horseResource = new HorseResource(horseService, horseQueryService);
         this.restHorseMockMvc = MockMvcBuilders.standaloneSetup(horseResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class HorseResourceIntTest {
             .andExpect(jsonPath("$.id").value(horse.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllHorsesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        horseRepository.saveAndFlush(horse);
+
+        // Get all the horseList where title equals to DEFAULT_TITLE
+        defaultHorseShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the horseList where title equals to UPDATED_TITLE
+        defaultHorseShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllHorsesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        horseRepository.saveAndFlush(horse);
+
+        // Get all the horseList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultHorseShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the horseList where title equals to UPDATED_TITLE
+        defaultHorseShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllHorsesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        horseRepository.saveAndFlush(horse);
+
+        // Get all the horseList where title is not null
+        defaultHorseShouldBeFound("title.specified=true");
+
+        // Get all the horseList where title is null
+        defaultHorseShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllHorsesByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        horse.addProfile(profile);
+        horseRepository.saveAndFlush(horse);
+        Long profileId = profile.getId();
+
+        // Get all the horseList where profile equals to profileId
+        defaultHorseShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the horseList where profile equals to profileId + 1
+        defaultHorseShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultHorseShouldBeFound(String filter) throws Exception {
+        restHorseMockMvc.perform(get("/api/horses?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(horse.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultHorseShouldNotBeFound(String filter) throws Exception {
+        restHorseMockMvc.perform(get("/api/horses?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingHorse() throws Exception {

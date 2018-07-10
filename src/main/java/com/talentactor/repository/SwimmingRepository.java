@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SwimmingRepository extends JpaRepository<Swimming, Long> {
+public interface SwimmingRepository extends JpaRepository<Swimming, Long>, JpaSpecificationExecutor<Swimming> {
 
 }

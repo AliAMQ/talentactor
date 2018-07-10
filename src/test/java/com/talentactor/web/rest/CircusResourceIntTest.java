@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Circus;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.CircusRepository;
 import com.talentactor.service.CircusService;
 import com.talentactor.service.dto.CircusDTO;
 import com.talentactor.service.mapper.CircusMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.CircusCriteria;
+import com.talentactor.service.CircusQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class CircusResourceIntTest {
     private CircusService circusService;
 
     @Autowired
+    private CircusQueryService circusQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class CircusResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CircusResource circusResource = new CircusResource(circusService);
+        final CircusResource circusResource = new CircusResource(circusService, circusQueryService);
         this.restCircusMockMvc = MockMvcBuilders.standaloneSetup(circusResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class CircusResourceIntTest {
             .andExpect(jsonPath("$.id").value(circus.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllCircusesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        circusRepository.saveAndFlush(circus);
+
+        // Get all the circusList where title equals to DEFAULT_TITLE
+        defaultCircusShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the circusList where title equals to UPDATED_TITLE
+        defaultCircusShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCircusesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        circusRepository.saveAndFlush(circus);
+
+        // Get all the circusList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultCircusShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the circusList where title equals to UPDATED_TITLE
+        defaultCircusShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCircusesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        circusRepository.saveAndFlush(circus);
+
+        // Get all the circusList where title is not null
+        defaultCircusShouldBeFound("title.specified=true");
+
+        // Get all the circusList where title is null
+        defaultCircusShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCircusesByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        circus.addProfile(profile);
+        circusRepository.saveAndFlush(circus);
+        Long profileId = profile.getId();
+
+        // Get all the circusList where profile equals to profileId
+        defaultCircusShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the circusList where profile equals to profileId + 1
+        defaultCircusShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultCircusShouldBeFound(String filter) throws Exception {
+        restCircusMockMvc.perform(get("/api/circuses?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(circus.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultCircusShouldNotBeFound(String filter) throws Exception {
+        restCircusMockMvc.perform(get("/api/circuses?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingCircus() throws Exception {

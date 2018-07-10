@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.ProfileDTO;
+import com.talentactor.service.dto.ProfileCriteria;
+import com.talentactor.service.ProfileQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +37,11 @@ public class ProfileResource {
 
     private final ProfileService profileService;
 
-    public ProfileResource(ProfileService profileService) {
+    private final ProfileQueryService profileQueryService;
+
+    public ProfileResource(ProfileService profileService, ProfileQueryService profileQueryService) {
         this.profileService = profileService;
+        this.profileQueryService = profileQueryService;
     }
 
     /**
@@ -85,20 +90,15 @@ public class ProfileResource {
      * GET  /profiles : get all the profiles.
      *
      * @param pageable the pagination information
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of profiles in body
      */
     @GetMapping("/profiles")
     @Timed
-    public ResponseEntity<List<ProfileDTO>> getAllProfiles(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get a page of Profiles");
-        Page<ProfileDTO> page;
-        if (eagerload) {
-            page = profileService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = profileService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/profiles?eagerload=%b", eagerload));
+    public ResponseEntity<List<ProfileDTO>> getAllProfiles(ProfileCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Profiles by criteria: {}", criteria);
+        Page<ProfileDTO> page = profileQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/profiles");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -117,12 +117,12 @@ public class ProfileResource {
     }
 
     /**
-     * GET  /user-profiles/:userId : get the "userId" userProfile.
+     * GET  /profiles/:userId : get the "userId" userProfile.
      *
-     * @param userId the userId of the userProfileDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the userProfileDTO, or with status 404 (Not Found)
+     * @param userId the userId of the profileDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the profileDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/user-profiles-by-userid/{userId}")
+    @GetMapping("/profiles-by-userid/{userId}")
     @Timed
     public ResponseEntity<ProfileDTO> getProfileByUserId(@PathVariable Long userId) {
         log.debug("REST request to get Profile : {}", userId);

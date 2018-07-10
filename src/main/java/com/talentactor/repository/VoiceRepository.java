@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface VoiceRepository extends JpaRepository<Voice, Long> {
+public interface VoiceRepository extends JpaRepository<Voice, Long>, JpaSpecificationExecutor<Voice> {
 
 }

@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.FilmDTO;
+import com.talentactor.service.dto.FilmCriteria;
+import com.talentactor.service.FilmQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class FilmResource {
 
     private final FilmService filmService;
 
-    public FilmResource(FilmService filmService) {
+    private final FilmQueryService filmQueryService;
+
+    public FilmResource(FilmService filmService, FilmQueryService filmQueryService) {
         this.filmService = filmService;
+        this.filmQueryService = filmQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class FilmResource {
      * GET  /films : get all the films.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of films in body
      */
     @GetMapping("/films")
     @Timed
-    public ResponseEntity<List<FilmDTO>> getAllFilms(Pageable pageable) {
-        log.debug("REST request to get a page of Films");
-        Page<FilmDTO> page = filmService.findAll(pageable);
+    public ResponseEntity<List<FilmDTO>> getAllFilms(FilmCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Films by criteria: {}", criteria);
+        Page<FilmDTO> page = filmQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TelevisionRepository extends JpaRepository<Television, Long> {
+public interface TelevisionRepository extends JpaRepository<Television, Long>, JpaSpecificationExecutor<Television> {
 
 }

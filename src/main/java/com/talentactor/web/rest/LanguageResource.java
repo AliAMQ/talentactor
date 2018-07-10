@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.LanguageDTO;
+import com.talentactor.service.dto.LanguageCriteria;
+import com.talentactor.service.LanguageQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class LanguageResource {
 
     private final LanguageService languageService;
 
-    public LanguageResource(LanguageService languageService) {
+    private final LanguageQueryService languageQueryService;
+
+    public LanguageResource(LanguageService languageService, LanguageQueryService languageQueryService) {
         this.languageService = languageService;
+        this.languageQueryService = languageQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class LanguageResource {
      * GET  /languages : get all the languages.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of languages in body
      */
     @GetMapping("/languages")
     @Timed
-    public ResponseEntity<List<LanguageDTO>> getAllLanguages(Pageable pageable) {
-        log.debug("REST request to get a page of Languages");
-        Page<LanguageDTO> page = languageService.findAll(pageable);
+    public ResponseEntity<List<LanguageDTO>> getAllLanguages(LanguageCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Languages by criteria: {}", criteria);
+        Page<LanguageDTO> page = languageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/languages");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

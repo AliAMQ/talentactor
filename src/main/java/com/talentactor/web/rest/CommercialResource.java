@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.CommercialDTO;
+import com.talentactor.service.dto.CommercialCriteria;
+import com.talentactor.service.CommercialQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class CommercialResource {
 
     private final CommercialService commercialService;
 
-    public CommercialResource(CommercialService commercialService) {
+    private final CommercialQueryService commercialQueryService;
+
+    public CommercialResource(CommercialService commercialService, CommercialQueryService commercialQueryService) {
         this.commercialService = commercialService;
+        this.commercialQueryService = commercialQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class CommercialResource {
      * GET  /commercials : get all the commercials.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of commercials in body
      */
     @GetMapping("/commercials")
     @Timed
-    public ResponseEntity<List<CommercialDTO>> getAllCommercials(Pageable pageable) {
-        log.debug("REST request to get a page of Commercials");
-        Page<CommercialDTO> page = commercialService.findAll(pageable);
+    public ResponseEntity<List<CommercialDTO>> getAllCommercials(CommercialCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Commercials by criteria: {}", criteria);
+        Page<CommercialDTO> page = commercialQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/commercials");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

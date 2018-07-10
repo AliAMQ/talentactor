@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Cycling;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.CyclingRepository;
 import com.talentactor.service.CyclingService;
 import com.talentactor.service.dto.CyclingDTO;
 import com.talentactor.service.mapper.CyclingMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.CyclingCriteria;
+import com.talentactor.service.CyclingQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class CyclingResourceIntTest {
     private CyclingService cyclingService;
 
     @Autowired
+    private CyclingQueryService cyclingQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class CyclingResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CyclingResource cyclingResource = new CyclingResource(cyclingService);
+        final CyclingResource cyclingResource = new CyclingResource(cyclingService, cyclingQueryService);
         this.restCyclingMockMvc = MockMvcBuilders.standaloneSetup(cyclingResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class CyclingResourceIntTest {
             .andExpect(jsonPath("$.id").value(cycling.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllCyclingsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cyclingRepository.saveAndFlush(cycling);
+
+        // Get all the cyclingList where title equals to DEFAULT_TITLE
+        defaultCyclingShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the cyclingList where title equals to UPDATED_TITLE
+        defaultCyclingShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCyclingsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        cyclingRepository.saveAndFlush(cycling);
+
+        // Get all the cyclingList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultCyclingShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the cyclingList where title equals to UPDATED_TITLE
+        defaultCyclingShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCyclingsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cyclingRepository.saveAndFlush(cycling);
+
+        // Get all the cyclingList where title is not null
+        defaultCyclingShouldBeFound("title.specified=true");
+
+        // Get all the cyclingList where title is null
+        defaultCyclingShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCyclingsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        cycling.addProfile(profile);
+        cyclingRepository.saveAndFlush(cycling);
+        Long profileId = profile.getId();
+
+        // Get all the cyclingList where profile equals to profileId
+        defaultCyclingShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the cyclingList where profile equals to profileId + 1
+        defaultCyclingShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultCyclingShouldBeFound(String filter) throws Exception {
+        restCyclingMockMvc.perform(get("/api/cyclings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(cycling.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultCyclingShouldNotBeFound(String filter) throws Exception {
+        restCyclingMockMvc.perform(get("/api/cyclings?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingCycling() throws Exception {

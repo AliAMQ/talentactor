@@ -44,7 +44,7 @@ public interface ProfileService {
     Optional<ProfileDTO> findOne(Long id);
 
     /**
-     * Get the "userId" profile.
+     * Get the "userId" Profile.
      *
      * @param userId the id of the entity
      * @return the entity

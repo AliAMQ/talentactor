@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Theater;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.TheaterRepository;
 import com.talentactor.service.TheaterService;
 import com.talentactor.service.dto.TheaterDTO;
 import com.talentactor.service.mapper.TheaterMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.TheaterCriteria;
+import com.talentactor.service.TheaterQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -80,6 +83,9 @@ public class TheaterResourceIntTest {
     private TheaterService theaterService;
 
     @Autowired
+    private TheaterQueryService theaterQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -98,7 +104,7 @@ public class TheaterResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TheaterResource theaterResource = new TheaterResource(theaterService);
+        final TheaterResource theaterResource = new TheaterResource(theaterService, theaterQueryService);
         this.restTheaterMockMvc = MockMvcBuilders.standaloneSetup(theaterResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -241,6 +247,250 @@ public class TheaterResourceIntTest {
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where title equals to DEFAULT_TITLE
+        defaultTheaterShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the theaterList where title equals to UPDATED_TITLE
+        defaultTheaterShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultTheaterShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the theaterList where title equals to UPDATED_TITLE
+        defaultTheaterShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where title is not null
+        defaultTheaterShouldBeFound("title.specified=true");
+
+        // Get all the theaterList where title is null
+        defaultTheaterShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByDirectorIsEqualToSomething() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where director equals to DEFAULT_DIRECTOR
+        defaultTheaterShouldBeFound("director.equals=" + DEFAULT_DIRECTOR);
+
+        // Get all the theaterList where director equals to UPDATED_DIRECTOR
+        defaultTheaterShouldNotBeFound("director.equals=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByDirectorIsInShouldWork() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where director in DEFAULT_DIRECTOR or UPDATED_DIRECTOR
+        defaultTheaterShouldBeFound("director.in=" + DEFAULT_DIRECTOR + "," + UPDATED_DIRECTOR);
+
+        // Get all the theaterList where director equals to UPDATED_DIRECTOR
+        defaultTheaterShouldNotBeFound("director.in=" + UPDATED_DIRECTOR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByDirectorIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where director is not null
+        defaultTheaterShouldBeFound("director.specified=true");
+
+        // Get all the theaterList where director is null
+        defaultTheaterShouldNotBeFound("director.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where link equals to DEFAULT_LINK
+        defaultTheaterShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the theaterList where link equals to UPDATED_LINK
+        defaultTheaterShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultTheaterShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the theaterList where link equals to UPDATED_LINK
+        defaultTheaterShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where link is not null
+        defaultTheaterShouldBeFound("link.specified=true");
+
+        // Get all the theaterList where link is null
+        defaultTheaterShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultTheaterShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the theaterList where imagepath equals to UPDATED_IMAGEPATH
+        defaultTheaterShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultTheaterShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the theaterList where imagepath equals to UPDATED_IMAGEPATH
+        defaultTheaterShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where imagepath is not null
+        defaultTheaterShouldBeFound("imagepath.specified=true");
+
+        // Get all the theaterList where imagepath is null
+        defaultTheaterShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByVideopathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where videopath equals to DEFAULT_VIDEOPATH
+        defaultTheaterShouldBeFound("videopath.equals=" + DEFAULT_VIDEOPATH);
+
+        // Get all the theaterList where videopath equals to UPDATED_VIDEOPATH
+        defaultTheaterShouldNotBeFound("videopath.equals=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByVideopathIsInShouldWork() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where videopath in DEFAULT_VIDEOPATH or UPDATED_VIDEOPATH
+        defaultTheaterShouldBeFound("videopath.in=" + DEFAULT_VIDEOPATH + "," + UPDATED_VIDEOPATH);
+
+        // Get all the theaterList where videopath equals to UPDATED_VIDEOPATH
+        defaultTheaterShouldNotBeFound("videopath.in=" + UPDATED_VIDEOPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByVideopathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        theaterRepository.saveAndFlush(theater);
+
+        // Get all the theaterList where videopath is not null
+        defaultTheaterShouldBeFound("videopath.specified=true");
+
+        // Get all the theaterList where videopath is null
+        defaultTheaterShouldNotBeFound("videopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTheatersByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        theater.setProfile(profile);
+        theaterRepository.saveAndFlush(theater);
+        Long profileId = profile.getId();
+
+        // Get all the theaterList where profile equals to profileId
+        defaultTheaterShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the theaterList where profile equals to profileId + 1
+        defaultTheaterShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultTheaterShouldBeFound(String filter) throws Exception {
+        restTheaterMockMvc.perform(get("/api/theaters?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(theater.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].director").value(hasItem(DEFAULT_DIRECTOR.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].videoContentType").value(hasItem(DEFAULT_VIDEO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].video").value(hasItem(Base64Utils.encodeToString(DEFAULT_VIDEO))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
+            .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultTheaterShouldNotBeFound(String filter) throws Exception {
+        restTheaterMockMvc.perform(get("/api/theaters?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingTheater() throws Exception {

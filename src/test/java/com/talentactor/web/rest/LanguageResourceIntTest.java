@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Language;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.LanguageRepository;
 import com.talentactor.service.LanguageService;
 import com.talentactor.service.dto.LanguageDTO;
 import com.talentactor.service.mapper.LanguageMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.LanguageCriteria;
+import com.talentactor.service.LanguageQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +60,9 @@ public class LanguageResourceIntTest {
     private LanguageService languageService;
 
     @Autowired
+    private LanguageQueryService languageQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +81,7 @@ public class LanguageResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LanguageResource languageResource = new LanguageResource(languageService);
+        final LanguageResource languageResource = new LanguageResource(languageService, languageQueryService);
         this.restLanguageMockMvc = MockMvcBuilders.standaloneSetup(languageResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,6 +192,86 @@ public class LanguageResourceIntTest {
             .andExpect(jsonPath("$.id").value(language.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllLanguagesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        languageRepository.saveAndFlush(language);
+
+        // Get all the languageList where title equals to DEFAULT_TITLE
+        defaultLanguageShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the languageList where title equals to UPDATED_TITLE
+        defaultLanguageShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllLanguagesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        languageRepository.saveAndFlush(language);
+
+        // Get all the languageList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultLanguageShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the languageList where title equals to UPDATED_TITLE
+        defaultLanguageShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllLanguagesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        languageRepository.saveAndFlush(language);
+
+        // Get all the languageList where title is not null
+        defaultLanguageShouldBeFound("title.specified=true");
+
+        // Get all the languageList where title is null
+        defaultLanguageShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllLanguagesByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        language.addProfile(profile);
+        languageRepository.saveAndFlush(language);
+        Long profileId = profile.getId();
+
+        // Get all the languageList where profile equals to profileId
+        defaultLanguageShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the languageList where profile equals to profileId + 1
+        defaultLanguageShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultLanguageShouldBeFound(String filter) throws Exception {
+        restLanguageMockMvc.perform(get("/api/languages?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(language.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultLanguageShouldNotBeFound(String filter) throws Exception {
+        restLanguageMockMvc.perform(get("/api/languages?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingLanguage() throws Exception {

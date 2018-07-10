@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.WeaponDTO;
+import com.talentactor.service.dto.WeaponCriteria;
+import com.talentactor.service.WeaponQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class WeaponResource {
 
     private final WeaponService weaponService;
 
-    public WeaponResource(WeaponService weaponService) {
+    private final WeaponQueryService weaponQueryService;
+
+    public WeaponResource(WeaponService weaponService, WeaponQueryService weaponQueryService) {
         this.weaponService = weaponService;
+        this.weaponQueryService = weaponQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class WeaponResource {
      * GET  /weapons : get all the weapons.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of weapons in body
      */
     @GetMapping("/weapons")
     @Timed
-    public ResponseEntity<List<WeaponDTO>> getAllWeapons(Pageable pageable) {
-        log.debug("REST request to get a page of Weapons");
-        Page<WeaponDTO> page = weaponService.findAll(pageable);
+    public ResponseEntity<List<WeaponDTO>> getAllWeapons(WeaponCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Weapons by criteria: {}", criteria);
+        Page<WeaponDTO> page = weaponQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/weapons");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

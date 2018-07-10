@@ -3,11 +3,15 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Role;
+import com.talentactor.domain.Profile;
+import com.talentactor.domain.Project;
 import com.talentactor.repository.RoleRepository;
 import com.talentactor.service.RoleService;
 import com.talentactor.service.dto.RoleDTO;
 import com.talentactor.service.mapper.RoleMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.RoleCriteria;
+import com.talentactor.service.RoleQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +64,9 @@ public class RoleResourceIntTest {
     private RoleService roleService;
 
     @Autowired
+    private RoleQueryService roleQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -78,7 +85,7 @@ public class RoleResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RoleResource roleResource = new RoleResource(roleService);
+        final RoleResource roleResource = new RoleResource(roleService, roleQueryService);
         this.restRoleMockMvc = MockMvcBuilders.standaloneSetup(roleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -193,6 +200,145 @@ public class RoleResourceIntTest {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllRolesByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where title equals to DEFAULT_TITLE
+        defaultRoleShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the roleList where title equals to UPDATED_TITLE
+        defaultRoleShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultRoleShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the roleList where title equals to UPDATED_TITLE
+        defaultRoleShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where title is not null
+        defaultRoleShouldBeFound("title.specified=true");
+
+        // Get all the roleList where title is null
+        defaultRoleShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByDescriptionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where description equals to DEFAULT_DESCRIPTION
+        defaultRoleShouldBeFound("description.equals=" + DEFAULT_DESCRIPTION);
+
+        // Get all the roleList where description equals to UPDATED_DESCRIPTION
+        defaultRoleShouldNotBeFound("description.equals=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByDescriptionIsInShouldWork() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
+        defaultRoleShouldBeFound("description.in=" + DEFAULT_DESCRIPTION + "," + UPDATED_DESCRIPTION);
+
+        // Get all the roleList where description equals to UPDATED_DESCRIPTION
+        defaultRoleShouldNotBeFound("description.in=" + UPDATED_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByDescriptionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        roleRepository.saveAndFlush(role);
+
+        // Get all the roleList where description is not null
+        defaultRoleShouldBeFound("description.specified=true");
+
+        // Get all the roleList where description is null
+        defaultRoleShouldNotBeFound("description.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllRolesByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        role.setProfile(profile);
+        roleRepository.saveAndFlush(role);
+        Long profileId = profile.getId();
+
+        // Get all the roleList where profile equals to profileId
+        defaultRoleShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the roleList where profile equals to profileId + 1
+        defaultRoleShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRolesByProjectIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Project project = ProjectResourceIntTest.createEntity(em);
+        em.persist(project);
+        em.flush();
+        role.setProject(project);
+        roleRepository.saveAndFlush(role);
+        Long projectId = project.getId();
+
+        // Get all the roleList where project equals to projectId
+        defaultRoleShouldBeFound("projectId.equals=" + projectId);
+
+        // Get all the roleList where project equals to projectId + 1
+        defaultRoleShouldNotBeFound("projectId.equals=" + (projectId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultRoleShouldBeFound(String filter) throws Exception {
+        restRoleMockMvc.perform(get("/api/roles?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultRoleShouldNotBeFound(String filter) throws Exception {
+        restRoleMockMvc.perform(get("/api/roles?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingRole() throws Exception {

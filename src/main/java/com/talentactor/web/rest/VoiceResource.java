@@ -6,6 +6,8 @@ import com.talentactor.web.rest.errors.BadRequestAlertException;
 import com.talentactor.web.rest.util.HeaderUtil;
 import com.talentactor.web.rest.util.PaginationUtil;
 import com.talentactor.service.dto.VoiceDTO;
+import com.talentactor.service.dto.VoiceCriteria;
+import com.talentactor.service.VoiceQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ public class VoiceResource {
 
     private final VoiceService voiceService;
 
-    public VoiceResource(VoiceService voiceService) {
+    private final VoiceQueryService voiceQueryService;
+
+    public VoiceResource(VoiceService voiceService, VoiceQueryService voiceQueryService) {
         this.voiceService = voiceService;
+        this.voiceQueryService = voiceQueryService;
     }
 
     /**
@@ -86,13 +91,14 @@ public class VoiceResource {
      * GET  /voices : get all the voices.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of voices in body
      */
     @GetMapping("/voices")
     @Timed
-    public ResponseEntity<List<VoiceDTO>> getAllVoices(Pageable pageable) {
-        log.debug("REST request to get a page of Voices");
-        Page<VoiceDTO> page = voiceService.findAll(pageable);
+    public ResponseEntity<List<VoiceDTO>> getAllVoices(VoiceCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Voices by criteria: {}", criteria);
+        Page<VoiceDTO> page = voiceQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/voices");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

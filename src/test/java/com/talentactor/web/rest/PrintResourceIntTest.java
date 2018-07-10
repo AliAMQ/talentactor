@@ -3,11 +3,14 @@ package com.talentactor.web.rest;
 import com.talentactor.TalentactorApp;
 
 import com.talentactor.domain.Print;
+import com.talentactor.domain.Profile;
 import com.talentactor.repository.PrintRepository;
 import com.talentactor.service.PrintService;
 import com.talentactor.service.dto.PrintDTO;
 import com.talentactor.service.mapper.PrintMapper;
 import com.talentactor.web.rest.errors.ExceptionTranslator;
+import com.talentactor.service.dto.PrintCriteria;
+import com.talentactor.service.PrintQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,6 +78,9 @@ public class PrintResourceIntTest {
     private PrintService printService;
 
     @Autowired
+    private PrintQueryService printQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -93,7 +99,7 @@ public class PrintResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PrintResource printResource = new PrintResource(printService);
+        final PrintResource printResource = new PrintResource(printService, printQueryService);
         this.restPrintMockMvc = MockMvcBuilders.standaloneSetup(printResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -228,6 +234,248 @@ public class PrintResourceIntTest {
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()));
     }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByTitleIsEqualToSomething() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where title equals to DEFAULT_TITLE
+        defaultPrintShouldBeFound("title.equals=" + DEFAULT_TITLE);
+
+        // Get all the printList where title equals to UPDATED_TITLE
+        defaultPrintShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByTitleIsInShouldWork() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where title in DEFAULT_TITLE or UPDATED_TITLE
+        defaultPrintShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+
+        // Get all the printList where title equals to UPDATED_TITLE
+        defaultPrintShouldNotBeFound("title.in=" + UPDATED_TITLE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByTitleIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where title is not null
+        defaultPrintShouldBeFound("title.specified=true");
+
+        // Get all the printList where title is null
+        defaultPrintShouldNotBeFound("title.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByPhotographerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where photographer equals to DEFAULT_PHOTOGRAPHER
+        defaultPrintShouldBeFound("photographer.equals=" + DEFAULT_PHOTOGRAPHER);
+
+        // Get all the printList where photographer equals to UPDATED_PHOTOGRAPHER
+        defaultPrintShouldNotBeFound("photographer.equals=" + UPDATED_PHOTOGRAPHER);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByPhotographerIsInShouldWork() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where photographer in DEFAULT_PHOTOGRAPHER or UPDATED_PHOTOGRAPHER
+        defaultPrintShouldBeFound("photographer.in=" + DEFAULT_PHOTOGRAPHER + "," + UPDATED_PHOTOGRAPHER);
+
+        // Get all the printList where photographer equals to UPDATED_PHOTOGRAPHER
+        defaultPrintShouldNotBeFound("photographer.in=" + UPDATED_PHOTOGRAPHER);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByPhotographerIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where photographer is not null
+        defaultPrintShouldBeFound("photographer.specified=true");
+
+        // Get all the printList where photographer is null
+        defaultPrintShouldNotBeFound("photographer.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByHairIsEqualToSomething() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where hair equals to DEFAULT_HAIR
+        defaultPrintShouldBeFound("hair.equals=" + DEFAULT_HAIR);
+
+        // Get all the printList where hair equals to UPDATED_HAIR
+        defaultPrintShouldNotBeFound("hair.equals=" + UPDATED_HAIR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByHairIsInShouldWork() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where hair in DEFAULT_HAIR or UPDATED_HAIR
+        defaultPrintShouldBeFound("hair.in=" + DEFAULT_HAIR + "," + UPDATED_HAIR);
+
+        // Get all the printList where hair equals to UPDATED_HAIR
+        defaultPrintShouldNotBeFound("hair.in=" + UPDATED_HAIR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByHairIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where hair is not null
+        defaultPrintShouldBeFound("hair.specified=true");
+
+        // Get all the printList where hair is null
+        defaultPrintShouldNotBeFound("hair.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where link equals to DEFAULT_LINK
+        defaultPrintShouldBeFound("link.equals=" + DEFAULT_LINK);
+
+        // Get all the printList where link equals to UPDATED_LINK
+        defaultPrintShouldNotBeFound("link.equals=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where link in DEFAULT_LINK or UPDATED_LINK
+        defaultPrintShouldBeFound("link.in=" + DEFAULT_LINK + "," + UPDATED_LINK);
+
+        // Get all the printList where link equals to UPDATED_LINK
+        defaultPrintShouldNotBeFound("link.in=" + UPDATED_LINK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where link is not null
+        defaultPrintShouldBeFound("link.specified=true");
+
+        // Get all the printList where link is null
+        defaultPrintShouldNotBeFound("link.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByImagepathIsEqualToSomething() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where imagepath equals to DEFAULT_IMAGEPATH
+        defaultPrintShouldBeFound("imagepath.equals=" + DEFAULT_IMAGEPATH);
+
+        // Get all the printList where imagepath equals to UPDATED_IMAGEPATH
+        defaultPrintShouldNotBeFound("imagepath.equals=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByImagepathIsInShouldWork() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where imagepath in DEFAULT_IMAGEPATH or UPDATED_IMAGEPATH
+        defaultPrintShouldBeFound("imagepath.in=" + DEFAULT_IMAGEPATH + "," + UPDATED_IMAGEPATH);
+
+        // Get all the printList where imagepath equals to UPDATED_IMAGEPATH
+        defaultPrintShouldNotBeFound("imagepath.in=" + UPDATED_IMAGEPATH);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByImagepathIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        printRepository.saveAndFlush(print);
+
+        // Get all the printList where imagepath is not null
+        defaultPrintShouldBeFound("imagepath.specified=true");
+
+        // Get all the printList where imagepath is null
+        defaultPrintShouldNotBeFound("imagepath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPrintsByProfileIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Profile profile = ProfileResourceIntTest.createEntity(em);
+        em.persist(profile);
+        em.flush();
+        print.setProfile(profile);
+        printRepository.saveAndFlush(print);
+        Long profileId = profile.getId();
+
+        // Get all the printList where profile equals to profileId
+        defaultPrintShouldBeFound("profileId.equals=" + profileId);
+
+        // Get all the printList where profile equals to profileId + 1
+        defaultPrintShouldNotBeFound("profileId.equals=" + (profileId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultPrintShouldBeFound(String filter) throws Exception {
+        restPrintMockMvc.perform(get("/api/prints?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(print.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].photographer").value(hasItem(DEFAULT_PHOTOGRAPHER.toString())))
+            .andExpect(jsonPath("$.[*].hair").value(hasItem(DEFAULT_HAIR.toString())))
+            .andExpect(jsonPath("$.[*].link").value(hasItem(DEFAULT_LINK.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultPrintShouldNotBeFound(String filter) throws Exception {
+        restPrintMockMvc.perform(get("/api/prints?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
     @Test
     @Transactional
     public void getNonExistingPrint() throws Exception {
