@@ -9,6 +9,9 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { FilmService } from './film.service';
+import { IRole } from 'app/shared/model/role.model';
+import { IProfile } from 'app/shared/model/profile.model';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
     selector: 'jhi-film',
@@ -29,6 +32,7 @@ export class FilmComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    profileid: number;
 
     constructor(
         private filmService: FilmService,
@@ -38,7 +42,8 @@ export class FilmComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private profileService: ProfileService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -50,16 +55,20 @@ export class FilmComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.filmService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IFilm[]>) => this.paginateFilms(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.filmService
+                .query({
+                    page: this.page - 1,
+                    size: this.itemsPerPage,
+                    sort: this.sort(),
+                    'profileId.equals': this.profileid
+                })
+                .subscribe(
+                    (res1: HttpResponse<IFilm[]>) => this.paginateFilms(res1.body, res1.headers),
+                    (res1: HttpErrorResponse) => this.onError(res1.message)
+                );
+        });
     }
 
     loadPage(page: number) {

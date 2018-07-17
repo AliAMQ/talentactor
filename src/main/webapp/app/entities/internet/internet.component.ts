@@ -9,6 +9,9 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { InternetService } from './internet.service';
+import { IProfile } from 'app/shared/model/profile.model';
+import { ProfileService } from '../profile/profile.service';
+import { ITelevision } from 'app/shared/model/television.model';
 
 @Component({
     selector: 'jhi-internet',
@@ -29,6 +32,7 @@ export class InternetComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    profileid: number;
 
     constructor(
         private internetService: InternetService,
@@ -38,7 +42,8 @@ export class InternetComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private profileService: ProfileService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -50,16 +55,20 @@ export class InternetComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.internetService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IInternet[]>) => this.paginateInternets(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.internetService
+                .query({
+                    page: this.page - 1,
+                    size: this.itemsPerPage,
+                    sort: this.sort(),
+                    'profileId.equals': this.profileid
+                })
+                .subscribe(
+                    (res1: HttpResponse<IInternet[]>) => this.paginateInternets(res1.body, res1.headers),
+                    (res1: HttpErrorResponse) => this.onError(res1.message)
+                );
+        });
     }
 
     loadPage(page: number) {
