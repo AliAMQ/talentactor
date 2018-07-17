@@ -81,17 +81,20 @@
                 </div>
                 -->
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
-                &nbsp;
-                <button [hidden]="isAdmin" id="roles" class="btn btn-primary" routerLink="../role-my">
-                    <fa-icon [icon]="'search'"></fa-icon>&nbsp;<span jhiTranslate="settings.form.roles">Roles</span>
-                </button>
-                &nbsp;
+                &nbsp;|&nbsp;
                 <a routerLink="../profile/{{profileid}}/view">
-                    <span jhiTranslate="global.menu.entities.profile">Profile</span>
+                    <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
+                </a>
+                &nbsp;|&nbsp;
+                <!--<button [hidden]="isAdmin" id="roles" class="btn btn-primary" routerLink="../role-my">
+                    <fa-icon [icon]="'search'"></fa-icon>&nbsp;<span jhiTranslate="settings.form.roles">Roles</span>
+                </button>-->
+                <a routerLink="../role-my" [hidden]="isAdmin">
+                    <span jhiTranslate="settings.form.roles">Roles</span>
                 </a>
                 <br>
                 <br>
-                Setting professional history
+                Professional history
                 <br>
                 <a routerLink="../film" [hidden]="isAdmin">
                     <span jhiTranslate="global.menu.entities.film">Film</span>
@@ -120,7 +123,11 @@
                 <a routerLink="../voice" [hidden]="isAdmin">
                     <span jhiTranslate="global.menu.entities.voice">Voice</span>
                 </a>
-
+                <br>
+                <br>
+                <a routerLink="../profile/{{profileid}}/view">
+                    <span jhiTranslate="global.menu.entities.profileView">Profile View</span>
+                </a>
             </form>
         </div>
     </div>
