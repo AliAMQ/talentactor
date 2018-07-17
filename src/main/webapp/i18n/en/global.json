@@ -6,7 +6,8 @@
             "home": "Home",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
-                "main": "Entities",
+                "main": "Professional History",
+                "adminMenu": "Setting skills",
                 "profile": "Profile",
                 "skill": "Skill",
                 "film": "Film",

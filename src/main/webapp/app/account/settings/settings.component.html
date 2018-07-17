@@ -81,9 +81,46 @@
                 </div>
                 -->
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
+                &nbsp;
+                <button [hidden]="isAdmin" id="roles" class="btn btn-primary" routerLink="../role">
+                    <fa-icon [icon]="'search'"></fa-icon>&nbsp;<span jhiTranslate="settings.form.roles">Roles</span>
+                </button>
+                &nbsp;
                 <a routerLink="../profile/{{profileid}}/view">
                     <span jhiTranslate="global.menu.entities.profile">Profile</span>
                 </a>
+                <br>
+                <br>
+                Setting professional history
+                <br>
+                <a routerLink="../film" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.film">Film</span>
+                </a>
+                &nbsp;
+                <a routerLink="../television" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.television">Television</span>
+                </a>
+                &nbsp;
+                <a routerLink="../internet" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.internet">Internet</span>
+                </a>
+                &nbsp;
+                <a routerLink="../commercial" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.commercial">Commercial</span>
+                </a>
+                &nbsp;
+                <a routerLink="../print" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.print">Print</span>
+                </a>
+                &nbsp;
+                <a routerLink="../theater" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.theater">Theater</span>
+                </a>
+                &nbsp;
+                <a routerLink="../voice" [hidden]="isAdmin">
+                    <span jhiTranslate="global.menu.entities.voice">Voice</span>
+                </a>
+
             </form>
         </div>
     </div>

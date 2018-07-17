@@ -18,6 +18,7 @@ export class SettingsComponent implements OnInit {
     settingsAccount: any;
     languages: any[];
     profileid: number;
+    isAdmin: boolean;
 
     constructor(
         private account: AccountService,
@@ -36,6 +37,8 @@ export class SettingsComponent implements OnInit {
         });
 
         this.findProfileByUserId();
+
+        this.isAdmin = this.principal.hasAnyAuthority(['ROLE_ADMIN']).__zone_symbol__value;
     }
 
     save() {
