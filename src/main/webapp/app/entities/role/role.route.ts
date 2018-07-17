@@ -11,6 +11,7 @@ import { RoleDetailComponent } from './role-detail.component';
 import { RoleUpdateComponent } from './role-update.component';
 import { RoleDeletePopupComponent } from './role-delete-dialog.component';
 import { IRole } from 'app/shared/model/role.model';
+import { RoleMyComponent } from 'app/entities/role/role-my/role-my.component';
 
 @Injectable({ providedIn: 'root' })
 export class RoleResolve implements Resolve<IRole> {
@@ -26,6 +27,19 @@ export class RoleResolve implements Resolve<IRole> {
 }
 
 export const roleRoute: Routes = [
+    {
+        path: 'role-my',
+        component: RoleMyComponent,
+        resolve: {
+            pagingParams: JhiResolvePagingParams
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            defaultSort: 'id,asc',
+            pageTitle: 'talentactorApp.role.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
     {
         path: 'role',
         component: RoleComponent,

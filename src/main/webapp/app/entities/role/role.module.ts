@@ -11,12 +11,20 @@ import {
     roleRoute,
     rolePopupRoute
 } from './';
+import { RoleMyComponent } from './role-my/role-my.component';
 
 const ENTITY_STATES = [...roleRoute, ...rolePopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [RoleComponent, RoleDetailComponent, RoleUpdateComponent, RoleDeleteDialogComponent, RoleDeletePopupComponent],
+    declarations: [
+        RoleComponent,
+        RoleDetailComponent,
+        RoleUpdateComponent,
+        RoleDeleteDialogComponent,
+        RoleDeletePopupComponent,
+        RoleMyComponent
+    ],
     entryComponents: [RoleComponent, RoleUpdateComponent, RoleDeleteDialogComponent, RoleDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
