@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 import { IProfile } from 'app/shared/model/profile.model';
-import { IUser, Principal } from 'app/core';
+import { Principal } from 'app/core';
 
 @Component({
     selector: 'jhi-profile-detail',
