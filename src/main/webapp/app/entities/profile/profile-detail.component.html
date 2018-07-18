@@ -112,8 +112,15 @@
                 <dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>
                 <dd>
                     <div *ngIf="profile.video">
-                        <a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
+                        <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
                         <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
+                        <div *ngIf="profile.video">
+                            <video style="max-width: 100%;" alt="User video" controls>
+                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
+                            </video>
+                            <a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
+                            <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
+                        </div>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
