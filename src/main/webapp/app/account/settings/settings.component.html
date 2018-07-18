@@ -1,7 +1,7 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2 jhiTranslate="settings.title" translateValues="{username: '{{settingsAccount.login}}'}" *ngIf="settingsAccount">User settings for [<b>{{settingsAccount.login}}</b>]</h2>
+            <h5 jhiTranslate="settings.title" translateValues="{username: '{{settingsAccount.login}}'}" *ngIf="settingsAccount">User settings for [<b>{{settingsAccount.login}}</b>]</h5>
 
             <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
                 <strong>Settings saved!</strong>
@@ -81,21 +81,9 @@
                 </div>
                 -->
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
-                &nbsp;|&nbsp;
-                <a routerLink="../profile/{{profileid}}/view">
-                    <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
-                </a>
-                &nbsp;|&nbsp;
-                <!--<button [hidden]="isAdmin" id="roles" class="btn btn-primary" routerLink="../role-my">
-                    <fa-icon [icon]="'search'"></fa-icon>&nbsp;<span jhiTranslate="settings.form.roles">Roles</span>
-                </button>-->
-                <a routerLink="../role-my" [hidden]="isAdmin">
-                    <span jhiTranslate="settings.form.roles">Roles</span>
-                </a>
                 <br>
                 <br>
-                Professional history
-                <br>
+                <h5 jhiTranslate="settings.advance">Professional history</h5>
                 <a routerLink="../film" [hidden]="isAdmin">
                     <span jhiTranslate="global.menu.entities.film">Film</span>
                 </a>
@@ -126,7 +114,11 @@
                 <br>
                 <br>
                 <a routerLink="../profile/{{profileid}}/view">
-                    <span jhiTranslate="global.menu.entities.profileView">Profile View</span>
+                    <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
+                </a>
+                &nbsp;|&nbsp;
+                <a routerLink="../role-my" [hidden]="isAdmin">
+                    <span jhiTranslate="settings.form.roles">Roles</span>
                 </a>
             </form>
         </div>
