@@ -16,7 +16,9 @@
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>-->
                 <dd>
-                    {{profile.address}} {{profile.city}}, {{profile.state}}
+                    {{profile.address}} {{profile.city}}, {{profile.state}} |
+                    <label jhiTranslate="talentactorApp.profile.phone">First Name</label>
+                    {{profile.phone}}
                     <!--<span jhiTranslate="{{'talentactorApp.State.' + profile.state}}">{{profile.state}}</span>-->
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>-->
@@ -27,12 +29,14 @@
                 <!--<dd>
                     <span>{{profile.address}}</span>
                 </dd>-->
-                <dt><span jhiTranslate="talentactorApp.profile.phone">Phone</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.phone">Phone</span></dt>
                 <dd>
                     <span>{{profile.phone}}</span>
-                </dd>
+                </dd>-->
                 <!--Film list-Begin-->
-                <div class="table-responsive" *ngIf="films">
+                <dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>
+                <dd>
+                    <div class="table-responsive" *ngIf="films">
                     <table class="table table-striped">
                         <thead>
                         <tr jhiSort [(predicate)]="predicate">
@@ -98,6 +102,7 @@
                         </tbody>
                     </table>
                 </div>
+                </dd>
                 <!--Film list-End-->
                     <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
                     <dd>
