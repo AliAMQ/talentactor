@@ -1,54 +1,56 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="profile">
-            <h2><span jhiTranslate="talentactorApp.profile.detail.title">Profile</span> {{profile.id}}</h2>
+            <h2>{{firstName}}&nbsp;{{lastName}}</h2>
+            <h4><span jhiTranslate="talentactorApp.profile.detail.login">Profile</span> {{login}}</h4>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'talentactorApp.State.' + profile.state}}">{{profile.state}}</span>
+                    <div *ngIf="profile.image">
+                        <a (click)="openFile(profile.imageContentType, profile.image)">
+                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 50%;" alt="profile image"/>
+                        </a>
+                        <!--{{profile.imageContentType}}, {{byteSize(profile.image)}}-->
+                    </div>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>-->
                 <dd>
+                    {{profile.address}} {{profile.city}}, {{profile.state}}
+                    <!--<span jhiTranslate="{{'talentactorApp.State.' + profile.state}}">{{profile.state}}</span>-->
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>-->
+                <!--<dd>
                     <span>{{profile.city}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.address">Address</span></dt>
-                <dd>
+                </dd>-->
+                <!--<dt><span jhiTranslate="talentactorApp.profile.address">Address</span></dt>-->
+                <!--<dd>
                     <span>{{profile.address}}</span>
-                </dd>
+                </dd>-->
                 <dt><span jhiTranslate="talentactorApp.profile.phone">Phone</span></dt>
                 <dd>
                     <span>{{profile.phone}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
-                <dd>
-                    <span>{{profile.since}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="profile.image">
-                        <a (click)="openFile(profile.imageContentType, profile.image)">
-                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
-                        </a>
-                        {{profile.imageContentType}}, {{byteSize(profile.image)}}
-                    </div>
-                </dd>
+                    <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
+                    <dd>
+                        <span>{{profile.since}}</span>
+                    </dd>
+                    <dt><span jhiTranslate="talentactorApp.profile.image">Image</span></dt>-->
                 <dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>
                 <dd>
                     <div *ngIf="profile.video">
                         <a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
-                        {{profile.videoContentType}}, {{byteSize(profile.video)}}
+                        <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
                     </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
                 <dd>
                     <div *ngIf="profile.audio">
                         <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
-                        {{profile.audioContentType}}, {{byteSize(profile.audio)}}
+                        <!--{{profile.audioContentType}}, {{byteSize(profile.audio)}}-->
                     </div>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span></dt>
                 <dd>
                     <span>{{profile.imagepath}}</span>
                 </dd>
@@ -59,11 +61,11 @@
                 <dt><span jhiTranslate="talentactorApp.profile.audiopath">Audiopath</span></dt>
                 <dd>
                     <span>{{profile.audiopath}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.user">User</span></dt>
+                </dd>-->
+                <!--<dt><span jhiTranslate="talentactorApp.profile.user">User</span></dt>
                 <dd>
                     {{profile.userId}}
-                </dd>
+                </dd>-->
                 <dt><span jhiTranslate="talentactorApp.profile.skill">Skill</span></dt>
                 <dd>
                     <span *ngFor="let skill of profile.skills; let last = last">

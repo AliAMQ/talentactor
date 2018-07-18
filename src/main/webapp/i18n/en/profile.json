@@ -14,7 +14,8 @@
                 "question": "Are you sure you want to delete Profile {{ id }}?"
             },
             "detail": {
-                "title": "Profile"
+                "title": "Profile",
+                "login": "Login:"
             },
             "state": "State",
             "city": "City",
