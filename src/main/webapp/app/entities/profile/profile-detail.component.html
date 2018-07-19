@@ -9,10 +9,43 @@
                 <dd>
                     <div *ngIf="profile.image">
                         <a (click)="openFile(profile.imageContentType, profile.image)">
-                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 50%;" alt="profile image"/>
+                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 40%;" alt="profile image"/>
                         </a>
                         <!--{{profile.imageContentType}}, {{byteSize(profile.image)}}-->
                     </div>
+                    <!--<table>
+                        <tr>
+                            <td>
+                                <div *ngIf="profile.image">
+                                    <a (click)="openFile(profile.imageContentType, profile.image)">
+                                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 50%;" alt="profile image"/>
+                                    </a>
+                                    &lt;!&ndash;{{profile.imageContentType}}, {{byteSize(profile.image)}}&ndash;&gt;
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="profile.video">
+                                    &lt;!&ndash;<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
+                                    &lt;!&ndash;{{profile.videoContentType}}, {{byteSize(profile.video)}}&ndash;&gt;
+                                    <div *ngIf="profile.video">
+                                        <video style="max-width: 100%;" alt="User video" controls>
+                                            <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
+                                        </video>
+                                        &lt;!&ndash;<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
+                                        &lt;!&ndash;{{profile.videoContentType}}, {{byteSize(profile.video)}}&ndash;&gt;
+                                    </div>
+                                </div>
+                                <br>
+                                <div *ngIf="profile.audio">
+                                    <audio style="max-width: 100%;" alt="User Audio" controls>
+                                        <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
+                                    </audio>
+                                    &lt;!&ndash;<a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
+                                    &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
+                                </div>
+                            </td>
+                        </tr>
+                    </table>-->
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>-->
                 <dd>
@@ -125,7 +158,14 @@
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
                 <dd>
+                    <!--<div *ngIf="profile.audio">
+                        <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
+                        &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
+                    </div>-->
                     <div *ngIf="profile.audio">
+                        <audio style="max-width: 100%;" alt="User Audio" controls>
+                            <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
+                        </audio>
                         <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
                         <!--{{profile.audioContentType}}, {{byteSize(profile.audio)}}-->
                     </div>
@@ -146,12 +186,6 @@
                 <dd>
                     {{profile.userId}}
                 </dd>-->
-                <dt><span jhiTranslate="talentactorApp.profile.skill">Skill</span></dt>
-                <dd>
-                    <span *ngFor="let skill of profile.skills; let last = last">
-                        <a [routerLink]="['/skill', skill?.id, 'view' ]">{{skill.title}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
                 <dd>
                     <span *ngFor="let sport of profile.sports; let last = last">
@@ -204,6 +238,12 @@
                 <dd>
                     <span *ngFor="let horse of profile.horses; let last = last">
                         <a [routerLink]="['/horse', horse?.id, 'view' ]">{{horse.title}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.profile.skill">Skill</span></dt>
+                <dd>
+                    <span *ngFor="let skill of profile.skills; let last = last">
+                        <a [routerLink]="['/skill', skill?.id, 'view' ]">{{skill.title}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
             </dl>
