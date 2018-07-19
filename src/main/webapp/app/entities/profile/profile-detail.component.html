@@ -208,6 +208,77 @@
                     </div>
                 </dd>
                 <!--Television list-End-->
+                <!--Internet list-Begin-->
+                <dt><span jhiTranslate="talentactorApp.profile.internet">Internet</span></dt>
+                <dd>
+                    <div class="table-responsive" *ngIf="internets">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr jhiSort [(predicate)]="predicate">
+                                <th><span jhiTranslate="talentactorApp.internet.title">Title</span></th>
+                                <th><span jhiTranslate="talentactorApp.internet.director">Director</span></th>
+                                <th><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
+                                <th><span jhiTranslate="talentactorApp.internet.video">Video</span></th>
+                                <th><span jhiTranslate="talentactorApp.internet.image">Image</span></th>
+                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let internet of internets ;trackBy: trackId">
+                                <td><a href="{{internet.link}}" target="_blank">{{internet.title}}</a></td>
+                                <td>{{internet.director}}</td>
+                                <td>{{internet.cameraman}}</td>
+                                <!--<td>{{film.link}}</td>-->
+                                <td>
+                                    <a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">
+                                        <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
+                                    </a>
+                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
+                                </td>
+                                <td>
+                                    <a *ngIf="internet.video" (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
+                                    <span *ngIf="internet.video">{{internet.videoContentType}}, {{byteSize(internet.video)}}</span>
+                                </td>
+                                <!--<td>{{film.imagepath}}</td>
+                                <td>{{film.videopath}}</td>
+                                <td>
+                                    <div *ngIf="film.profileId">
+                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
+                                    </div>
+                                </td>-->
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit"
+                                                [routerLink]="['/internet', internet.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/internet', internet.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', { outlets: { popup: 'internet/'+ internet.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <!--Internet list-End-->
                     <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
                     <dd>
                         <span>{{profile.since}}</span>

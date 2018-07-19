@@ -9,6 +9,8 @@ import { IFilm } from 'app/shared/model/film.model';
 import { FilmService } from 'app/entities/film/film.service';
 import { ITelevision } from 'app/shared/model/television.model';
 import { TelevisionService } from 'app/entities/television/television.service';
+import { IInternet } from 'app/shared/model/internet.model';
+import { InternetService } from 'app/entities/internet/internet.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -23,6 +25,7 @@ export class ProfileDetailComponent implements OnInit {
     profileid: number;
     films: IFilm[];
     televisions: ITelevision[];
+    internets: IInternet[];
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -30,7 +33,8 @@ export class ProfileDetailComponent implements OnInit {
         private principal: Principal,
         private profileService: ProfileService,
         private filmService: FilmService,
-        private televisionService: TelevisionService
+        private televisionService: TelevisionService,
+        private internetService: InternetService
     ) {}
 
     loadAllFilms() {
@@ -55,6 +59,17 @@ export class ProfileDetailComponent implements OnInit {
         });
     }
 
+    loadAllInternets() {
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.internetService
+                .query({
+                    'profileId.equals': this.profileid
+                })
+                .subscribe((res1: HttpResponse<IInternet[]>) => (this.internets = res1.body));
+        });
+    }
+
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
@@ -65,6 +80,7 @@ export class ProfileDetailComponent implements OnInit {
         });
         this.loadAllFilms();
         this.loadAllTelevisions();
+        this.loadAllInternets();
     }
 
     byteSize(field) {
