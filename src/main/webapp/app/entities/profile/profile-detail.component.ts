@@ -17,6 +17,8 @@ import { IPrint } from 'app/shared/model/print.model';
 import { PrintService } from 'app/entities/print/print.service';
 import { ITheater } from 'app/shared/model/theater.model';
 import { TheaterService } from 'app/entities/theater/theater.service';
+import { IVoice } from 'app/shared/model/voice.model';
+import { VoiceService } from 'app/entities/voice/voice.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -34,6 +36,7 @@ export class ProfileDetailComponent implements OnInit {
     commercials: ICommercial[];
     prints: IPrint[];
     theaters: ITheater[];
+    voices: IVoice[];
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -45,7 +48,8 @@ export class ProfileDetailComponent implements OnInit {
         private internetService: InternetService,
         private commercialService: CommercialService,
         private printService: PrintService,
-        private theaterService: TheaterService
+        private theaterService: TheaterService,
+        private voiceService: VoiceService
     ) {}
 
     loadAllFilms() {
@@ -96,6 +100,14 @@ export class ProfileDetailComponent implements OnInit {
             .subscribe((res1: HttpResponse<ITheater[]>) => (this.theaters = res1.body));
     }
 
+    loadAllVoices() {
+        this.voiceService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<IVoice[]>) => (this.voices = res1.body));
+    }
+
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
@@ -110,6 +122,7 @@ export class ProfileDetailComponent implements OnInit {
         this.loadAllCommercials();
         this.loadAllPrints();
         this.loadAllTheaters();
+        this.loadAllVoices();
     }
 
     byteSize(field) {

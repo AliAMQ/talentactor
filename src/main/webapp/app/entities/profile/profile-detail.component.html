@@ -6,36 +6,41 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <!--<dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>-->
                 <dd>
-                    <div *ngIf="profile.image">
-                        <a (click)="openFile(profile.imageContentType, profile.image)">
-                            <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 40%;" alt="profile image"/>
-                        </a>
-                        <!--{{profile.imageContentType}}, {{byteSize(profile.image)}}-->
-                    </div>
-                    <!--<table>
+                    <table>
                         <tr>
-                            <td>
+                            <td width="45%">
                                 <div *ngIf="profile.image">
                                     <a (click)="openFile(profile.imageContentType, profile.image)">
-                                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 50%;" alt="profile image"/>
+                                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
                                     </a>
-                                    &lt;!&ndash;{{profile.imageContentType}}, {{byteSize(profile.image)}}&ndash;&gt;
+                                    <!--{{profile.imageContentType}}, {{byteSize(profile.image)}}-->
                                 </div>
                             </td>
-                            <td>
+                            <td width="5%"></td>
+                            <td width="45%">
                                 <div *ngIf="profile.video">
-                                    &lt;!&ndash;<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
-                                    &lt;!&ndash;{{profile.videoContentType}}, {{byteSize(profile.video)}}&ndash;&gt;
-                                    <div *ngIf="profile.video">
-                                        <video style="max-width: 100%;" alt="User video" controls>
-                                            <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
-                                        </video>
-                                        &lt;!&ndash;<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
-                                        &lt;!&ndash;{{profile.videoContentType}}, {{byteSize(profile.video)}}&ndash;&gt;
-                                    </div>
+                                    <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
+                                    <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
+                                    <video style="max-width: 100%;" alt="User video" controls>
+                                        <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
+                                    </video>
+                                    <br>
+                                    <br>
+                                    <audio style="max-width: 100%;" alt="User Audio" controls>
+                                        <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
+                                    </audio>
+                                    <br>
+                                    <br>
+                                    {{profile.address}} {{profile.city}}, {{profile.state}} |
+                                    <label jhiTranslate="talentactorApp.profile.phone">Phone</label>
+                                    {{profile.phone}}
+                                    <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
+                                    <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
                                 </div>
-                                <br>
+                            </td>
+                            <!--<td>
                                 <div *ngIf="profile.audio">
                                     <audio style="max-width: 100%;" alt="User Audio" controls>
                                         <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
@@ -43,16 +48,9 @@
                                     &lt;!&ndash;<a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
                                     &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
                                 </div>
-                            </td>
+                            </td>-->
                         </tr>
-                    </table>-->
-                </dd>
-                <!--<dt><span jhiTranslate="talentactorApp.profile.state">State</span></dt>-->
-                <dd>
-                    {{profile.address}} {{profile.city}}, {{profile.state}} |
-                    <label jhiTranslate="talentactorApp.profile.phone">First Name</label>
-                    {{profile.phone}}
-                    <!--<span jhiTranslate="{{'talentactorApp.State.' + profile.state}}">{{profile.state}}</span>-->
+                    </table>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>-->
                 <!--<dd>
@@ -78,7 +76,7 @@
                             <th><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span></th>
                             <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                             <th><span jhiTranslate="talentactorApp.film.image">Image</span></th>
-                            <th><span jhiTranslate="talentactorApp.film.video">Video</span></th>
+                            <!--<th><span jhiTranslate="talentactorApp.film.video">Video</span></th>-->
                             <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                             <th></th>
@@ -96,10 +94,10 @@
                                 </a>
                                 <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                             </td>
-                            <td>
+                            <!--<td>
                                 <a *ngIf="film.video" (click)="openFile(film.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
                                 <span *ngIf="film.video">{{film.videoContentType}}, {{byteSize(film.video)}}</span>
-                            </td>
+                            </td>-->
                             <!--<td>{{film.imagepath}}</td>
                             <td>{{film.videopath}}</td>
                             <td>
@@ -149,7 +147,7 @@
                                 <th><span jhiTranslate="talentactorApp.television.cameraman">Cameraman</span></th>
                                 <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.television.image">Image</span></th>
-                                <th><span jhiTranslate="talentactorApp.television.video">Video</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.television.video">Video</span></th>-->
                                 <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                                 <th></th>
@@ -167,10 +165,10 @@
                                     </a>
                                     <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <td>
+                                <!--<td>
                                     <a *ngIf="television.video" (click)="openFile(television.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
                                     <span *ngIf="television.video">{{television.videoContentType}}, {{byteSize(television.video)}}</span>
-                                </td>
+                                </td>-->
                                 <!--<td>{{film.imagepath}}</td>
                                 <td>{{film.videopath}}</td>
                                 <td>
@@ -220,7 +218,7 @@
                                 <th><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span></th>
                                 <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.internet.image">Image</span></th>
-                                <th><span jhiTranslate="talentactorApp.internet.video">Video</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.internet.video">Video</span></th>-->
                                 <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                                 <th></th>
@@ -238,10 +236,10 @@
                                     </a>
                                     <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <td>
+                                <!--<td>
                                     <a *ngIf="internet.video" (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
                                     <span *ngIf="internet.video">{{internet.videoContentType}}, {{byteSize(internet.video)}}</span>
-                                </td>
+                                </td>-->
                                 <!--<td>{{film.imagepath}}</td>
                                 <td>{{film.videopath}}</td>
                                 <td>
@@ -291,7 +289,7 @@
                                 <th><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span></th>
                                 <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.commercial.image">Image</span></th>
-                                <th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
                                 <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                                 <th></th>
@@ -309,10 +307,10 @@
                                     </a>
                                     <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <td>
+                                <!--<td>
                                     <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
                                     <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
-                                </td>
+                                </td>-->
                                 <!--<td>{{film.imagepath}}</td>
                                 <td>{{film.videopath}}</td>
                                 <td>
@@ -421,6 +419,94 @@
                     </div>
                 </dd>
                 <!--print list-End-->
+                <!--Voice list-Begin-->
+                <dt><span jhiTranslate="talentactorApp.profile.voice">Voice</span></dt>
+                <dd>
+                    <div class="table-responsive" *ngIf="voices">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr jhiSort [(predicate)]="predicate">
+                                <th><span jhiTranslate="talentactorApp.voice.title">Title</span></th>
+                                <th><span jhiTranslate="talentactorApp.voice.director">director</span></th>
+                                <th><span jhiTranslate="talentactorApp.voice.audio">audio</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.print.audio">audio</span></th>-->
+                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
+                                <!--<th><span jhiTranslate="talentactorApp.print.image">Image</span></th>-->
+                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
+                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let voice of voices ;trackBy: trackId">
+                                <td><a href="{{voice.link}}" target="_blank">{{voice.title}}</a></td>
+                                <td>{{voice.director}}</td>
+                                <!--<td>{{print.photographer}}</td>
+                                <td>{{print.hair}}</td>-->
+                                <!--<td>{{film.link}}</td>-->
+                                <!--<td>
+                                    <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
+                                        <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
+                                    </a>
+                                    &lt;!&ndash;<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>&ndash;&gt;
+                                </td>-->
+                                <td>
+                                    <!--<a *ngIf="voice.video" (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>-->
+                                    <!--<span *ngIf="voice.video">{{voice.videoContentType}}, {{byteSize(voice.video)}}</span>-->
+                                    <!--<div *ngIf="voice.video">
+                                        <video style="max-width: 100%;" alt="User video" controls>
+                                            <source type="video/mp4" [src]="'data:video/mp4;base64,' + voice.video">
+                                        </video>
+                                        <a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>
+                                        {{voice.videoContentType}}, {{byteSize(voice.video)}}
+                                    </div>-->
+                                    <div *ngIf="voice.audio">
+                                        <audio style="max-width: 100%;" alt="User Audio" controls>
+                                            <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
+                                        </audio>
+                                        <!--<a (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>
+                                        {{voice.audioContentType}}, {{byteSize(voice.audio)}}-->
+                                    </div>
+
+                                </td>
+                                <!--<td>{{film.imagepath}}</td>
+                                <td>{{film.videopath}}</td>
+                                <td>
+                                    <div *ngIf="film.profileId">
+                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
+                                    </div>
+                                </td>-->
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit"
+                                                [routerLink]="['/voice', voice.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/voice', voice.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', { outlets: { popup: 'voice/'+ voice.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <!--Voice list-End-->
                 <!--Theater list-Begin-->
                 <dt><span jhiTranslate="talentactorApp.profile.theater">Theater</span></dt>
                 <dd>
@@ -433,7 +519,7 @@
                                 <!--<th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>-->
                                 <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.theater.image">Image</span></th>
-                                <th><span jhiTranslate="talentactorApp.theater.video">Video</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.theater.video">Video</span></th>-->
                                 <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                                 <th></th>
@@ -497,34 +583,20 @@
                         <span>{{profile.since}}</span>
                     </dd>
                     <dt><span jhiTranslate="talentactorApp.profile.image">Image</span></dt>-->
-                <dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
                 <dd>
-                    <div *ngIf="profile.video">
-                        <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
-                        <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
-                        <div *ngIf="profile.video">
-                            <video style="max-width: 100%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
-                            </video>
-                            <a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
-                            <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
-                        </div>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
-                <dd>
-                    <!--<div *ngIf="profile.audio">
+                    &lt;!&ndash;<div *ngIf="profile.audio">
                         <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
                         &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
-                    </div>-->
+                    </div>&ndash;&gt;
                     <div *ngIf="profile.audio">
                         <audio style="max-width: 100%;" alt="User Audio" controls>
                             <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
                         </audio>
                         <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
-                        <!--{{profile.audioContentType}}, {{byteSize(profile.audio)}}-->
+                        &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
                     </div>
-                </dd>
+                </dd>-->
                 <!--<dt><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span></dt>
                 <dd>
                     <span>{{profile.imagepath}}</span>
