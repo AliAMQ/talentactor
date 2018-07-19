@@ -4,9 +4,11 @@ import { JhiDataUtils } from 'ng-jhipster';
 import { IProfile } from 'app/shared/model/profile.model';
 import { Principal } from 'app/core';
 import { HttpResponse } from '@angular/common/http';
-import { IFilm } from 'app/shared/model/film.model';
 import { ProfileService } from '../profile/profile.service';
+import { IFilm } from 'app/shared/model/film.model';
 import { FilmService } from 'app/entities/film/film.service';
+import { ITelevision } from 'app/shared/model/television.model';
+import { TelevisionService } from 'app/entities/television/television.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -20,13 +22,15 @@ export class ProfileDetailComponent implements OnInit {
     email: string;
     profileid: number;
     films: IFilm[];
+    televisions: ITelevision[];
 
     constructor(
         private dataUtils: JhiDataUtils,
         private activatedRoute: ActivatedRoute,
         private principal: Principal,
         private profileService: ProfileService,
-        private filmService: FilmService
+        private filmService: FilmService,
+        private televisionService: TelevisionService
     ) {}
 
     loadAllFilms() {
@@ -40,6 +44,17 @@ export class ProfileDetailComponent implements OnInit {
         });
     }
 
+    loadAllTelevisions() {
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.televisionService
+                .query({
+                    'profileId.equals': this.profileid
+                })
+                .subscribe((res1: HttpResponse<ITelevision[]>) => (this.televisions = res1.body));
+        });
+    }
+
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
@@ -49,6 +64,7 @@ export class ProfileDetailComponent implements OnInit {
             this.email = this.principal.userIdentity.email;
         });
         this.loadAllFilms();
+        this.loadAllTelevisions();
     }
 
     byteSize(field) {
