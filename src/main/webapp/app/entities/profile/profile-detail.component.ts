@@ -11,6 +11,8 @@ import { ITelevision } from 'app/shared/model/television.model';
 import { TelevisionService } from 'app/entities/television/television.service';
 import { IInternet } from 'app/shared/model/internet.model';
 import { InternetService } from 'app/entities/internet/internet.service';
+import { ICommercial } from 'app/shared/model/commercial.model';
+import { CommercialService } from 'app/entities/commercial/commercial.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -26,6 +28,7 @@ export class ProfileDetailComponent implements OnInit {
     films: IFilm[];
     televisions: ITelevision[];
     internets: IInternet[];
+    commercials: ICommercial[];
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -34,7 +37,8 @@ export class ProfileDetailComponent implements OnInit {
         private profileService: ProfileService,
         private filmService: FilmService,
         private televisionService: TelevisionService,
-        private internetService: InternetService
+        private internetService: InternetService,
+        private commercialService: CommercialService
     ) {}
 
     loadAllFilms() {
@@ -70,6 +74,17 @@ export class ProfileDetailComponent implements OnInit {
         });
     }
 
+    loadAllCommercials() {
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.commercialService
+                .query({
+                    'profileId.equals': this.profileid
+                })
+                .subscribe((res1: HttpResponse<ICommercial[]>) => (this.commercials = res1.body));
+        });
+    }
+
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
@@ -81,6 +96,7 @@ export class ProfileDetailComponent implements OnInit {
         this.loadAllFilms();
         this.loadAllTelevisions();
         this.loadAllInternets();
+        this.loadAllCommercials();
     }
 
     byteSize(field) {
