@@ -421,6 +421,77 @@
                     </div>
                 </dd>
                 <!--print list-End-->
+                <!--Theater list-Begin-->
+                <dt><span jhiTranslate="talentactorApp.profile.theater">Theater</span></dt>
+                <dd>
+                    <div class="table-responsive" *ngIf="theaters">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr jhiSort [(predicate)]="predicate">
+                                <th><span jhiTranslate="talentactorApp.theater.title">Title</span></th>
+                                <th><span jhiTranslate="talentactorApp.theater.director">director</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>-->
+                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
+                                <th><span jhiTranslate="talentactorApp.theater.image">Image</span></th>
+                                <th><span jhiTranslate="talentactorApp.theater.video">Video</span></th>
+                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let theater of theaters ;trackBy: trackId">
+                                <td><a href="{{theater.link}}" target="_blank">{{theater.title}}</a></td>
+                                <td>{{theater.director}}</td>
+                                <!--<td>{{theater.hair}}</td>-->
+                                <!--<td>{{film.link}}</td>-->
+                                <td>
+                                    <a *ngIf="theater.image" (click)="openFile(print.imageContentType, theater.image)">
+                                        <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
+                                    </a>
+                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
+                                </td>
+                                <!--<td>
+                                    <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
+                                    <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
+                                </td>-->
+                                <!--<td>{{film.imagepath}}</td>
+                                <td>{{film.videopath}}</td>
+                                <td>
+                                    <div *ngIf="film.profileId">
+                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
+                                    </div>
+                                </td>-->
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit"
+                                                [routerLink]="['/theater', theater.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/theater', theater.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', { outlets: { popup: 'theater/'+ theater.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <!--Theater list-End-->
                     <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
                     <dd>
                         <span>{{profile.since}}</span>

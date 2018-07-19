@@ -15,6 +15,8 @@ import { ICommercial } from 'app/shared/model/commercial.model';
 import { CommercialService } from 'app/entities/commercial/commercial.service';
 import { IPrint } from 'app/shared/model/print.model';
 import { PrintService } from 'app/entities/print/print.service';
+import { ITheater } from 'app/shared/model/theater.model';
+import { TheaterService } from 'app/entities/theater/theater.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -32,6 +34,7 @@ export class ProfileDetailComponent implements OnInit {
     internets: IInternet[];
     commercials: ICommercial[];
     prints: IPrint[];
+    theaters: ITheater[];
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -42,7 +45,8 @@ export class ProfileDetailComponent implements OnInit {
         private televisionService: TelevisionService,
         private internetService: InternetService,
         private commercialService: CommercialService,
-        private printService: PrintService
+        private printService: PrintService,
+        private theaterService: TheaterService
     ) {}
 
     loadAllFilms() {
@@ -100,6 +104,17 @@ export class ProfileDetailComponent implements OnInit {
         });
     }
 
+    loadAllTheaters() {
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;
+            this.theaterService
+                .query({
+                    'profileId.equals': this.profileid
+                })
+                .subscribe((res1: HttpResponse<ITheater[]>) => (this.theaters = res1.body));
+        });
+    }
+
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
@@ -113,6 +128,7 @@ export class ProfileDetailComponent implements OnInit {
         this.loadAllInternets();
         this.loadAllCommercials();
         this.loadAllPrints();
+        this.loadAllTheaters();
     }
 
     byteSize(field) {
