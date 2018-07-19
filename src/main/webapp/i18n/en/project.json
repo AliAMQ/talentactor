@@ -16,8 +16,9 @@
             "detail": {
                 "title": "Project"
             },
+            "id": "ID",
             "title": "Title",
-            "code": "Code",
+            "code": "Synopsis",
             "date": "Date",
             "image": "Image",
             "video": "Video",

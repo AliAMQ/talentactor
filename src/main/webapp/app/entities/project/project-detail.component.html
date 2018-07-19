@@ -1,46 +1,72 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="project">
-            <h2><span jhiTranslate="talentactorApp.project.detail.title">Project</span> {{project.id}}</h2>
+            <!--<h2><span jhiTranslate="talentactorApp.project.detail.title">Project</span> {{project.id}}</h2>-->
+            <h2>{{project.title}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.project.title">Title</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.project.id">Id</span></dt>-->
                 <dd>
-                    <span>{{project.title}}</span>
+                    <b><span jhiTranslate="talentactorApp.project.id">Id</span></b>
+                    <span>{{project.id}}</span>
                 </dd>
+                <!--
+                <dt><span jhiTranslate="talentactorApp.project.date">Date</span></dt>
+                <dd>
+                    <span>{{project.date}}</span>
+                </dd>-->
+                <!--<dt><span jhiTranslate="talentactorApp.project.image">Image</span></dt>-->
+                <dd>
+                    <table>
+                        <tr>
+                            <td width="30%">
+                                <div *ngIf="project.image">
+                                    <a (click)="openFile(project.imageContentType, project.image)">
+                                        <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-width: 100%;" alt="project image"/>
+                                    </a>
+                                    <!--{{project.imageContentType}}, {{byteSize(project.image)}}-->
+                                </div>
+                            </td>
+                            <td width="70%">
+                                <div *ngIf="project.video">
+                                    <!--<a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>-->
+                                    <!--{{project.videoContentType}}, {{byteSize(project.video)}}-->
+                                    <video style="max-width: 100%;" alt="User video" controls>
+                                        <source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">
+                                    </video>
+                                    <!--<a (click)="openFile(project.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
+                                    {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}-->
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.project.video">Video</span></dt>
+                <dd>
+                    <div *ngIf="project.video">
+                        &lt;!&ndash;<a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
+                        &lt;!&ndash;{{project.videoContentType}}, {{byteSize(project.video)}}&ndash;&gt;
+                            <video style="max-width: 100%;" alt="User video" controls>
+                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">
+                            </video>
+                            &lt;!&ndash;<a (click)="openFile(project.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
+                            {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}&ndash;&gt;
+                    </div>
+                </dd>-->
                 <dt><span jhiTranslate="talentactorApp.project.code">Code</span></dt>
                 <dd>
                     <span>{{project.code}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.project.date">Date</span></dt>
-                <dd>
-                    <span>{{project.date}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.project.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="project.image">
-                        <a (click)="openFile(project.imageContentType, project.image)">
-                            <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-width: 100%;" alt="project image"/>
-                        </a>
-                        {{project.imageContentType}}, {{byteSize(project.image)}}
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.project.video">Video</span></dt>
-                <dd>
-                    <div *ngIf="project.video">
-                        <a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>
-                        {{project.videoContentType}}, {{byteSize(project.video)}}
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.project.imagepath">Imagepath</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.project.imagepath">Imagepath</span></dt>
                 <dd>
                     <span>{{project.imagepath}}</span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.project.videopath">Videopath</span></dt>
                 <dd>
                     <span>{{project.videopath}}</span>
-                </dd>
+                </dd>-->
             </dl>
 
             <button type="submit"
