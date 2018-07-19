@@ -446,7 +446,7 @@
                                 <!--<td>{{theater.hair}}</td>-->
                                 <!--<td>{{film.link}}</td>-->
                                 <td>
-                                    <a *ngIf="theater.image" (click)="openFile(print.imageContentType, theater.image)">
+                                    <a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">
                                         <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
                                     </a>
                                     <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->

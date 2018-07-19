@@ -28,7 +28,6 @@ export class ProfileDetailComponent implements OnInit {
     firstName;
     lastName;
     email: string;
-    profileid: number;
     films: IFilm[];
     televisions: ITelevision[];
     internets: IInternet[];
@@ -50,69 +49,51 @@ export class ProfileDetailComponent implements OnInit {
     ) {}
 
     loadAllFilms() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.filmService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<IFilm[]>) => (this.films = res1.body));
-        });
+        this.filmService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<IFilm[]>) => (this.films = res1.body));
     }
 
     loadAllTelevisions() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.televisionService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<ITelevision[]>) => (this.televisions = res1.body));
-        });
+        this.televisionService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<ITelevision[]>) => (this.televisions = res1.body));
     }
 
     loadAllInternets() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.internetService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<IInternet[]>) => (this.internets = res1.body));
-        });
+        this.internetService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<IInternet[]>) => (this.internets = res1.body));
     }
 
     loadAllCommercials() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.commercialService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<ICommercial[]>) => (this.commercials = res1.body));
-        });
+        this.commercialService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<ICommercial[]>) => (this.commercials = res1.body));
     }
 
     loadAllPrints() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.printService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<IPrint[]>) => (this.prints = res1.body));
-        });
+        this.printService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<IPrint[]>) => (this.prints = res1.body));
     }
 
     loadAllTheaters() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.theaterService
-                .query({
-                    'profileId.equals': this.profileid
-                })
-                .subscribe((res1: HttpResponse<ITheater[]>) => (this.theaters = res1.body));
-        });
+        this.theaterService
+            .query({
+                'profileId.equals': this.profile.id
+            })
+            .subscribe((res1: HttpResponse<ITheater[]>) => (this.theaters = res1.body));
     }
 
     ngOnInit() {
