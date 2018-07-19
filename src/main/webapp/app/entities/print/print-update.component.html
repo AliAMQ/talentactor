@@ -58,13 +58,13 @@
                         [(ngModel)]="print.imagepath" />
                 </div>
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.print.profile" for="field_profile">Profile</label>
                     <select class="form-control" id="field_profile" name="profile" [(ngModel)]="print.profileId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.id}}</option>
                     </select>
-                </div>
+                </div>-->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

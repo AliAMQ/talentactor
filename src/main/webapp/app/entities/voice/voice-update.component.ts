@@ -9,6 +9,8 @@ import { VoiceService } from './voice.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-voice-update',
     templateUrl: './voice-update.component.html'
@@ -18,13 +20,15 @@ export class VoiceUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private voiceService: VoiceService,
         private profileService: ProfileService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -57,12 +61,16 @@ export class VoiceUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.voice.id !== undefined) {
-            this.subscribeToSaveResponse(this.voiceService.update(this.voice));
-        } else {
-            this.subscribeToSaveResponse(this.voiceService.create(this.voice));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.voice.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.voice.id !== undefined) {
+                this.subscribeToSaveResponse(this.voiceService.update(this.voice));
+            } else {
+                this.subscribeToSaveResponse(this.voiceService.create(this.voice));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IVoice>>) {

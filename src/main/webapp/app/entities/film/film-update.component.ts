@@ -9,6 +9,8 @@ import { FilmService } from './film.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-film-update',
     templateUrl: './film-update.component.html'
@@ -16,8 +18,8 @@ import { ProfileService } from 'app/entities/profile';
 export class FilmUpdateComponent implements OnInit {
     private _film: IFilm;
     isSaving: boolean;
-
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +27,8 @@ export class FilmUpdateComponent implements OnInit {
         private filmService: FilmService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +65,16 @@ export class FilmUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.film.id !== undefined) {
-            this.subscribeToSaveResponse(this.filmService.update(this.film));
-        } else {
-            this.subscribeToSaveResponse(this.filmService.create(this.film));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.film.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.film.id !== undefined) {
+                this.subscribeToSaveResponse(this.filmService.update(this.film));
+            } else {
+                this.subscribeToSaveResponse(this.filmService.create(this.film));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IFilm>>) {

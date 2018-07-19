@@ -9,6 +9,8 @@ import { TelevisionService } from './television.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-television-update',
     templateUrl: './television-update.component.html'
@@ -18,6 +20,7 @@ export class TelevisionUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +28,8 @@ export class TelevisionUpdateComponent implements OnInit {
         private televisionService: TelevisionService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +66,16 @@ export class TelevisionUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.television.id !== undefined) {
-            this.subscribeToSaveResponse(this.televisionService.update(this.television));
-        } else {
-            this.subscribeToSaveResponse(this.televisionService.create(this.television));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.television.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.television.id !== undefined) {
+                this.subscribeToSaveResponse(this.televisionService.update(this.television));
+            } else {
+                this.subscribeToSaveResponse(this.televisionService.create(this.television));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<ITelevision>>) {

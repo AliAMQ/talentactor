@@ -9,6 +9,8 @@ import { CommercialService } from './commercial.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-commercial-update',
     templateUrl: './commercial-update.component.html'
@@ -18,6 +20,7 @@ export class CommercialUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +28,8 @@ export class CommercialUpdateComponent implements OnInit {
         private commercialService: CommercialService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +66,16 @@ export class CommercialUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.commercial.id !== undefined) {
-            this.subscribeToSaveResponse(this.commercialService.update(this.commercial));
-        } else {
-            this.subscribeToSaveResponse(this.commercialService.create(this.commercial));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.commercial.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.commercial.id !== undefined) {
+                this.subscribeToSaveResponse(this.commercialService.update(this.commercial));
+            } else {
+                this.subscribeToSaveResponse(this.commercialService.create(this.commercial));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<ICommercial>>) {

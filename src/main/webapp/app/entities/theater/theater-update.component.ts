@@ -9,6 +9,8 @@ import { TheaterService } from './theater.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-theater-update',
     templateUrl: './theater-update.component.html'
@@ -18,6 +20,7 @@ export class TheaterUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +28,8 @@ export class TheaterUpdateComponent implements OnInit {
         private theaterService: TheaterService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +66,16 @@ export class TheaterUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.theater.id !== undefined) {
-            this.subscribeToSaveResponse(this.theaterService.update(this.theater));
-        } else {
-            this.subscribeToSaveResponse(this.theaterService.create(this.theater));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.theater.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.theater.id !== undefined) {
+                this.subscribeToSaveResponse(this.theaterService.update(this.theater));
+            } else {
+                this.subscribeToSaveResponse(this.theaterService.create(this.theater));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<ITheater>>) {

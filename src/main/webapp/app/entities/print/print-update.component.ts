@@ -9,6 +9,8 @@ import { PrintService } from './print.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-print-update',
     templateUrl: './print-update.component.html'
@@ -18,6 +20,7 @@ export class PrintUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +28,8 @@ export class PrintUpdateComponent implements OnInit {
         private printService: PrintService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +66,16 @@ export class PrintUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.print.id !== undefined) {
-            this.subscribeToSaveResponse(this.printService.update(this.print));
-        } else {
-            this.subscribeToSaveResponse(this.printService.create(this.print));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.print.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.print.id !== undefined) {
+                this.subscribeToSaveResponse(this.printService.update(this.print));
+            } else {
+                this.subscribeToSaveResponse(this.printService.create(this.print));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IPrint>>) {

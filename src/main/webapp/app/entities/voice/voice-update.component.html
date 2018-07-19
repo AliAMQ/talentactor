@@ -77,13 +77,13 @@
                         [(ngModel)]="voice.audiopath" />
                 </div>
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.profile" for="field_profile">Profile</label>
                     <select class="form-control" id="field_profile" name="profile" [(ngModel)]="voice.profileId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.id}}</option>
                     </select>
-                </div>
+                </div>-->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

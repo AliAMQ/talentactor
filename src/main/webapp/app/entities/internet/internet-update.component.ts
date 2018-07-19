@@ -9,6 +9,8 @@ import { InternetService } from './internet.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
+import { Principal } from 'app/core';
+
 @Component({
     selector: 'jhi-internet-update',
     templateUrl: './internet-update.component.html'
@@ -18,6 +20,7 @@ export class InternetUpdateComponent implements OnInit {
     isSaving: boolean;
 
     profiles: IProfile[];
+    profileId: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -25,7 +28,8 @@ export class InternetUpdateComponent implements OnInit {
         private internetService: InternetService,
         private profileService: ProfileService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -62,12 +66,16 @@ export class InternetUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.internet.id !== undefined) {
-            this.subscribeToSaveResponse(this.internetService.update(this.internet));
-        } else {
-            this.subscribeToSaveResponse(this.internetService.create(this.internet));
-        }
+        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileId = res.body.id;
+            this.internet.profileId = this.profileId;
+            this.isSaving = true;
+            if (this.internet.id !== undefined) {
+                this.subscribeToSaveResponse(this.internetService.update(this.internet));
+            } else {
+                this.subscribeToSaveResponse(this.internetService.create(this.internet));
+            }
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IInternet>>) {
