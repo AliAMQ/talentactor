@@ -349,7 +349,78 @@
                         </table>
                     </div>
                 </dd>
-                <!--Commerciallist-End-->
+                <!--Commercial list-End-->
+                <!--Print list-Begin-->
+                <dt><span jhiTranslate="talentactorApp.profile.print">Print</span></dt>
+                <dd>
+                    <div class="table-responsive" *ngIf="prints">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr jhiSort [(predicate)]="predicate">
+                                <th><span jhiTranslate="talentactorApp.print.title">Title</span></th>
+                                <th><span jhiTranslate="talentactorApp.print.photographer">photographer</span></th>
+                                <th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
+                                <th><span jhiTranslate="talentactorApp.print.image">Image</span></th>
+                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
+                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let print of prints ;trackBy: trackId">
+                                <td><a href="{{print.link}}" target="_blank">{{print.title}}</a></td>
+                                <td>{{print.photographer}}</td>
+                                <td>{{print.hair}}</td>
+                                <!--<td>{{film.link}}</td>-->
+                                <td>
+                                    <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
+                                        <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
+                                    </a>
+                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
+                                </td>
+                                <!--<td>
+                                    <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
+                                    <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
+                                </td>-->
+                                <!--<td>{{film.imagepath}}</td>
+                                <td>{{film.videopath}}</td>
+                                <td>
+                                    <div *ngIf="film.profileId">
+                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
+                                    </div>
+                                </td>-->
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit"
+                                                [routerLink]="['/print', print.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/print', print.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', { outlets: { popup: 'print/'+ print.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+                <!--print list-End-->
                     <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
                     <dd>
                         <span>{{profile.since}}</span>
