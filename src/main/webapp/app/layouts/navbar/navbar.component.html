@@ -24,6 +24,12 @@
                     <span jhiTranslate="global.menu.entities.project">Project</span>
                 </a>
             </li>
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <fa-icon [icon]="'list'" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.entities.profile">Profile</span>
+                </a>
+            </li>
             <!--<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                     <fa-icon [icon]="'list'" [fixedWidth]="true"></fa-icon>
