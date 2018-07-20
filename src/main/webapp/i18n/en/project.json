@@ -24,7 +24,7 @@
             "video": "Video",
             "imagepath": "Imagepath",
             "videopath": "Videopath",
-            "role": "Role"
+            "role": "Roles"
         }
     }
 }

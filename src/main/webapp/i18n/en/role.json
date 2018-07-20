@@ -19,7 +19,9 @@
             "title": "Title",
             "description": "Description",
             "profile": "Profile",
-            "project": "Project"
+            "project": "Project",
+            "actor": "Actor",
+            "goActor": "Go to actor"
         }
     }
 }
