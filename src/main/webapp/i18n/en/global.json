@@ -71,12 +71,13 @@
         "messages": {
             "info": {
                 "authenticated": {
-                    "prefix": "If you want to ",
+                    "prefix": "You may ",
                     "link": "sign in",
-                    "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+                    "suffix2": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
+                    "suffix": " to set up your profile or access your roles"
                 },
                 "register": {
-                    "noaccount": "You don't have an account yet?",
+                    "noaccount": "Don't have an account yet?",
                     "link": "Register a new account"
                 }
             },
@@ -155,5 +156,5 @@
         "idexists": "A new {{ entityName }} cannot already have an ID",
         "idnull": "Invalid ID"
     },
-    "footer": "This is your footer"
+    "footer": "Copyright © Talentactor 2018"
 }

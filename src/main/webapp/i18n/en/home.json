@@ -1,9 +1,11 @@
 {
     "home": {
-        "title": "Welcome, Java Hipster!",
+        "title": "Welcome, Talented Actor!",
         "subtitle": "This is your homepage",
         "logged": {
-            "message": "You are logged in as user \"{{username}}\"."
+            "message": "You are logged in as \"{{username}}\"",
+            "message2": "Here is everything about your profile",
+            "message3": "And here are your"
         },
         "question": "If you have any question on JHipster:",
         "link": {
@@ -14,6 +16,7 @@
             "follow": "follow @java_hipster on Twitter"
         },
         "like": "If you like JHipster, don't forget to give us a star on",
-        "github": "GitHub"
+        "github": "GitHub",
+        "roles": "Roles"
     }
 }
