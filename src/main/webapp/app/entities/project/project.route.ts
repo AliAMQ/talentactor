@@ -47,7 +47,8 @@ export const projectRoute: Routes = [
             project: ProjectResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            /*authorities: ['ROLE_USER'],*/
+            authorities: [],
             pageTitle: 'talentactorApp.project.home.title'
         },
         canActivate: [UserRouteAccessService]
