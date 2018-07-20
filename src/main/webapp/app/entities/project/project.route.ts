@@ -33,7 +33,8 @@ export const projectRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            /*authorities: ['ROLE_USER'],*/
+            authorities: [],
             defaultSort: 'id,asc',
             pageTitle: 'talentactorApp.project.home.title'
         },
