@@ -3,9 +3,9 @@
         "title": "Welcome, Talented Actor!",
         "subtitle": "This is your homepage",
         "logged": {
-            "message": "You are logged in as \"{{username}}\"",
+            "message": "You are logged in as \"{{username}}\".",
             "message2": "Here is everything about your profile",
-            "message3": "And here are your"
+            "message3": "and here are your"
         },
         "question": "If you have any question on JHipster:",
         "link": {
@@ -17,6 +17,8 @@
         },
         "like": "If you like JHipster, don't forget to give us a star on",
         "github": "GitHub",
-        "roles": "Roles"
+        "roles": "Roles.",
+        "check": "Check out",
+        "allProjects": "all Talentactor project"
     }
 }

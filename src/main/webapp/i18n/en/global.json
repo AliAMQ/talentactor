@@ -74,11 +74,11 @@
                     "prefix": "You may ",
                     "link": "sign in",
                     "suffix2": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
-                    "suffix": " to set up your profile or access your roles"
+                    "suffix": " to set up your profile or access your roles."
                 },
                 "register": {
                     "noaccount": "Don't have an account yet?",
-                    "link": "Register a new account"
+                    "link": "Register a new account."
                 }
             },
             "error": {
