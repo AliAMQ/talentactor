@@ -33,8 +33,13 @@
                 <dt><span jhiTranslate="talentactorApp.commercial.video">Video</span></dt>
                 <dd>
                     <div *ngIf="commercial.video">
-                        <a (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
+                        <!--<a (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>-->
                         <!--{{commercial.videoContentType}}, {{byteSize(commercial.video)}}-->
+                        <div *ngIf="commercial.video">
+                            <video style="max-width: 50%;" alt="User video" controls>
+                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + commercial.video">
+                            </video>
+                        </div>
                     </div>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.commercial.imagepath">Imagepath</span></dt>

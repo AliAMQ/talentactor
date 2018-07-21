@@ -40,7 +40,7 @@
                     <div>
                         <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 100px;" *ngIf="internet.image" alt="internet image"/>
                         <div *ngIf="internet.image" class="form-text text-danger clearfix">
-                            <!--<span class="pull-left">{{internet.imageContentType}}, {{byteSize(internet.image)}}</span>-->
+                            <span class="pull-left">{{internet.imageContentType}}, {{byteSize(internet.image)}}</span>
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>

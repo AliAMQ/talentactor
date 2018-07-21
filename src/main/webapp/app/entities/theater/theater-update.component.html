@@ -35,7 +35,7 @@
                     <div>
                         <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 100px;" *ngIf="theater.image" alt="theater image"/>
                         <div *ngIf="theater.image" class="form-text text-danger clearfix">
-                            <!--<span class="pull-left">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>-->
+                            <span class="pull-left">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>

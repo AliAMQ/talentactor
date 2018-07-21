@@ -57,7 +57,7 @@
                     <div>
                         <div *ngIf="commercial.video" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a><br>
-                            <!--<span class="pull-left">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>-->
+                            <span class="pull-left">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
                             <button type="button" (click)="commercial.video=null;commercial.videoContentType=null;"
                                     class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>

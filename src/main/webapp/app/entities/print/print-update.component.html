@@ -40,7 +40,7 @@
                     <div>
                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 100px;" *ngIf="print.image" alt="print image"/>
                         <div *ngIf="print.image" class="form-text text-danger clearfix">
-                            <!--<span class="pull-left">{{print.imageContentType}}, {{byteSize(print.image)}}</span>-->
+                            <span class="pull-left">{{print.imageContentType}}, {{byteSize(print.image)}}</span>
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
