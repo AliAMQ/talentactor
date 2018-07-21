@@ -1,13 +1,22 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="internet">
-            <h2><span jhiTranslate="talentactorApp.internet.detail.title">Internet</span> {{internet.id}}</h2>
+            <!--<h2><span jhiTranslate="talentactorApp.internet.detail.title">Internet</span> {{internet.id}}</h2>-->
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="talentactorApp.internet.title">Title</span></dt>
                 <dd>
                     <span>{{internet.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.internet.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="internet.image">
+                        <a (click)="openFile(internet.imageContentType, internet.image)">
+                            <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 50%;" alt="internet image"/>
+                        </a>
+                        <!--{{internet.imageContentType}}, {{byteSize(internet.image)}}-->
+                    </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.internet.director">Director</span></dt>
                 <dd>
@@ -19,16 +28,7 @@
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.internet.link">Link</span></dt>
                 <dd>
-                    <span>{{internet.link}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.internet.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="internet.image">
-                        <a (click)="openFile(internet.imageContentType, internet.image)">
-                            <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 100%;" alt="internet image"/>
-                        </a>
-                        {{internet.imageContentType}}, {{byteSize(internet.image)}}
-                    </div>
+                    <span><a href="{{internet.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.internet.video">Video</span></dt>
                 <dd>
@@ -37,7 +37,7 @@
                         {{internet.videoContentType}}, {{byteSize(internet.video)}}
                     </div>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.internet.imagepath">Imagepath</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.internet.imagepath">Imagepath</span></dt>
                 <dd>
                     <span>{{internet.imagepath}}</span>
                 </dd>
@@ -50,7 +50,7 @@
                     <div *ngIf="internet.profileId">
                         <a [routerLink]="['/profile', internet.profileId, 'view']">{{internet.profileId}}</a>
                     </div>
-                </dd>
+                </dd>-->
             </dl>
 
             <button type="submit"

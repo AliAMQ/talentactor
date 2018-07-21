@@ -14,33 +14,33 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.internet.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th><span jhiTranslate="talentactorApp.internet.image">Image</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.internet.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="cameraman"><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.internet.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.internet.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.internet.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.internet.link">Link</span></th>
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.internet.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.internet.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.internet.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.internet.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.internet.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let internet of internets ;trackBy: trackId">
-                <td><a [routerLink]="['/internet', internet.id, 'view' ]">{{internet.id}}</a></td>
+                <!--<td><a [routerLink]="['/internet', internet.id, 'view' ]">{{internet.id}}</a></td>-->
                 <td>{{internet.title}}</td>
-                <td>{{internet.director}}</td>
-                <td>{{internet.cameraman}}</td>
-                <td>{{internet.link}}</td>
                 <td>
                     <a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">
-                        <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
+                        <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 100px;" alt="internet image"/>
                     </a>
-                    <span *ngIf="internet.image">{{internet.imageContentType}}, {{byteSize(internet.image)}}</span>
+                    <!--<span *ngIf="internet.image">{{internet.imageContentType}}, {{byteSize(internet.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{internet.director}}</td>
+                <td>{{internet.cameraman}}</td>
+                <td><a href="{{internet.link}}" target="_blank">Go to website</a></td>
+                <!--<td>
                     <a *ngIf="internet.video" (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="internet.video">{{internet.videoContentType}}, {{byteSize(internet.video)}}</span>
                 </td>
@@ -50,7 +50,7 @@
                     <div *ngIf="internet.profileId">
                         <a [routerLink]="['../profile', internet.profileId , 'view' ]" >{{internet.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
