@@ -3,12 +3,12 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-commercial-heading" jhiTranslate="talentactorApp.commercial.home.createOrEditLabel">Create or edit a Commercial</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
+                <!--<jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!commercial.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="commercial.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.commercial.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
@@ -40,7 +40,7 @@
                     <div>
                         <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 100px;" *ngIf="commercial.image" alt="commercial image"/>
                         <div *ngIf="commercial.image" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{commercial.imageContentType}}, {{byteSize(commercial.image)}}</span>
+                            <!--<span class="pull-left">{{commercial.imageContentType}}, {{byteSize(commercial.image)}}</span>-->
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
@@ -57,7 +57,7 @@
                     <div>
                         <div *ngIf="commercial.video" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a><br>
-                            <span class="pull-left">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
+                            <!--<span class="pull-left">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>-->
                             <button type="button" (click)="commercial.video=null;commercial.videoContentType=null;"
                                     class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
@@ -70,7 +70,7 @@
                     <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
                         [(ngModel)]="commercial.videoContentType" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.commercial.imagepath" for="field_imagepath">Imagepath</label>
                     <input type="text" class="form-control" name="imagepath" id="field_imagepath"
                         [(ngModel)]="commercial.imagepath" />
@@ -79,8 +79,7 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.commercial.videopath" for="field_videopath">Videopath</label>
                     <input type="text" class="form-control" name="videopath" id="field_videopath"
                         [(ngModel)]="commercial.videopath" />
-                </div>
-
+                </div>-->
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.commercial.profile" for="field_profile">Profile</label>
                     <select class="form-control" id="field_profile" name="profile" [(ngModel)]="commercial.profileId" >

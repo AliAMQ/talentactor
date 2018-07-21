@@ -14,33 +14,33 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.commercial.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.commercial.image">Image</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.commercial.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="cameraman"><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.commercial.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.commercial.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.commercial.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.commercial.link">Link</span></th>
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.commercial.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.commercial.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.commercial.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.commercial.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.commercial.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let commercial of commercials ;trackBy: trackId">
-                <td><a [routerLink]="['/commercial', commercial.id, 'view' ]">{{commercial.id}}</a></td>
+                <!--<td><a [routerLink]="['/commercial', commercial.id, 'view' ]">{{commercial.id}}</a></td>-->
                 <td>{{commercial.title}}</td>
-                <td>{{commercial.director}}</td>
-                <td>{{commercial.cameraman}}</td>
-                <td>{{commercial.link}}</td>
                 <td>
                     <a *ngIf="commercial.image" (click)="openFile(commercial.imageContentType, commercial.image)">
-                        <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 30px;" alt="commercial image"/>
+                        <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 100px;" alt="commercial image"/>
                     </a>
-                    <span *ngIf="commercial.image">{{commercial.imageContentType}}, {{byteSize(commercial.image)}}</span>
+                    <!--<span *ngIf="commercial.image">{{commercial.imageContentType}}, {{byteSize(commercial.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{commercial.director}}</td>
+                <td>{{commercial.cameraman}}</td>
+                <td><a href="{{commercial.link}}" target="_blank">Go to website</a></td>
+                <!--<td>
                     <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
                 </td>
@@ -50,7 +50,7 @@
                     <div *ngIf="commercial.profileId">
                         <a [routerLink]="['../profile', commercial.profileId , 'view' ]" >{{commercial.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
