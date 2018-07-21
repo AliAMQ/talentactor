@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="talentactorApp.project.home.title">Projects</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-project" [routerLink]="['/project/new']">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-project" [routerLink]="['/project/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="talentactorApp.project.home.createLabel">
             Create new Project
@@ -14,37 +14,38 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.project.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="code"><span jhiTranslate="talentactorApp.project.code">Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="date"><span jhiTranslate="talentactorApp.project.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.project.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.project.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.project.image">Image</span></th>
+            <th><span jhiTranslate="talentactorApp.project.code">Code</span></th>
+            <!--<th jhiSortBy="date"><span jhiTranslate="talentactorApp.project.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.project.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.project.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.project.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.project.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let project of projects ;trackBy: trackId">
-                <td><a [routerLink]="['/project', project.id, 'view' ]">{{project.id}}</a></td>
-                <td>{{project.title}}</td>
-                <td>{{project.code}}</td>
-                <td>{{project.date | date:'mediumDate'}}</td>
+                <!--<td><a [routerLink]="['/project', project.id, 'view' ]">{{project.id}}</a></td>-->
+                <td width="20%"><a [routerLink]="['/project', project.id, 'view' ]">{{project.title}}</a></td>
+                <!--<td>{{project.title}}</td>-->
                 <td>
                     <a *ngIf="project.image" (click)="openFile(project.imageContentType, project.image)">
-                        <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-height: 30px;" alt="project image"/>
+                        <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-height: 100px;" alt="project image"/>
                     </a>
-                    <span *ngIf="project.image">{{project.imageContentType}}, {{byteSize(project.image)}}</span>
+                    <!--<span *ngIf="project.image">{{project.imageContentType}}, {{byteSize(project.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{project.code}}</td>
+                <!--<td>{{project.date | date:'mediumDate'}}</td>-->
+                <!--<td>
                     <a *ngIf="project.video" (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="project.video">{{project.videoContentType}}, {{byteSize(project.video)}}</span>
                 </td>
                 <td>{{project.imagepath}}</td>
-                <td>{{project.videopath}}</td>
+                <td>{{project.videopath}}</td>-->
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['/project', project.id, 'view' ]"
                                 class="btn btn-info btn-sm">
