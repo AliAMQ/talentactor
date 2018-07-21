@@ -14,36 +14,36 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.print.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.print.image">Image</span></th>
             <th jhiSortBy="photographer"><span jhiTranslate="talentactorApp.print.photographer">Photographer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hair"><span jhiTranslate="talentactorApp.print.hair">Hair</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.print.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.print.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.print.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.print.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.print.link">Link</span></th>
+            <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.print.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.print.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let print of prints ;trackBy: trackId">
-                <td><a [routerLink]="['/print', print.id, 'view' ]">{{print.id}}</a></td>
+                <!--<td><a [routerLink]="['/print', print.id, 'view' ]">{{print.id}}</a></td>-->
                 <td>{{print.title}}</td>
-                <td>{{print.photographer}}</td>
-                <td>{{print.hair}}</td>
-                <td>{{print.link}}</td>
                 <td>
                     <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
                     </a>
-                    <span *ngIf="print.image">{{print.imageContentType}}, {{byteSize(print.image)}}</span>
+                    <!--<span *ngIf="print.image">{{print.imageContentType}}, {{byteSize(print.image)}}</span>-->
                 </td>
-                <td>{{print.imagepath}}</td>
+                <td>{{print.photographer}}</td>
+                <td>{{print.hair}}</td>
+                <td><a href="{{print.link}}" target="_blank">Go to website</a></td>
+                <!--<td>{{print.imagepath}}</td>
                 <td>
                     <div *ngIf="print.profileId">
                         <a [routerLink]="['../profile', print.profileId , 'view' ]" >{{print.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

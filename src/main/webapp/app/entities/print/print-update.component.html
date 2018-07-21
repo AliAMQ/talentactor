@@ -4,11 +4,11 @@
             <h2 id="jhi-print-heading" jhiTranslate="talentactorApp.print.home.createOrEditLabel">Create or edit a Print</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!print.id">
+                <!--<div class="form-group" [hidden]="!print.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="print.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.print.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
@@ -40,7 +40,7 @@
                     <div>
                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 100px;" *ngIf="print.image" alt="print image"/>
                         <div *ngIf="print.image" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{print.imageContentType}}, {{byteSize(print.image)}}</span>
+                            <!--<span class="pull-left">{{print.imageContentType}}, {{byteSize(print.image)}}</span>-->
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
@@ -52,11 +52,11 @@
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
                         [(ngModel)]="print.imageContentType" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.print.imagepath" for="field_imagepath">Imagepath</label>
                     <input type="text" class="form-control" name="imagepath" id="field_imagepath"
                         [(ngModel)]="print.imagepath" />
-                </div>
+                </div>-->
 
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.print.profile" for="field_profile">Profile</label>
