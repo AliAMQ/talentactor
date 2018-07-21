@@ -83,43 +83,45 @@
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
                 <br>
                 <br>
-                <h5 jhiTranslate="settings.advance">Professional history</h5>
-                <a routerLink="../film" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.film">Film</span>
-                </a>
-                &nbsp;
-                <a routerLink="../television" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.television">Television</span>
-                </a>
-                &nbsp;
-                <a routerLink="../internet" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.internet">Internet</span>
-                </a>
-                &nbsp;
-                <a routerLink="../commercial" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.commercial">Commercial</span>
-                </a>
-                &nbsp;
-                <a routerLink="../print" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.print">Print</span>
-                </a>
-                &nbsp;
-                <a routerLink="../theater" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.theater">Theater</span>
-                </a>
-                &nbsp;
-                <a routerLink="../voice" [hidden]="isAdmin">
-                    <span jhiTranslate="global.menu.entities.voice">Voice</span>
-                </a>
-                <br>
-                <br>
-                <a routerLink="../profile/{{profileid}}/view">
-                    <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
-                </a>
-                &nbsp;|&nbsp;
-                <a routerLink="../role-my" [hidden]="isAdmin">
-                    <span jhiTranslate="settings.form.roles">Roles</span>
-                </a>
+                <div [hidden]="isAdmin">
+                    <h5 jhiTranslate="settings.advance">Professional history</h5>
+                    <a routerLink="../film">
+                        <span jhiTranslate="global.menu.entities.film">Film</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../television">
+                        <span jhiTranslate="global.menu.entities.television">Television</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../internet">
+                        <span jhiTranslate="global.menu.entities.internet">Internet</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../commercial">
+                        <span jhiTranslate="global.menu.entities.commercial">Commercial</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../print">
+                        <span jhiTranslate="global.menu.entities.print">Print</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../theater">
+                        <span jhiTranslate="global.menu.entities.theater">Theater</span>
+                    </a>
+                    &nbsp;
+                    <a routerLink="../voice">
+                        <span jhiTranslate="global.menu.entities.voice">Voice</span>
+                    </a>
+                    <br>
+                    <br>
+                    <a routerLink="../profile/{{profileid}}/view">
+                        <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a routerLink="../role-my" [hidden]="isAdmin">
+                        <span jhiTranslate="settings.form.roles">Roles</span>
+                    </a>
+                </div>
             </form>
         </div>
     </div>
