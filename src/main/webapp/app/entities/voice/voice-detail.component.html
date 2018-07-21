@@ -1,13 +1,27 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="voice">
-            <h2><span jhiTranslate="talentactorApp.voice.detail.title">Voice</span> {{voice.id}}</h2>
-            <hr>
+            <!--<h2><span jhiTranslate="talentactorApp.voice.detail.title">Voice</span> {{voice.id}}</h2>
+            <hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="talentactorApp.voice.title">Title</span></dt>
                 <dd>
                     <span>{{voice.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.audio">Audio</span></dt>
+                <dd>
+                    <div *ngIf="voice.audio">
+                        <div *ngIf="voice.audio">
+                            <audio style="max-width: 100%;" alt="User Audio" controls>
+                                <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
+                            </audio>
+                            <!--<a (click)="openFile(userExtra.audioContentType, userExtra.audio)" jhiTranslate="entity.action.open">open</a>
+                            {{userExtra.audioContentType}}, {{byteSize(userExtra.audio)}}-->
+                        </div>
+                        <!--<a (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>
+                        {{voice.audioContentType}}, {{byteSize(voice.audio)}}-->
+                    </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.voice.director">Director</span></dt>
                 <dd>
@@ -15,23 +29,23 @@
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.voice.link">Link</span></dt>
                 <dd>
-                    <span>{{voice.link}}</span>
+                    <span><a href="{{voice.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.voice.video">Video</span></dt>
                 <dd>
                     <div *ngIf="voice.video">
-                        <a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>
-                        {{voice.videoContentType}}, {{byteSize(voice.video)}}
+                        <!--<a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>-->
+                        <!--{{voice.videoContentType}}, {{byteSize(voice.video)}}-->
+                        <div *ngIf="voice.video">
+                            <video style="max-width: 100%;" alt="User video" controls>
+                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + voice.video">
+                            </video>
+                            <!--<a (click)="openFile(userExtra.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
+                            {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}-->
+                        </div>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.audio">Audio</span></dt>
-                <dd>
-                    <div *ngIf="voice.audio">
-                        <a (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>
-                        {{voice.audioContentType}}, {{byteSize(voice.audio)}}
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span></dt>
                 <dd>
                     <span>{{voice.videopath}}</span>
                 </dd>
@@ -44,7 +58,7 @@
                     <div *ngIf="voice.profileId">
                         <a [routerLink]="['/profile', voice.profileId, 'view']">{{voice.profileId}}</a>
                     </div>
-                </dd>
+                </dd>-->
             </dl>
 
             <button type="submit"

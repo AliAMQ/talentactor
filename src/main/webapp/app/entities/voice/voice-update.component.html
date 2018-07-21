@@ -4,11 +4,11 @@
             <h2 id="jhi-voice-heading" jhiTranslate="talentactorApp.voice.home.createOrEditLabel">Create or edit a Voice</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!voice.id">
+                <!--<div class="form-group" [hidden]="!voice.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="voice.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
@@ -66,7 +66,7 @@
                     <input type="hidden" class="form-control" name="audioContentType" id="field_audioContentType"
                         [(ngModel)]="voice.audioContentType" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.videopath" for="field_videopath">Videopath</label>
                     <input type="text" class="form-control" name="videopath" id="field_videopath"
                         [(ngModel)]="voice.videopath" />
@@ -75,8 +75,7 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.audiopath" for="field_audiopath">Audiopath</label>
                     <input type="text" class="form-control" name="audiopath" id="field_audiopath"
                         [(ngModel)]="voice.audiopath" />
-                </div>
-
+                </div>-->
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.profile" for="field_profile">Profile</label>
                     <select class="form-control" id="field_profile" name="profile" [(ngModel)]="voice.profileId" >
