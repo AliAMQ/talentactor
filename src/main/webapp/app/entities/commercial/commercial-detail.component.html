@@ -2,18 +2,18 @@
     <div class="col-8">
         <div *ngIf="commercial">
             <!--<h2><span jhiTranslate="talentactorApp.commercial.detail.title">Commercial</span> {{commercial.id}}</h2>-->
-            <hr>
+            <!--<hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="talentactorApp.commercial.title">Title</span></dt>
                 <dd>
                     <span>{{commercial.title}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.commercial.image">Image</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.commercial.image">Image</span></dt>-->
                 <dd>
                     <div *ngIf="commercial.image">
                         <a (click)="openFile(commercial.imageContentType, commercial.image)">
-                            <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-width: 100%;" alt="commercial image"/>
+                            <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-width: 30%;" alt="commercial image"/>
                         </a>
                         <!--{{commercial.imageContentType}}, {{byteSize(commercial.image)}}-->
                     </div>

@@ -2,18 +2,18 @@
     <div class="col-8">
         <div *ngIf="internet">
             <!--<h2><span jhiTranslate="talentactorApp.internet.detail.title">Internet</span> {{internet.id}}</h2>-->
-            <hr>
+            <!--<hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="talentactorApp.internet.title">Title</span></dt>
                 <dd>
                     <span>{{internet.title}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.internet.image">Image</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.internet.image">Image</span></dt>-->
                 <dd>
                     <div *ngIf="internet.image">
                         <a (click)="openFile(internet.imageContentType, internet.image)">
-                            <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 50%;" alt="internet image"/>
+                            <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 30%;" alt="internet image"/>
                         </a>
                         <!--{{internet.imageContentType}}, {{byteSize(internet.image)}}-->
                     </div>

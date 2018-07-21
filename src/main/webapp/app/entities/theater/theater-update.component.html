@@ -4,11 +4,11 @@
             <h2 id="jhi-theater-heading" jhiTranslate="talentactorApp.theater.home.createOrEditLabel">Create or edit a Theater</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!theater.id">
+                <!--<div class="form-group" [hidden]="!theater.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="theater.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.theater.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
@@ -35,7 +35,7 @@
                     <div>
                         <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 100px;" *ngIf="theater.image" alt="theater image"/>
                         <div *ngIf="theater.image" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>
+                            <!--<span class="pull-left">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>-->
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
@@ -65,7 +65,7 @@
                     <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
                         [(ngModel)]="theater.videoContentType" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.theater.imagepath" for="field_imagepath">Imagepath</label>
                     <input type="text" class="form-control" name="imagepath" id="field_imagepath"
                         [(ngModel)]="theater.imagepath" />
@@ -74,7 +74,7 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.theater.videopath" for="field_videopath">Videopath</label>
                     <input type="text" class="form-control" name="videopath" id="field_videopath"
                         [(ngModel)]="theater.videopath" />
-                </div>
+                </div>-->
 
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.theater.profile" for="field_profile">Profile</label>

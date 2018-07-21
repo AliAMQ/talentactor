@@ -14,31 +14,31 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.theater.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.theater.image">Image</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.theater.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.theater.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.theater.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.theater.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.theater.link">Link</span></th>
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.theater.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.theater.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.theater.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.theater.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.theater.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let theater of theaters ;trackBy: trackId">
-                <td><a [routerLink]="['/theater', theater.id, 'view' ]">{{theater.id}}</a></td>
+                <!--<td><a [routerLink]="['/theater', theater.id, 'view' ]">{{theater.id}}</a></td>-->
                 <td>{{theater.title}}</td>
-                <td>{{theater.director}}</td>
-                <td>{{theater.link}}</td>
                 <td>
                     <a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">
-                        <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="theater image"/>
+                        <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 100px;" alt="theater image"/>
                     </a>
-                    <span *ngIf="theater.image">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>
+                    <!--<span *ngIf="theater.image">{{theater.imageContentType}}, {{byteSize(theater.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{theater.director}}</td>
+                <td><a href="{{theater.link}}" target="_blank">Go to website</a></td>
+                <!--<td>
                     <a *ngIf="theater.video" (click)="openFile(theater.videoContentType, theater.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="theater.video">{{theater.videoContentType}}, {{byteSize(theater.video)}}</span>
                 </td>
@@ -48,7 +48,7 @@
                     <div *ngIf="theater.profileId">
                         <a [routerLink]="['../profile', theater.profileId , 'view' ]" >{{theater.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

@@ -2,18 +2,18 @@
     <div class="col-8">
         <div *ngIf="print">
             <!--<h2><span jhiTranslate="talentactorApp.print.detail.title">Print</span> {{print.id}}</h2>-->
-            <hr>
+            <!--<hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="talentactorApp.print.title">Title</span></dt>
                 <dd>
                     <span>{{print.title}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.print.image">Image</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.print.image">Image</span></dt>-->
                 <dd>
                     <div *ngIf="print.image">
                         <a (click)="openFile(print.imageContentType, print.image)">
-                            <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-width: 100%;" alt="print image"/>
+                            <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-width: 30%;" alt="print image"/>
                         </a>
                         <!--{{print.imageContentType}}, {{byteSize(print.image)}}-->
                     </div>
