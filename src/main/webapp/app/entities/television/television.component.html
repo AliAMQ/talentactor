@@ -14,33 +14,33 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.television.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.television.image">Image</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.television.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="cameraman"><span jhiTranslate="talentactorApp.television.cameraman">Cameraman</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.television.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.television.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.television.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.television.link">Link</span></th>
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.television.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.television.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.television.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.television.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.television.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let television of televisions ;trackBy: trackId">
-                <td><a [routerLink]="['/television', television.id, 'view' ]">{{television.id}}</a></td>
+                <!--<td><a [routerLink]="['/television', television.id, 'view' ]">{{television.id}}</a></td>-->
                 <td>{{television.title}}</td>
-                <td>{{television.director}}</td>
-                <td>{{television.cameraman}}</td>
-                <td>{{television.link}}</td>
                 <td>
                     <a *ngIf="television.image" (click)="openFile(television.imageContentType, television.image)">
                         <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 30px;" alt="television image"/>
                     </a>
-                    <span *ngIf="television.image">{{television.imageContentType}}, {{byteSize(television.image)}}</span>
+                    <!--<span *ngIf="television.image">{{television.imageContentType}}, {{byteSize(television.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{television.director}}</td>
+                <td>{{television.cameraman}}</td>
+                <td><a href="{{television.link}}" target="_blank">Go to website</a></td>
+                <!--<td>
                     <a *ngIf="television.video" (click)="openFile(television.videoContentType, television.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="television.video">{{television.videoContentType}}, {{byteSize(television.video)}}</span>
                 </td>
@@ -50,7 +50,7 @@
                     <div *ngIf="television.profileId">
                         <a [routerLink]="['../profile', television.profileId , 'view' ]" >{{television.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
