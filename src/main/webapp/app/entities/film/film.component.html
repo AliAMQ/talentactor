@@ -14,43 +14,43 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.film.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.film.image">Image</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.film.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="cameraman"><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="link"><span jhiTranslate="talentactorApp.film.link">Link</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.film.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.film.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.film.link">Link</span></th>
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.film.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.film.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.film.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let film of films ;trackBy: trackId">
-                <td><a [routerLink]="['/film', film.id, 'view' ]">{{film.id}}</a></td>
+                <!--<td><a [routerLink]="['/film', film.id, 'view' ]">{{film.id}}</a></td>-->
                 <td>{{film.title}}</td>
-                <td>{{film.director}}</td>
-                <td>{{film.cameraman}}</td>
-                <td>{{film.link}}</td>
                 <td>
                     <a *ngIf="film.image" (click)="openFile(film.imageContentType, film.image)">
-                        <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-height: 30px;" alt="film image"/>
+                        <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-height: 100px;" alt="film image"/>
                     </a>
-                    <span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>
+                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                 </td>
-                <td>
+                <td>{{film.director}}</td>
+                <td>{{film.cameraman}}</td>
+                <td><a href="{{film.link}}" target="_blank">Go to website</a></td>
+                <!--<td>
                     <a *ngIf="film.video" (click)="openFile(film.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="film.video">{{film.videoContentType}}, {{byteSize(film.video)}}</span>
                 </td>
                 <td>{{film.imagepath}}</td>
-                <td>{{film.videopath}}</td>
-                <td>
+                <td>{{film.videopath}}</td>-->
+                <!--<td>
                     <div *ngIf="film.profileId">
                         <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
