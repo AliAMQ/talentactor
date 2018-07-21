@@ -36,7 +36,7 @@
             </div>-->
         </div>
         <dd>
-            <h6><span jhiTranslate="global.menu.entities.project">Project</span>: {{project.title}}</h6>
+            <h6><span jhiTranslate="global.menu.entities.project">Project</span>: <a [routerLink]="['/project', project.id, 'view' ]">{{project.title}}</a></h6>
             <table width="70%">
                 <tr>
                     <td width="30%">
