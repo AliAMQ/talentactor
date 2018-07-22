@@ -9,6 +9,7 @@ import { IUser } from './user.model';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private resourceUrl = SERVER_API_URL + 'api/users';
+    private resourceUrl2 = SERVER_API_URL + 'api/userbyid';
 
     constructor(private http: HttpClient) {}
 
@@ -22,6 +23,10 @@ export class UserService {
 
     find(login: string): Observable<HttpResponse<IUser>> {
         return this.http.get<IUser>(`${this.resourceUrl}/${login}`, { observe: 'response' });
+    }
+
+    findById(userId: number): Observable<HttpResponse<IUser>> {
+        return this.http.get<IUser>(`${this.resourceUrl2}/${userId}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<HttpResponse<IUser[]>> {

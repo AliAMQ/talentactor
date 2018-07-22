@@ -4,11 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
-import { IProfile } from 'app/shared/model/profile.model';
+import { IProfile, Profile } from 'app/shared/model/profile.model';
 import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { ProfileService } from './profile.service';
+
+import { UserService } from '../../core/user/user.service';
+import { IUser } from 'app/core/user/user.model';
 
 @Component({
     selector: 'jhi-profile',
@@ -29,6 +32,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    user: IUser;
+    userInfo: string;
 
     constructor(
         private profileService: ProfileService,
@@ -38,7 +43,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private userService: UserService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -57,7 +63,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 sort: this.sort()
             })
             .subscribe(
-                (res: HttpResponse<IProfile[]>) => this.paginateProfiles(res.body, res.headers),
+                (res: HttpResponse<IProfile[]>) => {
+                    this.paginateProfiles(res.body, res.headers);
+                    this.setUserInfo();
+                },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
     }
@@ -126,6 +135,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
             result.push('id');
         }
         return result;
+    }
+
+    setUserInfo() {
+        for (const p of this.profiles) {
+            this.userService.findById(p.userId).subscribe((res: HttpResponse<IUser>) => {
+                this.user = res.body;
+                p.imagepath = this.user.firstName + ' ' + this.user.lastName;
+            });
+        }
     }
 
     private paginateProfiles(data: IProfile[], headers: HttpHeaders) {

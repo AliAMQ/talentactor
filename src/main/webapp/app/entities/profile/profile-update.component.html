@@ -79,7 +79,7 @@
                     <input type="text" class="form-control" name="phone" id="field_phone"
                         [(ngModel)]="profile.phone" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.since" for="field_since">Since</label>
                     <div class="input-group">
                         <input id="field_since" type="text" class="form-control" name="since" ngbDatepicker  #sinceDp="ngbDatepicker" [(ngModel)]="profile.since"
@@ -88,7 +88,7 @@
                             <button type="button" class="btn btn-secondary" (click)="sinceDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                         </span>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.image" for="field_image">Image</label>
                     <div>
@@ -142,7 +142,7 @@
                     <input type="hidden" class="form-control" name="audioContentType" id="field_audioContentType"
                         [(ngModel)]="profile.audioContentType" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.imagepath" for="field_imagepath">Imagepath</label>
                     <input type="text" class="form-control" name="imagepath" id="field_imagepath"
                         [(ngModel)]="profile.imagepath" />
@@ -156,15 +156,15 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.audiopath" for="field_audiopath">Audiopath</label>
                     <input type="text" class="form-control" name="audiopath" id="field_audiopath"
                         [(ngModel)]="profile.audiopath" />
-                </div>
+                </div>-->
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.user" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" [(ngModel)]="profile.userId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
                     </select>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label jhiTranslate="talentactorApp.profile.skill" for="field_skill">Skill</label>
                     <select class="form-control" id="field_skill" multiple name="skill" [(ngModel)]="profile.skills">

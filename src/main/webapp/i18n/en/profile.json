@@ -46,7 +46,8 @@
             "weapon": "Weapon",
             "cycling": "Cycling",
             "circus": "Circus",
-            "horse": "Horse"
+            "horse": "Horse",
+            "userinfo": "User"
         }
     }
 }

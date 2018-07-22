@@ -1,12 +1,12 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="talentactorApp.profile.home.title">Profiles</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-profile" [routerLink]="['/profile/new']">
+        <!--<button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-profile" [routerLink]="['/profile/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="talentactorApp.profile.home.createLabel">
             Create new Profile
             </span>
-        </button>
+        </button>-->
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
@@ -14,50 +14,58 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.profile.userinfo">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.profile.image">Image</span></th>
             <th jhiSortBy="state"><span jhiTranslate="talentactorApp.profile.state">State</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span jhiTranslate="talentactorApp.profile.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="address"><span jhiTranslate="talentactorApp.profile.address">Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="phone"><span jhiTranslate="talentactorApp.profile.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="since"><span jhiTranslate="talentactorApp.profile.since">Since</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="image"><span jhiTranslate="talentactorApp.profile.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="video"><span jhiTranslate="talentactorApp.profile.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="audio"><span jhiTranslate="talentactorApp.profile.audio">Audio</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th><span jhiTranslate="talentactorApp.profile.address">Address</span></th>
+            <th><span jhiTranslate="talentactorApp.profile.phone">Phone</span></th>
+            <!--<th jhiSortBy="since"><span jhiTranslate="talentactorApp.profile.since">Since</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.profile.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="audio"><span jhiTranslate="talentactorApp.profile.audio">Audio</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.profile.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="audiopath"><span jhiTranslate="talentactorApp.profile.audiopath">Audiopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="userId"><span jhiTranslate="talentactorApp.profile.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userId"><span jhiTranslate="talentactorApp.profile.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let profile of profiles ;trackBy: trackId">
-                <td><a [routerLink]="['/profile', profile.id, 'view' ]">{{profile.id}}</a></td>
+                <!--<td><a [routerLink]="['/profile', profile.id, 'view' ]">{{profile.id}}</a></td>-->
+                <!--<td>
+                    {{profile.userId}}
+                    <br>
+                    &lt;!&ndash;{{getUserInfo(4) | async}}&ndash;&gt;
+                    &lt;!&ndash;{{getUserInfo(profile.userId)}}&ndash;&gt;
+                </td>-->
+                <td>{{profile.imagepath}}</td>
+                <td>
+                    <a *ngIf="profile.image" (click)="openFile(profile.imageContentType, profile.image)">
+                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-height: 100px;" alt="profile image"/>
+                    </a>
+                    <!--<span *ngIf="profile.image">{{profile.imageContentType}}, {{byteSize(profile.image)}}</span>-->
+                </td>
                 <td jhiTranslate="{{'talentactorApp.State.' + profile.state}}">{{profile.state}}</td>
                 <td>{{profile.city}}</td>
                 <td>{{profile.address}}</td>
                 <td>{{profile.phone}}</td>
-                <td>{{profile.since | date:'mediumDate'}}</td>
-                <td>
-                    <a *ngIf="profile.image" (click)="openFile(profile.imageContentType, profile.image)">
-                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-height: 30px;" alt="profile image"/>
-                    </a>
-                    <span *ngIf="profile.image">{{profile.imageContentType}}, {{byteSize(profile.image)}}</span>
-                </td>
-                <td>
+                <!--<td>{{profile.since | date:'mediumDate'}}</td>-->
+                <!--<td>
                     <a *ngIf="profile.video" (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="profile.video">{{profile.videoContentType}}, {{byteSize(profile.video)}}</span>
                 </td>
                 <td>
                     <a *ngIf="profile.audio" (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="profile.audio">{{profile.audioContentType}}, {{byteSize(profile.audio)}}</span>
-                </td>
-                <td>{{profile.imagepath}}</td>
+                </td>-->
+                <!--<td>{{profile.imagepath}}</td>
                 <td>{{profile.videopath}}</td>
                 <td>{{profile.audiopath}}</td>
                 <td>
                     {{profile.userId}}
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
