@@ -111,10 +111,10 @@ export class ProfileDetailComponent implements OnInit {
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
-            this.login = this.principal.userIdentity.login;
-            this.firstName = this.principal.userIdentity.firstName;
-            this.lastName = this.principal.userIdentity.lastName;
-            this.email = this.principal.userIdentity.email;
+            this.login = this.principal.getLogin();
+            this.firstName = this.principal.getFirstName();
+            this.lastName = this.principal.getLastName();
+            this.email = this.principal.getEmail();
         });
         this.loadAllFilms();
         this.loadAllTelevisions();

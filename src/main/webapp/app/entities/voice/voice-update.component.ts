@@ -61,7 +61,7 @@ export class VoiceUpdateComponent implements OnInit {
     }
 
     save() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
             this.profileId = res.body.id;
             this.voice.profileId = this.profileId;
             this.isSaving = true;

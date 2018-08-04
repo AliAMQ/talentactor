@@ -99,4 +99,28 @@ export class Principal {
     getImageUrl(): string {
         return this.isIdentityResolved() ? this.userIdentity.imageUrl : null;
     }
+
+    getId(): number {
+        return this.userIdentity.id;
+    }
+
+    getLogin(): string {
+        return this.userIdentity.login;
+    }
+
+    getFirstName(): string {
+        return this.userIdentity.firstName;
+    }
+
+    getLastName(): string {
+        return this.userIdentity.lirstName;
+    }
+
+    getEmail(): string {
+        return this.userIdentity.email;
+    }
+
+    hasAnyAuthorityOf(authorities: string[]): boolean {
+        return this.hasAnyAuthorityDirect(authorities);
+    }
 }

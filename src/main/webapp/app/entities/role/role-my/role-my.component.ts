@@ -54,7 +54,7 @@ export class RoleMyComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.profileService.findByUserId(this.principal.userIdentity.id).subscribe((res: HttpResponse<IProfile>) => {
+        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
             this.profileid = res.body.id;
             this.roleService
                 .query({

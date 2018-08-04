@@ -38,7 +38,10 @@ export class SettingsComponent implements OnInit {
 
         this.findProfileByUserId();
 
-        this.isAdmin = this.principal.hasAnyAuthority(['ROLE_ADMIN']).__zone_symbol__value;
+        this.isAdmin = this.principal.hasAnyAuthorityOf(['ROLE_ADMIN']);
+
+        /*console.log('aaaaaaaaaaa-' + this.principal.hasAnyAuthority(['ROLE_ADMIN']).__zone_symbol__value);
+        console.log('bbbbbbbbbbb-' + this.principal.hasAnyAuthorityOf(['ROLE_ADMIN']));*/
     }
 
     save() {
@@ -75,8 +78,6 @@ export class SettingsComponent implements OnInit {
     }
 
     findProfileByUserId() {
-        this.profileService
-            .findByUserId(this.principal.userIdentity.id)
-            .subscribe((res: HttpResponse<IProfile>) => (this.profileid = res.body.id));
+        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => (this.profileid = res.body.id));
     }
 }
