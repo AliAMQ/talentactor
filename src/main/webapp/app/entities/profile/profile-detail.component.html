@@ -160,7 +160,7 @@
                                 <td>{{television.cameraman}}</td>
                                 <!--<td>{{film.link}}</td>-->
                                 <td>
-                                    <a *ngIf="television.image" (click)="openFile(film.imageContentType, television.image)">
+                                    <a *ngIf="television.image" (click)="openFile(television.imageContentType, television.image)">
                                         <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 30px;" alt="television image"/>
                                     </a>
                                     <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
