@@ -73,7 +73,7 @@
                     <div class="table-responsive" *ngIf="roles">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.role.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.role.description">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.role.actor">Actor</span></th>
@@ -86,7 +86,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let role of roles ;trackBy: trackId">
+                            <tr *ngFor="let role of roles ;">
                                 <td>{{role.title}}</td>
                                 <td>{{role.description}}</td>
                                 <td>

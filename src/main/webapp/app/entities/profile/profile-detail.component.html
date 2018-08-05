@@ -70,7 +70,7 @@
                     <div class="table-responsive" *ngIf="films">
                     <table class="table table-striped">
                         <thead>
-                        <tr jhiSort [(predicate)]="predicate">
+                        <tr>
                             <th><span jhiTranslate="talentactorApp.film.title">Title</span></th>
                             <th><span jhiTranslate="talentactorApp.film.director">Director</span></th>
                             <th><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span></th>
@@ -83,7 +83,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let film of films ;trackBy: trackId">
+                        <tr *ngFor="let film of films ;">
                             <td><a href="{{film.link}}" target="_blank">{{film.title}}</a></td>
                             <td>{{film.director}}</td>
                             <td>{{film.cameraman}}</td>
@@ -141,7 +141,7 @@
                     <div class="table-responsive" *ngIf="televisions">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.television.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.television.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.television.cameraman">Cameraman</span></th>
@@ -154,7 +154,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let television of televisions ;trackBy: trackId">
+                            <tr *ngFor="let television of televisions ;">
                                 <td><a href="{{television.link}}" target="_blank">{{television.title}}</a></td>
                                 <td>{{television.director}}</td>
                                 <td>{{television.cameraman}}</td>
@@ -212,7 +212,7 @@
                     <div class="table-responsive" *ngIf="internets">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.internet.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.internet.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span></th>
@@ -225,7 +225,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let internet of internets ;trackBy: trackId">
+                            <tr *ngFor="let internet of internets ;">
                                 <td><a href="{{internet.link}}" target="_blank">{{internet.title}}</a></td>
                                 <td>{{internet.director}}</td>
                                 <td>{{internet.cameraman}}</td>
@@ -283,7 +283,7 @@
                     <div class="table-responsive" *ngIf="commercials">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.commercial.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.commercial.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span></th>
@@ -296,7 +296,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let commercial of commercials ;trackBy: trackId">
+                            <tr *ngFor="let commercial of commercials ;">
                                 <td><a href="{{commercial.link}}" target="_blank">{{commercial.title}}</a></td>
                                 <td>{{commercial.director}}</td>
                                 <td>{{commercial.cameraman}}</td>
@@ -354,7 +354,7 @@
                     <div class="table-responsive" *ngIf="prints">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.print.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.print.photographer">photographer</span></th>
                                 <th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>
@@ -367,7 +367,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let print of prints ;trackBy: trackId">
+                            <tr *ngFor="let print of prints ;">
                                 <td><a href="{{print.link}}" target="_blank">{{print.title}}</a></td>
                                 <td>{{print.photographer}}</td>
                                 <td>{{print.hair}}</td>
@@ -425,7 +425,7 @@
                     <div class="table-responsive" *ngIf="voices">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.voice.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.voice.director">director</span></th>
                                 <th><span jhiTranslate="talentactorApp.voice.audio">audio</span></th>
@@ -439,7 +439,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let voice of voices ;trackBy: trackId">
+                            <tr *ngFor="let voice of voices ;">
                                 <td><a href="{{voice.link}}" target="_blank">{{voice.title}}</a></td>
                                 <td>{{voice.director}}</td>
                                 <!--<td>{{print.photographer}}</td>
@@ -513,7 +513,7 @@
                     <div class="table-responsive" *ngIf="theaters">
                         <table class="table table-striped">
                             <thead>
-                            <tr jhiSort [(predicate)]="predicate">
+                            <tr>
                                 <th><span jhiTranslate="talentactorApp.theater.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.theater.director">director</span></th>
                                 <!--<th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>-->
@@ -526,7 +526,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let theater of theaters ;trackBy: trackId">
+                            <tr *ngFor="let theater of theaters ;">
                                 <td><a href="{{theater.link}}" target="_blank">{{theater.title}}</a></td>
                                 <td>{{theater.director}}</td>
                                 <!--<td>{{theater.hair}}</td>-->
