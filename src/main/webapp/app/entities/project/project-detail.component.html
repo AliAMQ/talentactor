@@ -67,7 +67,7 @@
                 <dd>
                     <span>{{project.videopath}}</span>
                 </dd>-->
-                <!--Film list-Begin-->
+                <!--Roles list-Begin-->
                 <dt><span jhiTranslate="talentactorApp.project.role">Role</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="roles">
@@ -141,7 +141,13 @@
                         </table>
                     </div>
                 </dd>
-                <!--Film list-End-->
+                <!--Roles list-End-->
+                <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span  jhiTranslate="talentactorApp.role.home.createLabel">
+                                    Create new Role
+                                </span>
+                </button>
             </dl>
 
             <button type="submit"
