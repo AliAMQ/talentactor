@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 
@@ -15,8 +15,15 @@ type EntityArrayResponseType = HttpResponse<IProfile[]>;
 export class ProfileService {
     private resourceUrl = SERVER_API_URL + 'api/profiles';
     private resourceUrl2 = SERVER_API_URL + '/api/profiles-by-userid';
+    private profileId = new BehaviorSubject(0);
+
+    getProfileId = this.profileId.asObservable();
 
     constructor(private http: HttpClient) {}
+
+    setProfileId(profileId: number) {
+        this.profileId.next(profileId);
+    }
 
     create(profile: IProfile): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(profile);

@@ -35,7 +35,7 @@
                 <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>-->
         </div>
-        <dd>
+        <dd *ngIf="project">
             <h6><span jhiTranslate="global.menu.entities.project">Project</span>: <a [routerLink]="['/project', project.id, 'view' ]">{{project.title}}</a></h6>
             <table width="70%">
                 <tr>

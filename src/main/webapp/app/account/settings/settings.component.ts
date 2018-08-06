@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
-    profileid: number;
+    profileId: number;
     isAdmin: boolean;
 
     constructor(
@@ -36,12 +36,9 @@ export class SettingsComponent implements OnInit {
             this.languages = languages;
         });
 
-        this.findProfileByUserId();
-
         this.isAdmin = this.principal.hasAnyAuthorityOf(['ROLE_ADMIN']);
 
-        /*console.log('aaaaaaaaaaa-' + this.principal.hasAnyAuthority(['ROLE_ADMIN']).__zone_symbol__value);
-        console.log('bbbbbbbbbbb-' + this.principal.hasAnyAuthorityOf(['ROLE_ADMIN']));*/
+        this.findProfileByUserId();
     }
 
     save() {
@@ -78,6 +75,18 @@ export class SettingsComponent implements OnInit {
     }
 
     findProfileByUserId() {
-        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => (this.profileid = res.body.id));
+        /*this.profileService.findByUserId(this.principal.getId()).subscribe(
+            (res: HttpResponse<IProfile>) => (this.profileid = res.body.id)
+        );*/
+
+        this.profileService.getProfileId.subscribe(value => (this.profileId = value));
+
+        if (this.profileId === 0) {
+            this.profileService
+                .query({
+                    'userId.equals': this.principal.getId()
+                })
+                .subscribe((res: HttpResponse<IProfile[]>) => (this.profileId = res.body[0].id));
+        }
     }
 }
