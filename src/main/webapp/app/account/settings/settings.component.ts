@@ -86,7 +86,10 @@ export class SettingsComponent implements OnInit {
                 .query({
                     'userId.equals': this.principal.getId()
                 })
-                .subscribe((res: HttpResponse<IProfile[]>) => (this.profileId = res.body[0].id));
+                .subscribe((res: HttpResponse<IProfile[]>) => {
+                    this.profileId = res.body[0].id;
+                    this.profileService.setProfileId(this.profileId);
+                });
         }
     }
 }
