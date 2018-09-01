@@ -1,7 +1,7 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h5 jhiTranslate="settings.title" translateValues="{username: '{{settingsAccount.login}}'}" *ngIf="settingsAccount">User settings for [<b>{{settingsAccount.login}}</b>]</h5>
+            <!--<h5 jhiTranslate="settings.title" translateValues="{username: '{{settingsAccount.login}}'}" *ngIf="settingsAccount">User settings for [<b>{{settingsAccount.login}}</b>]</h5>
 
             <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
                 <strong>Settings saved!</strong>
@@ -72,19 +72,23 @@
                         </small>
                     </div>
                 </div>
-                <!--
+                &lt;!&ndash;
                 <div class="form-group" *ngIf="languages && languages.length > 0">
                     <label for="langKey" jhiTranslate="settings.form.language">Language</label>
                     <select class="form-control" id="langKey" name="langKey" [(ngModel)]="settingsAccount.langKey">
                         <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
                     </select>
                 </div>
-                -->
+                &ndash;&gt;
                 <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
                 <br>
-                <br>
-                <div [hidden]="isAdmin">
-                    <h5 jhiTranslate="settings.advance">Professional history</h5>
+                <br>-->
+                <div>
+                    <h5 jhiTranslate="settings.edit">Professional history</h5>
+                    <a routerLink="../profile/{{profileId}}/edit">
+                        <span jhiTranslate="talentactorApp.profile.detail.title">Profile</span>
+                    </a>
+                    &nbsp;
                     <a routerLink="../film">
                         <span jhiTranslate="global.menu.entities.film">Film</span>
                     </a>
@@ -114,6 +118,7 @@
                     </a>
                     <br>
                     <br>
+                    <h5 jhiTranslate="settings.view">View</h5>
                     <a routerLink="../profile/{{profileId}}/view">
                         <span jhiTranslate="global.menu.entities.profileMore">Profile</span>
                     </a>

@@ -6,7 +6,6 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <!--<dt><span jhiTranslate="talentactorApp.profile.video">Video</span></dt>-->
                 <dd>
                     <table>
                         <tr>
@@ -15,14 +14,11 @@
                                     <a (click)="openFile(profile.imageContentType, profile.image)">
                                         <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
                                     </a>
-                                    <!--{{profile.imageContentType}}, {{byteSize(profile.image)}}-->
                                 </div>
                             </td>
                             <td width="5%"></td>
                             <td width="45%">
                                 <div *ngIf="profile.video">
-                                    <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
-                                    <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
                                     <video style="max-width: 100%;" alt="User video" controls>
                                         <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
                                     </video>
@@ -36,34 +32,11 @@
                                     {{profile.address}} {{profile.city}}, {{profile.state}} |
                                     <label jhiTranslate="talentactorApp.profile.phone">Phone</label>
                                     {{profile.phone}}
-                                    <!--<a (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a>-->
-                                    <!--{{profile.videoContentType}}, {{byteSize(profile.video)}}-->
                                 </div>
                             </td>
-                            <!--<td>
-                                <div *ngIf="profile.audio">
-                                    <audio style="max-width: 100%;" alt="User Audio" controls>
-                                        <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
-                                    </audio>
-                                    &lt;!&ndash;<a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>&ndash;&gt;
-                                    &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
-                                </div>
-                            </td>-->
                         </tr>
                     </table>
                 </dd>
-                <!--<dt><span jhiTranslate="talentactorApp.profile.city">City</span></dt>-->
-                <!--<dd>
-                    <span>{{profile.city}}</span>
-                </dd>-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.address">Address</span></dt>-->
-                <!--<dd>
-                    <span>{{profile.address}}</span>
-                </dd>-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.phone">Phone</span></dt>
-                <dd>
-                    <span>{{profile.phone}}</span>
-                </dd>-->
                 <!--Film list-Begin-->
                 <dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>
                 <dd>
@@ -74,38 +47,20 @@
                             <th><span jhiTranslate="talentactorApp.film.title">Title</span></th>
                             <th><span jhiTranslate="talentactorApp.film.director">Director</span></th>
                             <th><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span></th>
-                            <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                             <th><span jhiTranslate="talentactorApp.film.image">Image</span></th>
-                            <!--<th><span jhiTranslate="talentactorApp.film.video">Video</span></th>-->
-                            <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                            <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let film of films ;">
-                            <td><a href="{{film.link}}" target="_blank">{{film.title}}</a></td>
+                            <td><a href="#/film/{{film.id}}/view">{{film.title}}</a></td>
                             <td>{{film.director}}</td>
                             <td>{{film.cameraman}}</td>
-                            <!--<td>{{film.link}}</td>-->
                             <td>
                                 <a *ngIf="film.image" (click)="openFile(film.imageContentType, film.image)">
                                     <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-height: 30px;" alt="film image"/>
                                 </a>
-                                <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                             </td>
-                            <!--<td>
-                                <a *ngIf="film.video" (click)="openFile(film.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
-                                <span *ngIf="film.video">{{film.videoContentType}}, {{byteSize(film.video)}}</span>
-                            </td>-->
-                            <!--<td>{{film.imagepath}}</td>
-                            <td>{{film.videopath}}</td>
-                            <td>
-                                <div *ngIf="film.profileId">
-                                    <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                </div>
-                            </td>-->
-                            <td class="text-right">
+                            <!--<td class="text-right">
                                 <div class="btn-group flex-btn-group-container">
                                     <button type="submit"
                                             [routerLink]="['/film', film.id, 'view' ]"
@@ -128,7 +83,7 @@
                                         <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                     </button>
                                 </div>
-                            </td>
+                            </td>-->
                         </tr>
                         </tbody>
                     </table>
@@ -145,38 +100,20 @@
                                 <th><span jhiTranslate="talentactorApp.television.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.television.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.television.cameraman">Cameraman</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.television.image">Image</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.television.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let television of televisions ;">
-                                <td><a href="{{television.link}}" target="_blank">{{television.title}}</a></td>
+                                <td><a href="#/television/{{television.id}}/view">{{television.title}}</a></td>
                                 <td>{{television.director}}</td>
                                 <td>{{television.cameraman}}</td>
-                                <!--<td>{{film.link}}</td>-->
                                 <td>
                                     <a *ngIf="television.image" (click)="openFile(television.imageContentType, television.image)">
                                         <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 30px;" alt="television image"/>
                                     </a>
-                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <!--<td>
-                                    <a *ngIf="television.video" (click)="openFile(television.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a>
-                                    <span *ngIf="television.video">{{television.videoContentType}}, {{byteSize(television.video)}}</span>
-                                </td>-->
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/television', television.id, 'view' ]"
@@ -199,7 +136,7 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -216,38 +153,20 @@
                                 <th><span jhiTranslate="talentactorApp.internet.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.internet.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.internet.image">Image</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.internet.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let internet of internets ;">
-                                <td><a href="{{internet.link}}" target="_blank">{{internet.title}}</a></td>
+                                <td><a href="#/internet/{{internet.id}}/view">{{internet.title}}</a></td>
                                 <td>{{internet.director}}</td>
                                 <td>{{internet.cameraman}}</td>
-                                <!--<td>{{film.link}}</td>-->
                                 <td>
                                     <a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">
                                         <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
                                     </a>
-                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <!--<td>
-                                    <a *ngIf="internet.video" (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
-                                    <span *ngIf="internet.video">{{internet.videoContentType}}, {{byteSize(internet.video)}}</span>
-                                </td>-->
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/internet', internet.id, 'view' ]"
@@ -270,7 +189,7 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -287,38 +206,20 @@
                                 <th><span jhiTranslate="talentactorApp.commercial.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.commercial.director">Director</span></th>
                                 <th><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.commercial.image">Image</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let commercial of commercials ;">
-                                <td><a href="{{commercial.link}}" target="_blank">{{commercial.title}}</a></td>
+                                <td><a href="#/commercial/{{commercial.id}}/view">{{commercial.title}}</a></td>
                                 <td>{{commercial.director}}</td>
                                 <td>{{commercial.cameraman}}</td>
-                                <!--<td>{{film.link}}</td>-->
                                 <td>
                                     <a *ngIf="commercial.image" (click)="openFile(commercial.imageContentType, commercial.image)">
                                         <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 30px;" alt="commercial image"/>
                                     </a>
-                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <!--<td>
-                                    <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
-                                    <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
-                                </td>-->
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/commercial', commercial.id, 'view' ]"
@@ -341,7 +242,7 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -358,38 +259,20 @@
                                 <th><span jhiTranslate="talentactorApp.print.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.print.photographer">photographer</span></th>
                                 <th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.print.image">Image</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let print of prints ;">
-                                <td><a href="{{print.link}}" target="_blank">{{print.title}}</a></td>
+                                <td><a href="#/print/{{print.id}}/view">{{print.title}}</a></td>
                                 <td>{{print.photographer}}</td>
                                 <td>{{print.hair}}</td>
-                                <!--<td>{{film.link}}</td>-->
                                 <td>
                                     <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
                                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
                                     </a>
-                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <!--<td>
-                                    <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
-                                    <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
-                                </td>-->
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/print', print.id, 'view' ]"
@@ -412,7 +295,7 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -429,55 +312,20 @@
                                 <th><span jhiTranslate="talentactorApp.voice.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.voice.director">director</span></th>
                                 <th><span jhiTranslate="talentactorApp.voice.audio">audio</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.print.audio">audio</span></th>-->
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
-                                <!--<th><span jhiTranslate="talentactorApp.print.image">Image</span></th>-->
-                                <!--<th><span jhiTranslate="talentactorApp.commercial.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let voice of voices ;">
-                                <td><a href="{{voice.link}}" target="_blank">{{voice.title}}</a></td>
+                                <td><a href="#/voice/{{voice.id}}/view">{{voice.title}}</a></td>
                                 <td>{{voice.director}}</td>
-                                <!--<td>{{print.photographer}}</td>
-                                <td>{{print.hair}}</td>-->
-                                <!--<td>{{film.link}}</td>-->
-                                <!--<td>
-                                    <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
-                                        <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
-                                    </a>
-                                    &lt;!&ndash;<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>&ndash;&gt;
-                                </td>-->
                                 <td>
-                                    <!--<a *ngIf="voice.video" (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>-->
-                                    <!--<span *ngIf="voice.video">{{voice.videoContentType}}, {{byteSize(voice.video)}}</span>-->
-                                    <!--<div *ngIf="voice.video">
-                                        <video style="max-width: 100%;" alt="User video" controls>
-                                            <source type="video/mp4" [src]="'data:video/mp4;base64,' + voice.video">
-                                        </video>
-                                        <a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>
-                                        {{voice.videoContentType}}, {{byteSize(voice.video)}}
-                                    </div>-->
                                     <div *ngIf="voice.audio">
                                         <audio style="max-width: 100%;" alt="User Audio" controls>
                                             <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
                                         </audio>
-                                        <!--<a (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>
-                                        {{voice.audioContentType}}, {{byteSize(voice.audio)}}-->
                                     </div>
-
                                 </td>
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/voice', voice.id, 'view' ]"
@@ -500,7 +348,7 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -516,39 +364,19 @@
                             <tr>
                                 <th><span jhiTranslate="talentactorApp.theater.title">Title</span></th>
                                 <th><span jhiTranslate="talentactorApp.theater.director">director</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>-->
-                                <!--<th><span jhiTranslate="talentactorApp.film.link">Link</span></th>-->
                                 <th><span jhiTranslate="talentactorApp.theater.image">Image</span></th>
-                                <!--<th><span jhiTranslate="talentactorApp.theater.video">Video</span></th>-->
-                                <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.film.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let theater of theaters ;">
-                                <td><a href="{{theater.link}}" target="_blank">{{theater.title}}</a></td>
+                                <td><a href="#/theater/{{theater.id}}/view">{{theater.title}}</a></td>
                                 <td>{{theater.director}}</td>
-                                <!--<td>{{theater.hair}}</td>-->
-                                <!--<td>{{film.link}}</td>-->
                                 <td>
                                     <a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">
                                         <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
                                     </a>
-                                    <!--<span *ngIf="film.image">{{film.imageContentType}}, {{byteSize(film.image)}}</span>-->
                                 </td>
-                                <!--<td>
-                                    <a *ngIf="commercial.video" (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>
-                                    <span *ngIf="commercial.video">{{commercial.videoContentType}}, {{byteSize(commercial.video)}}</span>
-                                </td>-->
-                                <!--<td>{{film.imagepath}}</td>
-                                <td>{{film.videopath}}</td>
-                                <td>
-                                    <div *ngIf="film.profileId">
-                                        <a [routerLink]="['../profile', film.profileId , 'view' ]" >{{film.profileId}}</a>
-                                    </div>
-                                </td>-->
-                                <td class="text-right">
+                                <!--<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/theater', theater.id, 'view' ]"
@@ -571,48 +399,12 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </dd>
-                <!--Theater list-End-->
-                    <!--<dt><span jhiTranslate="talentactorApp.profile.since">Since</span></dt>
-                    <dd>
-                        <span>{{profile.since}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="talentactorApp.profile.image">Image</span></dt>-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.audio">Audio</span></dt>
-                <dd>
-                    &lt;!&ndash;<div *ngIf="profile.audio">
-                        <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
-                        &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
-                    </div>&ndash;&gt;
-                    <div *ngIf="profile.audio">
-                        <audio style="max-width: 100%;" alt="User Audio" controls>
-                            <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
-                        </audio>
-                        <a (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a>
-                        &lt;!&ndash;{{profile.audioContentType}}, {{byteSize(profile.audio)}}&ndash;&gt;
-                    </div>
-                </dd>-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.imagepath">Imagepath</span></dt>
-                <dd>
-                    <span>{{profile.imagepath}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.videopath">Videopath</span></dt>
-                <dd>
-                    <span>{{profile.videopath}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.profile.audiopath">Audiopath</span></dt>
-                <dd>
-                    <span>{{profile.audiopath}}</span>
-                </dd>-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.user">User</span></dt>
-                <dd>
-                    {{profile.userId}}
-                </dd>-->
                 <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
                 <dd>
                     <span *ngFor="let sport of profile.sports; let last = last">
@@ -680,12 +472,11 @@
                     class="btn btn-info">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
             </button>
-
-            <button type="button"
+            <!--<button type="button"
                     [routerLink]="['/profile', profile.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-            </button>
+            </button>-->
         </div>
     </div>
 </div>
