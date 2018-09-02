@@ -6,7 +6,7 @@ import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from './profile.service';
-import { IUser, UserService } from 'app/core';
+import { IUser, UserService, Principal, AccountService, JhiLanguageHelper } from 'app/core';
 import { ISkill } from 'app/shared/model/skill.model';
 import { SkillService } from 'app/entities/skill';
 import { ISport } from 'app/shared/model/sport.model';
@@ -27,6 +27,9 @@ import { ICircus } from 'app/shared/model/circus.model';
 import { CircusService } from 'app/entities/circus';
 import { IHorse } from 'app/shared/model/horse.model';
 import { HorseService } from 'app/entities/horse';
+
+import { FileManagementService } from '../../shared/file/file-management.service';
+import { JhiLanguageService } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-profile-update',
@@ -59,6 +62,11 @@ export class ProfileUpdateComponent implements OnInit {
     horses: IHorse[];
     sinceDp: any;
 
+    selectedFiles: FileList;
+    settingsAccount: any;
+    error: string;
+    success: string;
+
     constructor(
         private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
@@ -75,7 +83,12 @@ export class ProfileUpdateComponent implements OnInit {
         private circusService: CircusService,
         private horseService: HorseService,
         private elementRef: ElementRef,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private principal: Principal,
+        public fileManagementService: FileManagementService,
+        private account: AccountService,
+        private jhilanguageService: JhiLanguageService,
+        private languageHelper: JhiLanguageHelper
     ) {}
 
     ngOnInit() {
@@ -149,6 +162,12 @@ export class ProfileUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        this.principal.identity().then(account => {
+            this.settingsAccount = this.copyAccount(account);
+        });
+        this.languageHelper.getAll().then(languages => {
+            this.languages = languages;
+        });
     }
 
     byteSize(field) {
@@ -163,9 +182,9 @@ export class ProfileUpdateComponent implements OnInit {
         this.dataUtils.setFileData(event, entity, field, isImage);
     }
 
-    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+    /*clearInputImage(field: string, fieldContentType: string, idInput: string) {
         this.dataUtils.clearInputImage(this.profile, this.elementRef, field, fieldContentType, idInput);
-    }
+    }*/
 
     previousState() {
         window.history.back();
@@ -174,10 +193,33 @@ export class ProfileUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.profile.id !== undefined) {
+            if (this.selectedFiles !== undefined) {
+                if (this.profile.imagepath !== null) {
+                    this.fileManagementService.deleteFile(this.profile.imagepath);
+                }
+                if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
+                    this.profile.imagepath = this.upload('imagepath1');
+                } else {
+                    this.profile.imagepath = null;
+                }
+            } else {
+                if ((document.getElementById('imagepath1') as HTMLImageElement).hidden === true) {
+                    if (this.profile.imagepath !== null) {
+                        this.fileManagementService.deleteFile(this.profile.imagepath);
+                        this.profile.imagepath = null;
+                    }
+                }
+            }
             this.subscribeToSaveResponse(this.profileService.update(this.profile));
         } else {
+            if (this.selectedFiles !== undefined) {
+                if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
+                    this.profile.imagepath = this.upload('imagepath1');
+                }
+            }
             this.subscribeToSaveResponse(this.profileService.create(this.profile));
         }
+        this.saveAccount();
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IProfile>>) {
@@ -186,7 +228,7 @@ export class ProfileUpdateComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        global.setTimeout(this.previousState, 1000);
     }
 
     private onSaveError() {
@@ -257,5 +299,70 @@ export class ProfileUpdateComponent implements OnInit {
 
     set profile(profile: IProfile) {
         this._profile = profile;
+    }
+
+    copyAccount(account) {
+        return {
+            activated: account.activated,
+            email: account.email,
+            firstName: account.firstName,
+            langKey: account.langKey,
+            lastName: account.lastName,
+            login: account.login,
+            imageUrl: account.imageUrl
+        };
+    }
+
+    selectFile(event, image, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(image) as HTMLImageElement).src = reader.result;
+                (document.getElementById(image) as HTMLImageElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (image === 'imagepath1') {
+            this.selectedFiles = event.target.files;
+            (document.getElementById('close') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    upload(image): string {
+        let file;
+        if (image === 'imagepath1') {
+            file = this.selectedFiles.item(0);
+        }
+        return this.fileManagementService.uploadfile(file);
+    }
+
+    clearInputImage(image, button, input) {
+        (document.getElementById(image) as HTMLImageElement).src = '';
+        (document.getElementById(image) as HTMLImageElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
+    }
+
+    saveAccount() {
+        this.account.save(this.settingsAccount).subscribe(
+            () => {
+                this.error = null;
+                this.success = 'OK';
+                this.principal.identity(true).then(account => {
+                    this.settingsAccount = this.copyAccount(account);
+                });
+                this.jhilanguageService.getCurrent().then(current => {
+                    if (this.settingsAccount.langKey !== current) {
+                        this.jhilanguageService.changeLanguage(this.settingsAccount.langKey);
+                    }
+                });
+            },
+            () => {
+                this.success = null;
+                this.error = 'ERROR';
+            }
+        );
     }
 }

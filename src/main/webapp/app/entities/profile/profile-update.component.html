@@ -4,10 +4,33 @@
             <h2 id="jhi-profile-heading" jhiTranslate="talentactorApp.profile.home.createOrEditLabel">Create or edit a Profile</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!profile.id">
+                <!--<div class="form-group" [hidden]="!profile.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="profile.id" readonly />
+                </div>-->
+                <div class="form-group">
+                    <label class="form-control-label" for="email" jhiTranslate="talentactorApp.profile.email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
+                           [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
+                    <div *ngIf="emailInput.dirty && emailInput.invalid">
+                        <small class="form-text text-danger"
+                               *ngIf="emailInput.errors.required" jhiTranslate="global.messages.validate.email.required">
+                            Your email is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="emailInput.errors.email" jhiTranslate="global.messages.validate.email.invalid">
+                            Your email is invalid.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="emailInput.errors.minlength" jhiTranslate="global.messages.validate.email.minlength">
+                            Your email is required to be at least 5 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="emailInput.errors.maxlength" jhiTranslate="global.messages.validate.email.maxlength">
+                            Your email cannot be longer than 100 characters.
+                        </small>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.state" for="field_state">State</label>
@@ -91,7 +114,7 @@
                 </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.image" for="field_image">Image</label>
-                    <div>
+                    <!--<div>
                         <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-height: 100px;" *ngIf="profile.image" alt="profile image"/>
                         <div *ngIf="profile.image" class="form-text text-danger clearfix">
                             <span class="pull-left">{{profile.imageContentType}}, {{byteSize(profile.image)}}</span>
@@ -104,7 +127,15 @@
                     <input type="hidden" class="form-control" name="image" id="field_image"
                         [(ngModel)]="profile.image" />
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                        [(ngModel)]="profile.imageContentType" />
+                        [(ngModel)]="profile.imageContentType" />-->
+                    <div>
+                        <img [hidden]="!profile.imagepath" [src]="fileManagementService.getCloud() + profile.imagepath" style="width: 150px;" id="imagepath1"/>
+                        <button [hidden]="!profile.imagepath" type="button" (click)="clearInputImage('imagepath1', 'close', 'file_image')" class="btn btn-secondary btn-xs pull-right" id="close">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_image" (change)="selectFile($event,'imagepath1','file_image')" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.video" for="field_video">Video</label>

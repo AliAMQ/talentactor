@@ -10,10 +10,13 @@
                     <table>
                         <tr>
                             <td width="45%">
-                                <div *ngIf="profile.image">
+                                <!--<div *ngIf="profile.image">
                                     <a (click)="openFile(profile.imageContentType, profile.image)">
                                         <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
                                     </a>
+                                </div>-->
+                                <div *ngIf="profile.imagepath">
+                                    <img [src]="fileManagementService.getCloud() + profile.imagepath" style="max-width: 100%;" name="imageobj" id="imageobj" alt="صفحه را refresh کنید"/>
                                 </div>
                             </td>
                             <td width="5%"></td>

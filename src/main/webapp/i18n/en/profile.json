@@ -47,7 +47,9 @@
             "cycling": "Cycling",
             "circus": "Circus",
             "horse": "Horse",
-            "userinfo": "User"
+            "userinfo": "User",
+            "deleteimg": "Remove",
+            "email": "Email"
         }
     }
 }

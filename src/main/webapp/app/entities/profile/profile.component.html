@@ -15,7 +15,7 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
-            <th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.profile.userinfo">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="imagepath"><span jhiTranslate="talentactorApp.profile.userinfo">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th><span jhiTranslate="talentactorApp.profile.image">Image</span></th>
             <th jhiSortBy="state"><span jhiTranslate="talentactorApp.profile.state">State</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span jhiTranslate="talentactorApp.profile.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -40,10 +40,13 @@
                     &lt;!&ndash;{{getUserInfo(4) | async}}&ndash;&gt;
                     &lt;!&ndash;{{getUserInfo(profile.userId)}}&ndash;&gt;
                 </td>-->
-                <td>{{profile.imagepath}}</td>
+                <!--<td>{{profile.imagepath}}</td>-->
                 <td>
-                    <a *ngIf="profile.image" (click)="openFile(profile.imageContentType, profile.image)">
+                    <!--<a *ngIf="profile.image" (click)="openFile(profile.imageContentType, profile.image)">
                         <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-height: 100px;" alt="profile image"/>
+                    </a>-->
+                    <a *ngIf="profile.imagepath" class="example-image-link" [href]="fileManagementService.getCloud() + profile.imagepath" [attr.data-lightbox]="profile.imagepath">
+                        <img [src]="fileManagementService.getCloud() + profile.imagepath" style="height: 50px;" alt="صفحه را refresh کنید"/>
                     </a>
                     <!--<span *ngIf="profile.image">{{profile.imageContentType}}, {{byteSize(profile.image)}}</span>-->
                 </td>

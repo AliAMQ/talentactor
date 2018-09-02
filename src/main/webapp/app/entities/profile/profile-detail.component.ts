@@ -19,6 +19,7 @@ import { ITheater } from 'app/shared/model/theater.model';
 import { TheaterService } from 'app/entities/theater/theater.service';
 import { IVoice } from 'app/shared/model/voice.model';
 import { VoiceService } from 'app/entities/voice/voice.service';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-profile-detail',
@@ -49,7 +50,8 @@ export class ProfileDetailComponent implements OnInit {
         private commercialService: CommercialService,
         private printService: PrintService,
         private theaterService: TheaterService,
-        private voiceService: VoiceService
+        private voiceService: VoiceService,
+        public fileManagementService: FileManagementService
     ) {}
 
     loadAllFilms() {

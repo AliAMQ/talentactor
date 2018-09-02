@@ -12,6 +12,7 @@ import { ProfileService } from './profile.service';
 
 import { UserService } from '../../core/user/user.service';
 import { IUser } from 'app/core/user/user.model';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-profile',
@@ -44,7 +45,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private dataUtils: JhiDataUtils,
         private router: Router,
         private eventManager: JhiEventManager,
-        private userService: UserService
+        private userService: UserService,
+        public fileManagementService: FileManagementService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -65,7 +67,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: HttpResponse<IProfile[]>) => {
                     this.paginateProfiles(res.body, res.headers);
-                    this.setUserInfo();
+                    // this.setUserInfo();
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
