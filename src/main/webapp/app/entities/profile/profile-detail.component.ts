@@ -27,8 +27,8 @@ import { FileManagementService } from '../../shared/file/file-management.service
 export class ProfileDetailComponent implements OnInit {
     profile: IProfile;
     login;
-    firstName;
-    lastName;
+    // firstName;
+    // lastName;
     email: string;
     // films: IFilm[];
     /*televisions: ITelevision[];*/
@@ -113,8 +113,8 @@ export class ProfileDetailComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ profile }) => {
             this.profile = profile;
             this.login = this.principal.getLogin();
-            this.firstName = this.principal.getFirstName();
-            this.lastName = this.principal.getLastName();
+            // this.firstName = this.principal.getFirstName();
+            // this.lastName = this.principal.getLastName();
             this.email = this.principal.getEmail();
         });
         // this.loadAllFilms();

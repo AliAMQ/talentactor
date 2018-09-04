@@ -19,6 +19,7 @@ import { TalentactorCommercialModule } from 'app/entities/commercial/commercial.
 import { TalentactorPrintModule } from 'app/entities/print/print.module';
 import { TalentactorTheaterModule } from 'app/entities/theater/theater.module';
 import { TalentactorVoiceModule } from 'app/entities/voice/voice.module';
+import { TalentactorRoleModule } from 'app/entities/role/role.module';
 
 const ENTITY_STATES = [...profileRoute, ...profilePopupRoute];
 
@@ -33,7 +34,8 @@ const ENTITY_STATES = [...profileRoute, ...profilePopupRoute];
         TalentactorCommercialModule,
         TalentactorPrintModule,
         TalentactorTheaterModule,
-        TalentactorVoiceModule
+        TalentactorVoiceModule,
+        TalentactorRoleModule
     ],
     declarations: [
         ProfileComponent,

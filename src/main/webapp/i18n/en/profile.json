@@ -49,7 +49,10 @@
             "horse": "Horse",
             "userinfo": "User",
             "deleteimg": "Remove",
-            "email": "Email"
+            "email": "Email",
+            "firstname": "Firstname",
+            "lastname": "Lastname",
+            "username": "Username"
         }
     }
 }

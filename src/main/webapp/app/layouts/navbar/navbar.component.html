@@ -267,9 +267,14 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
                     <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
+                        <!--<a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'wrench'" [fixedWidth]="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.settings">Settings</span>
+                        </a>-->
+                        <a class="dropdown-item" routerLink="../profile/{{profileid}}/view" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'wrench'" [fixedWidth]="true"></fa-icon>
+                            <!--<span jhiTranslate="global.menu.account.settings">Settings</span>-->
+                            <span jhiTranslate="talentactorApp.profile.detail.title">Settings</span>
                         </a>
                     </li>
                     <li *ngSwitchCase="true">

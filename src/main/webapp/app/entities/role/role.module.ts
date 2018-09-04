@@ -17,6 +17,7 @@ const ENTITY_STATES = [...roleRoute, ...rolePopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [RoleMyComponent],
     declarations: [
         RoleComponent,
         RoleDetailComponent,

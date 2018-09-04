@@ -21,7 +21,8 @@
             "profile": "Profile",
             "project": "Project",
             "actor": "Actor",
-            "goActor": "Go to actor"
+            "goActor": "Go to actor",
+            "goproject": "GO to project"
         }
     }
 }

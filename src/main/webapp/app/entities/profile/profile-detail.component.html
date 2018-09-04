@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="profile">
-            <h2>{{firstName}}&nbsp;{{lastName}}</h2>
+            <h2>{{profile.firstname}}&nbsp;{{profile.lastname}}</h2>
             <h4><span jhiTranslate="talentactorApp.profile.detail.login">Profile</span> {{login}}</h4>
             <h5><span>{{email}}</span></h5>
             <hr>
@@ -417,6 +417,7 @@
                 </dd>-->
                 <jhi-theater></jhi-theater>
                 <!--Theater list-End-->
+                <jhi-role-my></jhi-role-my>
                 <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
                 <dd>
                     <span *ngFor="let sport of profile.sports; let last = last">

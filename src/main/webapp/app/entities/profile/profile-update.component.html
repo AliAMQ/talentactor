@@ -10,6 +10,16 @@
                         [(ngModel)]="profile.id" readonly />
                 </div>-->
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.firstname" for="field_firstname">Firstname</label>
+                    <input type="text" class="form-control" name="firstname" id="field_firstname"
+                           [(ngModel)]="profile.firstname" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.lastname" for="field_lastname">Lastname</label>
+                    <input type="text" class="form-control" name="lasttname" id="field_lastname"
+                           [(ngModel)]="profile.lastname" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="email" jhiTranslate="talentactorApp.profile.email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
                            [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>

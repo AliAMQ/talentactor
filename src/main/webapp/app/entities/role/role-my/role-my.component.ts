@@ -54,6 +54,12 @@ export class RoleMyComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        if (typeof this.predicate === 'undefined') {
+            this.predicate = 'id';
+        }
+        if (typeof this.page === 'undefined') {
+            this.page = 1;
+        }
         this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
             this.profileid = res.body.id;
             this.roleService
@@ -78,13 +84,13 @@ export class RoleMyComponent implements OnInit, OnDestroy {
     }
 
     transition() {
-        this.router.navigate(['/role'], {
+        /*this.router.navigate(['/role'], {
             queryParams: {
                 page: this.page,
                 size: this.itemsPerPage,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
-        });
+        });*/
         this.loadAll();
     }
 
@@ -101,10 +107,11 @@ export class RoleMyComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAll();
+        /*this.loadAll();*/
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
+        this.findProfileByUserId();
         this.registerChangeInRoles();
     }
 
@@ -137,5 +144,25 @@ export class RoleMyComponent implements OnInit, OnDestroy {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    findProfileByUserId() {
+        this.profileService.getProfileId.subscribe(value => (this.profileid = value));
+        if (this.profileid === 0) {
+            this.principal.identity().then(account => {
+                if (account !== null) {
+                    this.profileService
+                        .query({
+                            'username.equals': account.login
+                        })
+                        .subscribe((res: HttpResponse<IProfile[]>) => {
+                            this.profileid = res.body[0].id;
+                            this.loadAll();
+                        });
+                }
+            });
+        } else {
+            this.loadAll();
+        }
     }
 }

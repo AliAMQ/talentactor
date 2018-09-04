@@ -5,7 +5,10 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { VERSION } from 'app/app.constants';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from 'app/core';
-import { ProfileService } from '../profiles/profile.service';
+import { JhiProfileService } from '../profiles/profile.service';
+import { ProfileService } from '../../entities/profile/profile.service';
+import { IProfile } from 'app/shared/model/profile.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-navbar',
@@ -19,6 +22,7 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    profileid: number;
 
     constructor(
         private loginService: LoginService,
@@ -26,19 +30,21 @@ export class NavbarComponent implements OnInit {
         private languageHelper: JhiLanguageHelper,
         private principal: Principal,
         private loginModalService: LoginModalService,
-        private profileService: ProfileService,
-        private router: Router
+        private jhiprofileService: JhiProfileService,
+        private router: Router,
+        private profileService: ProfileService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
     }
 
     ngOnInit() {
+        this.findProfileByUserId();
         this.languageHelper.getAll().then(languages => {
             this.languages = languages;
         });
 
-        this.profileService.getProfileInfo().then(profileInfo => {
+        this.jhiprofileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
@@ -72,5 +78,22 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
+
+    findProfileByUserId() {
+        this.profileService.getProfileId.subscribe(value => (this.profileid = value));
+        if (this.profileid === 0) {
+            this.principal.identity().then(account => {
+                if (account !== null) {
+                    this.profileService
+                        .query({
+                            'username.equals': account.login
+                        })
+                        .subscribe((res: HttpResponse<IProfile[]>) => {
+                            this.profileid = res.body[0].id;
+                        });
+                }
+            });
+        }
     }
 }
