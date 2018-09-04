@@ -55,20 +55,26 @@ export class FilmComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.filmService
-                .query({
-                    page: this.page - 1,
-                    size: this.itemsPerPage,
-                    sort: this.sort(),
-                    'profileId.equals': this.profileid
-                })
-                .subscribe(
-                    (res1: HttpResponse<IFilm[]>) => this.paginateFilms(res1.body, res1.headers),
-                    (res1: HttpErrorResponse) => this.onError(res1.message)
-                );
-        });
+        // this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
+        // this.profileid = res.body.id;
+        if (typeof this.predicate === 'undefined') {
+            this.predicate = 'id';
+        }
+        if (typeof this.page === 'undefined') {
+            this.page = 1;
+        }
+        this.filmService
+            .query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                'profileId.equals': this.profileid
+            })
+            .subscribe(
+                (res1: HttpResponse<IFilm[]>) => this.paginateFilms(res1.body, res1.headers),
+                (res1: HttpErrorResponse) => this.onError(res1.message)
+            );
+        // });
     }
 
     loadPage(page: number) {
@@ -79,13 +85,13 @@ export class FilmComponent implements OnInit, OnDestroy {
     }
 
     transition() {
-        this.router.navigate(['/film'], {
+        /*this.router.navigate(['/film'], {
             queryParams: {
                 page: this.page,
                 size: this.itemsPerPage,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
-        });
+        });*/
         this.loadAll();
     }
 
@@ -102,7 +108,7 @@ export class FilmComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.findProfileByUserId();
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
@@ -146,5 +152,23 @@ export class FilmComponent implements OnInit, OnDestroy {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    findProfileByUserId() {
+        this.profileService.getProfileId.subscribe(value => (this.profileid = value));
+        if (this.profileid === 0) {
+            this.principal.identity().then(account => {
+                if (account !== null) {
+                    this.profileService
+                        .query({
+                            'username.equals': account.login
+                        })
+                        .subscribe((res: HttpResponse<IProfile[]>) => {
+                            this.profileid = res.body[0].id;
+                            this.loadAll();
+                        });
+                }
+            });
+        }
     }
 }

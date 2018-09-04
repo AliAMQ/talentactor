@@ -12,11 +12,12 @@ import {
     profileRoute,
     profilePopupRoute
 } from './';
+import { TalentactorFilmModule } from 'app/entities/film/film.module';
 
 const ENTITY_STATES = [...profileRoute, ...profilePopupRoute];
 
 @NgModule({
-    imports: [TalentactorSharedModule, TalentactorAdminModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [TalentactorSharedModule, TalentactorAdminModule, RouterModule.forChild(ENTITY_STATES), TalentactorFilmModule],
     declarations: [
         ProfileComponent,
         ProfileDetailComponent,

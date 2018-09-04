@@ -5,8 +5,8 @@ import { IProfile } from 'app/shared/model/profile.model';
 import { Principal } from 'app/core';
 import { HttpResponse } from '@angular/common/http';
 import { ProfileService } from '../profile/profile.service';
-import { IFilm } from 'app/shared/model/film.model';
-import { FilmService } from 'app/entities/film/film.service';
+// import { IFilm } from 'app/shared/model/film.model';
+// import { FilmService } from 'app/entities/film/film.service';
 import { ITelevision } from 'app/shared/model/television.model';
 import { TelevisionService } from 'app/entities/television/television.service';
 import { IInternet } from 'app/shared/model/internet.model';
@@ -31,7 +31,7 @@ export class ProfileDetailComponent implements OnInit {
     firstName;
     lastName;
     email: string;
-    films: IFilm[];
+    // films: IFilm[];
     televisions: ITelevision[];
     internets: IInternet[];
     commercials: ICommercial[];
@@ -44,7 +44,7 @@ export class ProfileDetailComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private principal: Principal,
         private profileService: ProfileService,
-        private filmService: FilmService,
+        // private filmService: FilmService,
         private televisionService: TelevisionService,
         private internetService: InternetService,
         private commercialService: CommercialService,
@@ -54,13 +54,13 @@ export class ProfileDetailComponent implements OnInit {
         public fileManagementService: FileManagementService
     ) {}
 
-    loadAllFilms() {
+    /*loadAllFilms() {
         this.filmService
             .query({
                 'profileId.equals': this.profile.id
             })
             .subscribe((res1: HttpResponse<IFilm[]>) => (this.films = res1.body));
-    }
+    }*/
 
     loadAllTelevisions() {
         this.televisionService
@@ -118,7 +118,7 @@ export class ProfileDetailComponent implements OnInit {
             this.lastName = this.principal.getLastName();
             this.email = this.principal.getEmail();
         });
-        this.loadAllFilms();
+        // this.loadAllFilms();
         this.loadAllTelevisions();
         this.loadAllInternets();
         this.loadAllCommercials();

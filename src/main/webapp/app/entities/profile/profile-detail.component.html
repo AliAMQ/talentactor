@@ -42,7 +42,7 @@
                 </dd>
                 <!--Film list-Begin-->
                 <dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>
-                <dd>
+                <!--<dd>
                     <div class="table-responsive" *ngIf="films">
                     <table class="table table-striped">
                         <thead>
@@ -63,7 +63,7 @@
                                     <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-height: 30px;" alt="film image"/>
                                 </a>
                             </td>
-                            <!--<td class="text-right">
+                            &lt;!&ndash;<td class="text-right">
                                 <div class="btn-group flex-btn-group-container">
                                     <button type="submit"
                                             [routerLink]="['/film', film.id, 'view' ]"
@@ -86,12 +86,13 @@
                                         <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                     </button>
                                 </div>
-                            </td>-->
+                            </td>&ndash;&gt;
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                </dd>
+                </dd>-->
+                <jhi-film></jhi-film>
                 <!--Film list-End-->
                 <!--Television list-Begin-->
                 <dt><span jhiTranslate="talentactorApp.profile.television">Television</span></dt>

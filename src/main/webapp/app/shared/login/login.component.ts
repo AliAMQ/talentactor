@@ -5,6 +5,10 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { ProfileService } from '../../entities/profile/profile.service';
+import { Principal } from 'app/core';
+import { IProfile } from 'app/shared/model/profile.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -16,6 +20,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
+    profileid: number;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -24,7 +29,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        private profileService: ProfileService,
+        private principal: Principal
     ) {
         this.credentials = {};
     }
@@ -69,6 +76,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
                     this.stateStorageService.storeUrl(null);
                     this.router.navigate([redirect]);
                 }
+                this.findProfileByUserId();
             })
             .catch(() => {
                 this.authenticationError = true;
@@ -83,5 +91,16 @@ export class JhiLoginModalComponent implements AfterViewInit {
     requestResetPassword() {
         this.activeModal.dismiss('to state requestReset');
         this.router.navigate(['/reset', 'request']);
+    }
+
+    findProfileByUserId() {
+        this.profileService
+            .query({
+                'userId.equals': this.principal.getId()
+            })
+            .subscribe((res: HttpResponse<IProfile[]>) => {
+                this.profileid = res.body[0].id;
+                this.profileService.setProfileId(this.profileid);
+            });
     }
 }

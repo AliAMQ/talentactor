@@ -16,6 +16,7 @@ const ENTITY_STATES = [...filmRoute, ...filmPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [FilmComponent],
     declarations: [FilmComponent, FilmDetailComponent, FilmUpdateComponent, FilmDeleteDialogComponent, FilmDeletePopupComponent],
     entryComponents: [FilmComponent, FilmUpdateComponent, FilmDeleteDialogComponent, FilmDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
