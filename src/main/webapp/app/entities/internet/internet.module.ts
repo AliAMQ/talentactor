@@ -16,6 +16,7 @@ const ENTITY_STATES = [...internetRoute, ...internetPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [InternetComponent],
     declarations: [
         InternetComponent,
         InternetDetailComponent,

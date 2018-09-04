@@ -100,6 +100,15 @@ public class ProfileQueryService extends QueryService<Profile> {
             if (criteria.getAudiopath() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getAudiopath(), Profile_.audiopath));
             }
+            if (criteria.getFirstname() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getFirstname(), Profile_.firstname));
+            }
+            if (criteria.getLastname() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getLastname(), Profile_.lastname));
+            }
+            if (criteria.getUsername() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getUsername(), Profile_.username));
+            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getUserId(), Profile_.user, User_.id));
             }

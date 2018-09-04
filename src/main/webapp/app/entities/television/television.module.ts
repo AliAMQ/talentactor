@@ -16,6 +16,7 @@ const ENTITY_STATES = [...televisionRoute, ...televisionPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [TelevisionComponent],
     declarations: [
         TelevisionComponent,
         TelevisionDetailComponent,

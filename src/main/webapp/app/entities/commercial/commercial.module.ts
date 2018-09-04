@@ -16,6 +16,7 @@ const ENTITY_STATES = [...commercialRoute, ...commercialPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [CommercialComponent],
     declarations: [
         CommercialComponent,
         CommercialDetailComponent,

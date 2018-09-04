@@ -36,4 +36,5 @@
     <include file="config/liquibase/changelog/20180703175251_added_entity_constraints_Voice.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180703175253_added_entity_constraints_Role.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20180904190011_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

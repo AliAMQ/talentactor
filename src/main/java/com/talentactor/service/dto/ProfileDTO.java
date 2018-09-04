@@ -43,6 +43,12 @@ public class ProfileDTO implements Serializable {
 
     private String audiopath;
 
+    private String firstname;
+
+    private String lastname;
+
+    private String username;
+
     private Long userId;
 
     private Set<SkillDTO> skills = new HashSet<>();
@@ -185,6 +191,30 @@ public class ProfileDTO implements Serializable {
         this.audiopath = audiopath;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -309,6 +339,9 @@ public class ProfileDTO implements Serializable {
             ", imagepath='" + getImagepath() + "'" +
             ", videopath='" + getVideopath() + "'" +
             ", audiopath='" + getAudiopath() + "'" +
+            ", firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", username='" + getUsername() + "'" +
             ", user=" + getUserId() +
             "}";
     }

@@ -108,10 +108,10 @@ export class FilmComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.findProfileByUserId();
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
+        this.findProfileByUserId();
         this.registerChangeInFilms();
     }
 
@@ -169,6 +169,8 @@ export class FilmComponent implements OnInit, OnDestroy {
                         });
                 }
             });
+        } else {
+            this.loadAll();
         }
     }
 }

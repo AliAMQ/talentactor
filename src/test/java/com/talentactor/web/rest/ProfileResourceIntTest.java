@@ -111,6 +111,15 @@ public class ProfileResourceIntTest {
     private static final String DEFAULT_AUDIOPATH = "AAAAAAAAAA";
     private static final String UPDATED_AUDIOPATH = "BBBBBBBBBB";
 
+    private static final String DEFAULT_FIRSTNAME = "AAAAAAAAAA";
+    private static final String UPDATED_FIRSTNAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LASTNAME = "AAAAAAAAAA";
+    private static final String UPDATED_LASTNAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_USERNAME = "AAAAAAAAAA";
+    private static final String UPDATED_USERNAME = "BBBBBBBBBB";
+
     @Autowired
     private ProfileRepository profileRepository;
     @Mock
@@ -176,7 +185,10 @@ public class ProfileResourceIntTest {
             .audioContentType(DEFAULT_AUDIO_CONTENT_TYPE)
             .imagepath(DEFAULT_IMAGEPATH)
             .videopath(DEFAULT_VIDEOPATH)
-            .audiopath(DEFAULT_AUDIOPATH);
+            .audiopath(DEFAULT_AUDIOPATH)
+            .firstname(DEFAULT_FIRSTNAME)
+            .lastname(DEFAULT_LASTNAME)
+            .username(DEFAULT_USERNAME);
         return profile;
     }
 
@@ -215,6 +227,9 @@ public class ProfileResourceIntTest {
         assertThat(testProfile.getImagepath()).isEqualTo(DEFAULT_IMAGEPATH);
         assertThat(testProfile.getVideopath()).isEqualTo(DEFAULT_VIDEOPATH);
         assertThat(testProfile.getAudiopath()).isEqualTo(DEFAULT_AUDIOPATH);
+        assertThat(testProfile.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
+        assertThat(testProfile.getLastname()).isEqualTo(DEFAULT_LASTNAME);
+        assertThat(testProfile.getUsername()).isEqualTo(DEFAULT_USERNAME);
     }
 
     @Test
@@ -261,7 +276,10 @@ public class ProfileResourceIntTest {
             .andExpect(jsonPath("$.[*].audio").value(hasItem(Base64Utils.encodeToString(DEFAULT_AUDIO))))
             .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
             .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())))
-            .andExpect(jsonPath("$.[*].audiopath").value(hasItem(DEFAULT_AUDIOPATH.toString())));
+            .andExpect(jsonPath("$.[*].audiopath").value(hasItem(DEFAULT_AUDIOPATH.toString())))
+            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME.toString())))
+            .andExpect(jsonPath("$.[*].lastname").value(hasItem(DEFAULT_LASTNAME.toString())))
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
     }
     
     public void getAllProfilesWithEagerRelationshipsIsEnabled() throws Exception {
@@ -319,7 +337,10 @@ public class ProfileResourceIntTest {
             .andExpect(jsonPath("$.audio").value(Base64Utils.encodeToString(DEFAULT_AUDIO)))
             .andExpect(jsonPath("$.imagepath").value(DEFAULT_IMAGEPATH.toString()))
             .andExpect(jsonPath("$.videopath").value(DEFAULT_VIDEOPATH.toString()))
-            .andExpect(jsonPath("$.audiopath").value(DEFAULT_AUDIOPATH.toString()));
+            .andExpect(jsonPath("$.audiopath").value(DEFAULT_AUDIOPATH.toString()))
+            .andExpect(jsonPath("$.firstname").value(DEFAULT_FIRSTNAME.toString()))
+            .andExpect(jsonPath("$.lastname").value(DEFAULT_LASTNAME.toString()))
+            .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME.toString()));
     }
 
     @Test
@@ -659,6 +680,123 @@ public class ProfileResourceIntTest {
 
         // Get all the profileList where audiopath is null
         defaultProfileShouldNotBeFound("audiopath.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByFirstnameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where firstname equals to DEFAULT_FIRSTNAME
+        defaultProfileShouldBeFound("firstname.equals=" + DEFAULT_FIRSTNAME);
+
+        // Get all the profileList where firstname equals to UPDATED_FIRSTNAME
+        defaultProfileShouldNotBeFound("firstname.equals=" + UPDATED_FIRSTNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByFirstnameIsInShouldWork() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where firstname in DEFAULT_FIRSTNAME or UPDATED_FIRSTNAME
+        defaultProfileShouldBeFound("firstname.in=" + DEFAULT_FIRSTNAME + "," + UPDATED_FIRSTNAME);
+
+        // Get all the profileList where firstname equals to UPDATED_FIRSTNAME
+        defaultProfileShouldNotBeFound("firstname.in=" + UPDATED_FIRSTNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByFirstnameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where firstname is not null
+        defaultProfileShouldBeFound("firstname.specified=true");
+
+        // Get all the profileList where firstname is null
+        defaultProfileShouldNotBeFound("firstname.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByLastnameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where lastname equals to DEFAULT_LASTNAME
+        defaultProfileShouldBeFound("lastname.equals=" + DEFAULT_LASTNAME);
+
+        // Get all the profileList where lastname equals to UPDATED_LASTNAME
+        defaultProfileShouldNotBeFound("lastname.equals=" + UPDATED_LASTNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByLastnameIsInShouldWork() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where lastname in DEFAULT_LASTNAME or UPDATED_LASTNAME
+        defaultProfileShouldBeFound("lastname.in=" + DEFAULT_LASTNAME + "," + UPDATED_LASTNAME);
+
+        // Get all the profileList where lastname equals to UPDATED_LASTNAME
+        defaultProfileShouldNotBeFound("lastname.in=" + UPDATED_LASTNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByLastnameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where lastname is not null
+        defaultProfileShouldBeFound("lastname.specified=true");
+
+        // Get all the profileList where lastname is null
+        defaultProfileShouldNotBeFound("lastname.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByUsernameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where username equals to DEFAULT_USERNAME
+        defaultProfileShouldBeFound("username.equals=" + DEFAULT_USERNAME);
+
+        // Get all the profileList where username equals to UPDATED_USERNAME
+        defaultProfileShouldNotBeFound("username.equals=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByUsernameIsInShouldWork() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where username in DEFAULT_USERNAME or UPDATED_USERNAME
+        defaultProfileShouldBeFound("username.in=" + DEFAULT_USERNAME + "," + UPDATED_USERNAME);
+
+        // Get all the profileList where username equals to UPDATED_USERNAME
+        defaultProfileShouldNotBeFound("username.in=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllProfilesByUsernameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+
+        // Get all the profileList where username is not null
+        defaultProfileShouldBeFound("username.specified=true");
+
+        // Get all the profileList where username is null
+        defaultProfileShouldNotBeFound("username.specified=false");
     }
 
     @Test
@@ -1042,7 +1180,10 @@ public class ProfileResourceIntTest {
             .andExpect(jsonPath("$.[*].audio").value(hasItem(Base64Utils.encodeToString(DEFAULT_AUDIO))))
             .andExpect(jsonPath("$.[*].imagepath").value(hasItem(DEFAULT_IMAGEPATH.toString())))
             .andExpect(jsonPath("$.[*].videopath").value(hasItem(DEFAULT_VIDEOPATH.toString())))
-            .andExpect(jsonPath("$.[*].audiopath").value(hasItem(DEFAULT_AUDIOPATH.toString())));
+            .andExpect(jsonPath("$.[*].audiopath").value(hasItem(DEFAULT_AUDIOPATH.toString())))
+            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME.toString())))
+            .andExpect(jsonPath("$.[*].lastname").value(hasItem(DEFAULT_LASTNAME.toString())))
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME.toString())));
     }
 
     /**
@@ -1090,7 +1231,10 @@ public class ProfileResourceIntTest {
             .audioContentType(UPDATED_AUDIO_CONTENT_TYPE)
             .imagepath(UPDATED_IMAGEPATH)
             .videopath(UPDATED_VIDEOPATH)
-            .audiopath(UPDATED_AUDIOPATH);
+            .audiopath(UPDATED_AUDIOPATH)
+            .firstname(UPDATED_FIRSTNAME)
+            .lastname(UPDATED_LASTNAME)
+            .username(UPDATED_USERNAME);
         ProfileDTO profileDTO = profileMapper.toDto(updatedProfile);
 
         restProfileMockMvc.perform(put("/api/profiles")
@@ -1116,6 +1260,9 @@ public class ProfileResourceIntTest {
         assertThat(testProfile.getImagepath()).isEqualTo(UPDATED_IMAGEPATH);
         assertThat(testProfile.getVideopath()).isEqualTo(UPDATED_VIDEOPATH);
         assertThat(testProfile.getAudiopath()).isEqualTo(UPDATED_AUDIOPATH);
+        assertThat(testProfile.getFirstname()).isEqualTo(UPDATED_FIRSTNAME);
+        assertThat(testProfile.getLastname()).isEqualTo(UPDATED_LASTNAME);
+        assertThat(testProfile.getUsername()).isEqualTo(UPDATED_USERNAME);
     }
 
     @Test

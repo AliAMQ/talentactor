@@ -74,6 +74,15 @@ public class Profile implements Serializable {
     @Column(name = "audiopath")
     private String audiopath;
 
+    @Column(name = "firstname")
+    private String firstname;
+
+    @Column(name = "lastname")
+    private String lastname;
+
+    @Column(name = "username")
+    private String username;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
@@ -369,6 +378,45 @@ public class Profile implements Serializable {
 
     public void setAudiopath(String audiopath) {
         this.audiopath = audiopath;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public Profile firstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public Profile lastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Profile username(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public User getUser() {
@@ -873,6 +921,9 @@ public class Profile implements Serializable {
             ", imagepath='" + getImagepath() + "'" +
             ", videopath='" + getVideopath() + "'" +
             ", audiopath='" + getAudiopath() + "'" +
+            ", firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", username='" + getUsername() + "'" +
             "}";
     }
 }

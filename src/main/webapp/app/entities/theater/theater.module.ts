@@ -16,6 +16,7 @@ const ENTITY_STATES = [...theaterRoute, ...theaterPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [TheaterComponent],
     declarations: [
         TheaterComponent,
         TheaterDetailComponent,

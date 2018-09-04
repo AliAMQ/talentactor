@@ -3,6 +3,7 @@
         <div *ngIf="profile">
             <h2>{{firstName}}&nbsp;{{lastName}}</h2>
             <h4><span jhiTranslate="talentactorApp.profile.detail.login">Profile</span> {{login}}</h4>
+            <h5><span>{{email}}</span></h5>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
@@ -41,7 +42,7 @@
                     </table>
                 </dd>
                 <!--Film list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>-->
                 <!--<dd>
                     <div class="table-responsive" *ngIf="films">
                     <table class="table table-striped">
@@ -95,9 +96,9 @@
                 <jhi-film></jhi-film>
                 <!--Film list-End-->
                 <!--Television list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.television">Television</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.television">Television</span></dt>-->
                 <dd>
-                    <div class="table-responsive" *ngIf="televisions">
+                    <!--<div class="table-responsive" *ngIf="televisions">
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -117,7 +118,7 @@
                                         <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 30px;" alt="television image"/>
                                     </a>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/television', television.id, 'view' ]"
@@ -140,15 +141,16 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>-->
+                    <jhi-television></jhi-television>
                 </dd>
                 <!--Television list-End-->
                 <!--Internet list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.internet">Internet</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.internet">Internet</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="internets">
                         <table class="table table-striped">
@@ -170,7 +172,7 @@
                                         <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
                                     </a>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/internet', internet.id, 'view' ]"
@@ -193,15 +195,16 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </dd>
+                </dd>-->
+                <jhi-internet></jhi-internet>
                 <!--Internet list-End-->
                 <!--Commercial list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.commercial">Commercial</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.commercial">Commercial</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="commercials">
                         <table class="table table-striped">
@@ -223,7 +226,7 @@
                                         <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 30px;" alt="commercial image"/>
                                     </a>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/commercial', commercial.id, 'view' ]"
@@ -246,15 +249,16 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </dd>
+                </dd>-->
+                <jhi-commercial></jhi-commercial>
                 <!--Commercial list-End-->
                 <!--Print list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.print">Print</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.print">Print</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="prints">
                         <table class="table table-striped">
@@ -276,7 +280,7 @@
                                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
                                     </a>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/print', print.id, 'view' ]"
@@ -299,15 +303,16 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </dd>
+                </dd>-->
+                <jhi-print></jhi-print>
                 <!--print list-End-->
                 <!--Voice list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.voice">Voice</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.voice">Voice</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="voices">
                         <table class="table table-striped">
@@ -329,7 +334,7 @@
                                         </audio>
                                     </div>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/voice', voice.id, 'view' ]"
@@ -352,15 +357,16 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </dd>
+                </dd>-->
+                <jhi-voice></jhi-voice>
                 <!--Voice list-End-->
                 <!--Theater list-Begin-->
-                <dt><span jhiTranslate="talentactorApp.profile.theater">Theater</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.profile.theater">Theater</span></dt>
                 <dd>
                     <div class="table-responsive" *ngIf="theaters">
                         <table class="table table-striped">
@@ -380,7 +386,7 @@
                                         <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
                                     </a>
                                 </td>
-                                <!--<td class="text-right">
+                                &lt;!&ndash;<td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit"
                                                 [routerLink]="['/theater', theater.id, 'view' ]"
@@ -403,12 +409,14 @@
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                                         </button>
                                     </div>
-                                </td>-->
+                                </td>&ndash;&gt;
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                </dd>
+                </dd>-->
+                <jhi-theater></jhi-theater>
+                <!--Theater list-End-->
                 <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
                 <dd>
                     <span *ngFor="let sport of profile.sports; let last = last">
@@ -476,11 +484,11 @@
                     class="btn btn-info">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
             </button>
-            <!--<button type="button"
+            <button type="button"
                     [routerLink]="['/profile', profile.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-            </button>-->
+            </button>
         </div>
     </div>
 </div>

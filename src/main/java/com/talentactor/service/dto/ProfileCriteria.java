@@ -51,6 +51,12 @@ public class ProfileCriteria implements Serializable {
 
     private StringFilter audiopath;
 
+    private StringFilter firstname;
+
+    private StringFilter lastname;
+
+    private StringFilter username;
+
     private LongFilter userId;
 
     private LongFilter roleId;
@@ -162,6 +168,30 @@ public class ProfileCriteria implements Serializable {
 
     public void setAudiopath(StringFilter audiopath) {
         this.audiopath = audiopath;
+    }
+
+    public StringFilter getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(StringFilter firstname) {
+        this.firstname = firstname;
+    }
+
+    public StringFilter getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(StringFilter lastname) {
+        this.lastname = lastname;
+    }
+
+    public StringFilter getUsername() {
+        return username;
+    }
+
+    public void setUsername(StringFilter username) {
+        this.username = username;
     }
 
     public LongFilter getUserId() {
@@ -328,6 +358,9 @@ public class ProfileCriteria implements Serializable {
                 (imagepath != null ? "imagepath=" + imagepath + ", " : "") +
                 (videopath != null ? "videopath=" + videopath + ", " : "") +
                 (audiopath != null ? "audiopath=" + audiopath + ", " : "") +
+                (firstname != null ? "firstname=" + firstname + ", " : "") +
+                (lastname != null ? "lastname=" + lastname + ", " : "") +
+                (username != null ? "username=" + username + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
                 (roleId != null ? "roleId=" + roleId + ", " : "") +
                 (filmId != null ? "filmId=" + filmId + ", " : "") +

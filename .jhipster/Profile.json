@@ -1,55 +1,6 @@
 {
-    "name": "Profile",
-    "fields": [
-        {
-            "fieldName": "state",
-            "fieldType": "State",
-            "fieldValues": "AK,AL,AZ,AR,CA,CO,CT,DE,FL,GA,HI,ID,IL,IN,IA,KS,KY,LA,ME,MD,MA,MI,MN,MS,MO,MT,NE,NV,NH,NJ,NM,NY,NC,ND,OH,OK,OR,PA,RI,SC,SD,TN,TX,UT,VT,VA,WA,WV,WI,WY"
-        },
-        {
-            "fieldName": "city",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "address",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "phone",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "since",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "image",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
-        },
-        {
-            "fieldName": "video",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "any"
-        },
-        {
-            "fieldName": "audio",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "any"
-        },
-        {
-            "fieldName": "imagepath",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "videopath",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "audiopath",
-            "fieldType": "String"
-        }
-    ],
+    "fluentMethods": true,
+    "clientRootFolder": "",
     "relationships": [
         {
             "relationshipType": "one-to-one",
@@ -188,13 +139,73 @@
             "ownerSide": true
         }
     ],
+    "fields": [
+        {
+            "fieldName": "state",
+            "fieldType": "State",
+            "fieldValues": "AK,AL,AZ,AR,CA,CO,CT,DE,FL,GA,HI,ID,IL,IN,IA,KS,KY,LA,ME,MD,MA,MI,MN,MS,MO,MT,NE,NV,NH,NJ,NM,NY,NC,ND,OH,OK,OR,PA,RI,SC,SD,TN,TX,UT,VT,VA,WA,WV,WI,WY"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "since",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "video",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "audio",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "imagepath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "videopath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "audiopath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "firstname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "username",
+            "fieldType": "String"
+        }
+    ],
     "changelogDate": "20180703175243",
-    "entityTableName": "profile",
     "dto": "mapstruct",
-    "pagination": "pagination",
+    "searchEngine": false,
     "service": "serviceImpl",
+    "entityTableName": "profile",
     "jpaMetamodelFiltering": true,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "pagination"
 }

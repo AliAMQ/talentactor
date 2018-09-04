@@ -117,6 +117,7 @@ public class UserService {
         // Alireza- Create a profile for the new user
         Profile profile = new Profile();
         profile.setUser(newUser);
+        profile.setUsername(newUser.getLogin());
         profileRepository.save(profile);
 
 

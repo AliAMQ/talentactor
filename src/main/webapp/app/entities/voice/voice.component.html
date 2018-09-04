@@ -16,9 +16,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <th jhiSortBy="title"><span jhiTranslate="talentactorApp.voice.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th><span jhiTranslate="talentactorApp.voice.audio">Audio</span></th>
             <th jhiSortBy="director"><span jhiTranslate="talentactorApp.voice.director">Director</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th><span jhiTranslate="talentactorApp.voice.link">Link</span></th>
+                <th><span jhiTranslate="talentactorApp.voice.audio">Audio</span></th>
             <!--<th jhiSortBy="video"><span jhiTranslate="talentactorApp.voice.video">Video</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
             <!--<th jhiSortBy="videopath"><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="audiopath"><span jhiTranslate="talentactorApp.voice.audiopath">Audiopath</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -29,21 +28,15 @@
             <tbody>
             <tr *ngFor="let voice of voices ;trackBy: trackId">
                 <!--<td><a [routerLink]="['/voice', voice.id, 'view' ]">{{voice.id}}</a></td>-->
-                <td>{{voice.title}}</td>
+                <td><a href="#/voice/{{voice.id}}/view">{{voice.title}}</a></td>
+                <td>{{voice.director}}</td>
                 <td>
-                    <!--<a *ngIf="voice.audio" (click)="openFile(voice.audioContentType, voice.audio)" jhiTranslate="entity.action.open">open</a>-->
-                    <!--<span *ngIf="voice.audio">{{voice.audioContentType}}, {{byteSize(voice.audio)}}</span>-->
                     <div *ngIf="voice.audio">
                         <audio style="max-width: 100%;" alt="User Audio" controls>
                             <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
                         </audio>
-                        <!--<a (click)="openFile(voice.audioContentType, userExtra.audio)" jhiTranslate="entity.action.open">open</a>
-                        {{userExtra.audioContentType}}, {{byteSize(userExtra.audio)}}-->
                     </div>
-
                 </td>
-                <td>{{voice.director}}</td>
-                <td><a href="{{voice.link}}" target="_blank">Go to website</a></td>
                 <!--<td>
                     <a *ngIf="voice.video" (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="voice.video">{{voice.videoContentType}}, {{byteSize(voice.video)}}</span>

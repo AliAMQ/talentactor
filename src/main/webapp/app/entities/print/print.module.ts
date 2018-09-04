@@ -16,6 +16,7 @@ const ENTITY_STATES = [...printRoute, ...printPopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [PrintComponent],
     declarations: [PrintComponent, PrintDetailComponent, PrintUpdateComponent, PrintDeleteDialogComponent, PrintDeletePopupComponent],
     entryComponents: [PrintComponent, PrintUpdateComponent, PrintDeleteDialogComponent, PrintDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

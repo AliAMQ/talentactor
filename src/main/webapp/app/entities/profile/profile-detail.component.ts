@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 import { IProfile } from 'app/shared/model/profile.model';
 import { Principal } from 'app/core';
-import { HttpResponse } from '@angular/common/http';
 import { ProfileService } from '../profile/profile.service';
 // import { IFilm } from 'app/shared/model/film.model';
 // import { FilmService } from 'app/entities/film/film.service';
@@ -32,12 +31,12 @@ export class ProfileDetailComponent implements OnInit {
     lastName;
     email: string;
     // films: IFilm[];
-    televisions: ITelevision[];
-    internets: IInternet[];
-    commercials: ICommercial[];
-    prints: IPrint[];
+    /*televisions: ITelevision[];*/
+    // internets: IInternet[];
+    // commercials: ICommercial[];
+    /*prints: IPrint[];
     theaters: ITheater[];
-    voices: IVoice[];
+    voices: IVoice[];*/
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -45,12 +44,12 @@ export class ProfileDetailComponent implements OnInit {
         private principal: Principal,
         private profileService: ProfileService,
         // private filmService: FilmService,
-        private televisionService: TelevisionService,
-        private internetService: InternetService,
-        private commercialService: CommercialService,
-        private printService: PrintService,
+        /*private televisionService: TelevisionService,*/
+        /*private internetService: InternetService,
+        private commercialService: CommercialService,*/
+        /*private printService: PrintService,
         private theaterService: TheaterService,
-        private voiceService: VoiceService,
+        private voiceService: VoiceService,*/
         public fileManagementService: FileManagementService
     ) {}
 
@@ -62,15 +61,15 @@ export class ProfileDetailComponent implements OnInit {
             .subscribe((res1: HttpResponse<IFilm[]>) => (this.films = res1.body));
     }*/
 
-    loadAllTelevisions() {
+    /*loadAllTelevisions() {
         this.televisionService
             .query({
                 'profileId.equals': this.profile.id
             })
             .subscribe((res1: HttpResponse<ITelevision[]>) => (this.televisions = res1.body));
-    }
+    }*/
 
-    loadAllInternets() {
+    /*loadAllInternets() {
         this.internetService
             .query({
                 'profileId.equals': this.profile.id
@@ -84,9 +83,9 @@ export class ProfileDetailComponent implements OnInit {
                 'profileId.equals': this.profile.id
             })
             .subscribe((res1: HttpResponse<ICommercial[]>) => (this.commercials = res1.body));
-    }
+    }*/
 
-    loadAllPrints() {
+    /*loadAllPrints() {
         this.printService
             .query({
                 'profileId.equals': this.profile.id
@@ -108,7 +107,7 @@ export class ProfileDetailComponent implements OnInit {
                 'profileId.equals': this.profile.id
             })
             .subscribe((res1: HttpResponse<IVoice[]>) => (this.voices = res1.body));
-    }
+    }*/
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ profile }) => {
@@ -119,12 +118,12 @@ export class ProfileDetailComponent implements OnInit {
             this.email = this.principal.getEmail();
         });
         // this.loadAllFilms();
-        this.loadAllTelevisions();
-        this.loadAllInternets();
-        this.loadAllCommercials();
-        this.loadAllPrints();
+        // this.loadAllTelevisions();
+        /*this.loadAllInternets();
+        this.loadAllCommercials();*/
+        /*this.loadAllPrints();
         this.loadAllTheaters();
-        this.loadAllVoices();
+        this.loadAllVoices();*/
     }
 
     byteSize(field) {

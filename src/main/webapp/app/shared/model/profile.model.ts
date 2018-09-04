@@ -87,6 +87,9 @@ export interface IProfile {
     imagepath?: string;
     videopath?: string;
     audiopath?: string;
+    firstname?: string;
+    lastname?: string;
+    username?: string;
     userId?: number;
     roles?: IRole[];
     films?: IFilm[];
@@ -125,6 +128,9 @@ export class Profile implements IProfile {
         public imagepath?: string,
         public videopath?: string,
         public audiopath?: string,
+        public firstname?: string,
+        public lastname?: string,
+        public username?: string,
         public userId?: number,
         public roles?: IRole[],
         public films?: IFilm[],

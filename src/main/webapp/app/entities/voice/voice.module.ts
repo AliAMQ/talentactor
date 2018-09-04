@@ -16,6 +16,7 @@ const ENTITY_STATES = [...voiceRoute, ...voicePopupRoute];
 
 @NgModule({
     imports: [TalentactorSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    exports: [VoiceComponent],
     declarations: [VoiceComponent, VoiceDetailComponent, VoiceUpdateComponent, VoiceDeleteDialogComponent, VoiceDeletePopupComponent],
     entryComponents: [VoiceComponent, VoiceUpdateComponent, VoiceDeleteDialogComponent, VoiceDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
