@@ -61,7 +61,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.film.video" for="videopath1">Video</label>
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.video" for="videopath1">Video</label>&nbsp;
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.videonote" for="videopath1">Video</label>
                     <!--<div>
                         <div *ngIf="film.video" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(film.videoContentType, film.video)" jhiTranslate="entity.action.open">open</a><br>
@@ -81,7 +82,7 @@
                         <!--<img [hidden]="!film.videopath" [src]="fileManagementService.getCloud() + film.videopath" style="width: 150px;" id="videopath1"/>-->
                         <video [hidden]="!film.videopath" width="150px" id="videopath1" controls>
                             <!--<img [hidden]="!film.imagepath" [src]="fileManagementService.getCloud() + film.imagepath" style="width: 150px;" id="imagepath1"/>-->
-                            <source src="{{fileManagementService.getCloud()}}{{film.videopath}}" type="video/mp4">
+                            <source src="{{fileManagementService.getCloud()}}{{film.videopath}}">
                             Your browser does not support the video tag.
                         </video>
                         <button [hidden]="!film.videopath" type="button" (click)="clearInputVideo('videopath1', 'close2', 'file_video')" class="btn btn-secondary btn-xs pull-right" id="close2">

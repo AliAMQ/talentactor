@@ -24,7 +24,8 @@
             "video": "Video",
             "imagepath": "Imagepath",
             "videopath": "Videopath",
-            "profile": "Profile"
+            "profile": "Profile",
+            "videonote": "(mp4 is the only format supported by all browsers)"
         }
     }
 }
