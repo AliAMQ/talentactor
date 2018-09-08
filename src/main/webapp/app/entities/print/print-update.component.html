@@ -36,7 +36,7 @@
                         [(ngModel)]="print.link" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.print.image" for="field_image">Image</label>
+                    <!--<label class="form-control-label" jhiTranslate="talentactorApp.print.image" for="field_image">Image</label>
                     <div>
                         <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 100px;" *ngIf="print.image" alt="print image"/>
                         <div *ngIf="print.image" class="form-text text-danger clearfix">
@@ -50,7 +50,16 @@
                     <input type="hidden" class="form-control" name="image" id="field_image"
                         [(ngModel)]="print.image" />
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                        [(ngModel)]="print.imageContentType" />
+                        [(ngModel)]="print.imageContentType" />-->
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.image" for="imagepath1">Image</label>
+                    <div>
+                        <img [hidden]="!print.imagepath" [src]="fileManagementService.getCloud() + print.imagepath" style="width: 150px;" id="imagepath1"/>
+                        <button [hidden]="!print.imagepath" type="button" (click)="clearInputImage('imagepath1', 'close', 'file_image')" class="btn btn-secondary btn-xs pull-right" id="close">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_image" (change)="selectFile($event,'imagepath1','file_image')" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.print.imagepath" for="field_imagepath">Imagepath</label>

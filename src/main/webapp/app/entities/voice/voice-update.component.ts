@@ -10,6 +10,7 @@ import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
 import { Principal } from 'app/core';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-voice-update',
@@ -21,6 +22,8 @@ export class VoiceUpdateComponent implements OnInit {
 
     profiles: IProfile[];
     profileId: number;
+    selectedFiles: FileList;
+    selectedFiles2: FileList;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -28,7 +31,8 @@ export class VoiceUpdateComponent implements OnInit {
         private voiceService: VoiceService,
         private profileService: ProfileService,
         private activatedRoute: ActivatedRoute,
-        private principal: Principal
+        private principal: Principal,
+        public fileManagementService: FileManagementService
     ) {}
 
     ngOnInit() {
@@ -42,6 +46,20 @@ export class VoiceUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+    }
+
+    clearInputVideo(video, button, input) {
+        (document.getElementById(video) as HTMLVideoElement).src = '';
+        (document.getElementById(video) as HTMLVideoElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
+    }
+
+    clearInputAudio(audio, button, input) {
+        (document.getElementById(audio) as HTMLAudioElement).src = '';
+        (document.getElementById(audio) as HTMLAudioElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
     }
 
     byteSize(field) {
@@ -66,8 +84,52 @@ export class VoiceUpdateComponent implements OnInit {
             this.voice.profileId = this.profileId;
             this.isSaving = true;
             if (this.voice.id !== undefined) {
+                if (this.selectedFiles !== undefined) {
+                    if (this.voice.videopath !== null) {
+                        this.fileManagementService.deleteFile(this.voice.videopath);
+                    }
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                        this.voice.videopath = this.upload('videopath1');
+                    } else {
+                        this.voice.videopath = null;
+                    }
+                } else {
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden === true) {
+                        if (this.voice.videopath !== null) {
+                            this.fileManagementService.deleteFile(this.voice.videopath);
+                            this.voice.videopath = null;
+                        }
+                    }
+                }
+                if (this.selectedFiles2 !== undefined) {
+                    if (this.voice.audiopath !== null) {
+                        this.fileManagementService.deleteFile(this.voice.audiopath);
+                    }
+                    if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden !== true) {
+                        this.voice.audiopath = this.upload('audiopath1');
+                    } else {
+                        this.voice.audiopath = null;
+                    }
+                } else {
+                    if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden === true) {
+                        if (this.voice.audiopath !== null) {
+                            this.fileManagementService.deleteFile(this.voice.audiopath);
+                            this.voice.audiopath = null;
+                        }
+                    }
+                }
                 this.subscribeToSaveResponse(this.voiceService.update(this.voice));
             } else {
+                if (this.selectedFiles !== undefined) {
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                        this.voice.videopath = this.upload('videopath1');
+                    }
+                }
+                if (this.selectedFiles2 !== undefined) {
+                    if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden !== true) {
+                        this.voice.audiopath = this.upload('audiopath1');
+                    }
+                }
                 this.subscribeToSaveResponse(this.voiceService.create(this.voice));
             }
         });
@@ -79,7 +141,7 @@ export class VoiceUpdateComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        global.setTimeout(this.previousState, 1000);
     }
 
     private onSaveError() {
@@ -99,5 +161,51 @@ export class VoiceUpdateComponent implements OnInit {
 
     set voice(voice: IVoice) {
         this._voice = voice;
+    }
+
+    selectVideoFile(event, video, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(video) as HTMLVideoElement).src = reader.result;
+                (document.getElementById(video) as HTMLVideoElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (video === 'videopath1') {
+            this.selectedFiles = event.target.files;
+            (document.getElementById('close') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    selectAudioFile(event, audio, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(audio) as HTMLAudioElement).src = reader.result;
+                (document.getElementById(audio) as HTMLAudioElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (audio === 'audiopath1') {
+            this.selectedFiles2 = event.target.files;
+            (document.getElementById('close2') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    upload(media): string {
+        let file;
+        if (media === 'videopath1') {
+            file = this.selectedFiles.item(0);
+        }
+        if (media === 'audiopath1') {
+            file = this.selectedFiles2.item(0);
+            console.log('ddddddddd media:' + media + '-file:' + file);
+        }
+        return this.fileManagementService.uploadfile(file);
     }
 }

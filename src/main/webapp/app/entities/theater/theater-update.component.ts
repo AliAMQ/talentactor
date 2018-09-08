@@ -10,6 +10,7 @@ import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from 'app/entities/profile';
 
 import { Principal } from 'app/core';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-theater-update',
@@ -21,6 +22,8 @@ export class TheaterUpdateComponent implements OnInit {
 
     profiles: IProfile[];
     profileId: number;
+    selectedFiles: FileList;
+    selectedFiles2: FileList;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -29,7 +32,8 @@ export class TheaterUpdateComponent implements OnInit {
         private profileService: ProfileService,
         private elementRef: ElementRef,
         private activatedRoute: ActivatedRoute,
-        private principal: Principal
+        private principal: Principal,
+        public fileManagementService: FileManagementService
     ) {}
 
     ngOnInit() {
@@ -57,8 +61,22 @@ export class TheaterUpdateComponent implements OnInit {
         this.dataUtils.setFileData(event, entity, field, isImage);
     }
 
-    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+    /*clearInputImage(field: string, fieldContentType: string, idInput: string) {
         this.dataUtils.clearInputImage(this.theater, this.elementRef, field, fieldContentType, idInput);
+    }*/
+
+    clearInputImage(image, button, input) {
+        (document.getElementById(image) as HTMLImageElement).src = '';
+        (document.getElementById(image) as HTMLImageElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
+    }
+
+    clearInputVideo(video, button, input) {
+        (document.getElementById(video) as HTMLVideoElement).src = '';
+        (document.getElementById(video) as HTMLVideoElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
     }
 
     previousState() {
@@ -71,8 +89,52 @@ export class TheaterUpdateComponent implements OnInit {
             this.theater.profileId = this.profileId;
             this.isSaving = true;
             if (this.theater.id !== undefined) {
+                if (this.selectedFiles !== undefined) {
+                    if (this.theater.imagepath !== null) {
+                        this.fileManagementService.deleteFile(this.theater.imagepath);
+                    }
+                    if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
+                        this.theater.imagepath = this.upload('imagepath1');
+                    } else {
+                        this.theater.imagepath = null;
+                    }
+                } else {
+                    if ((document.getElementById('imagepath1') as HTMLImageElement).hidden === true) {
+                        if (this.theater.imagepath !== null) {
+                            this.fileManagementService.deleteFile(this.theater.imagepath);
+                            this.theater.imagepath = null;
+                        }
+                    }
+                }
+                if (this.selectedFiles2 !== undefined) {
+                    if (this.theater.videopath !== null) {
+                        this.fileManagementService.deleteFile(this.theater.videopath);
+                    }
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                        this.theater.videopath = this.upload('videopath1');
+                    } else {
+                        this.theater.videopath = null;
+                    }
+                } else {
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden === true) {
+                        if (this.theater.videopath !== null) {
+                            this.fileManagementService.deleteFile(this.theater.videopath);
+                            this.theater.videopath = null;
+                        }
+                    }
+                }
                 this.subscribeToSaveResponse(this.theaterService.update(this.theater));
             } else {
+                if (this.selectedFiles !== undefined) {
+                    if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
+                        this.theater.imagepath = this.upload('imagepath1');
+                    }
+                }
+                if (this.selectedFiles2 !== undefined) {
+                    if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                        this.theater.videopath = this.upload('videopath1');
+                    }
+                }
                 this.subscribeToSaveResponse(this.theaterService.create(this.theater));
             }
         });
@@ -84,7 +146,7 @@ export class TheaterUpdateComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        global.setTimeout(this.previousState, 1000);
     }
 
     private onSaveError() {
@@ -104,5 +166,54 @@ export class TheaterUpdateComponent implements OnInit {
 
     set theater(theater: ITheater) {
         this._theater = theater;
+    }
+
+    selectFile(event, image, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(image) as HTMLImageElement).src = reader.result;
+                (document.getElementById(image) as HTMLImageElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (image === 'imagepath1') {
+            this.selectedFiles = event.target.files;
+            (document.getElementById('close') as HTMLButtonElement).hidden = false;
+        }
+        if (image === 'videopath1') {
+            this.selectedFiles2 = event.target.files;
+            (document.getElementById('close2') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    selectVideoFile(event, video, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(video) as HTMLVideoElement).src = reader.result;
+                (document.getElementById(video) as HTMLVideoElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (video === 'videopath1') {
+            this.selectedFiles2 = event.target.files;
+            (document.getElementById('close2') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    upload(media): string {
+        let file;
+        if (media === 'imagepath1') {
+            file = this.selectedFiles.item(0);
+        }
+        if (media === 'videopath1') {
+            file = this.selectedFiles2.item(0);
+        }
+        return this.fileManagementService.uploadfile(file);
     }
 }

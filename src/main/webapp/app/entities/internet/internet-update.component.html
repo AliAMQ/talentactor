@@ -36,8 +36,9 @@
                         [(ngModel)]="internet.link" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.internet.image" for="field_image">Image</label>
-                    <div>
+                    <!--<label class="form-control-label" jhiTranslate="talentactorApp.internet.image" for="field_image">Image</label>-->
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.image" for="imagepath1">Image</label>
+                    <!--<div>
                         <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 100px;" *ngIf="internet.image" alt="internet image"/>
                         <div *ngIf="internet.image" class="form-text text-danger clearfix">
                             <span class="pull-left">{{internet.imageContentType}}, {{byteSize(internet.image)}}</span>
@@ -50,10 +51,18 @@
                     <input type="hidden" class="form-control" name="image" id="field_image"
                         [(ngModel)]="internet.image" />
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                        [(ngModel)]="internet.imageContentType" />
+                        [(ngModel)]="internet.imageContentType" />-->
+                    <div>
+                        <img [hidden]="!internet.imagepath" [src]="fileManagementService.getCloud() + internet.imagepath" style="width: 150px;" id="imagepath1"/>
+                        <button [hidden]="!internet.imagepath" type="button" (click)="clearInputImage('imagepath1', 'close', 'file_image')" class="btn btn-secondary btn-xs pull-right" id="close">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_image" (change)="selectFile($event,'imagepath1','file_image')" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.internet.video" for="field_video">Video</label>
+                    <!--<label class="form-control-label" jhiTranslate="talentactorApp.internet.video" for="field_video">Video</label>
                     <div>
                         <div *ngIf="internet.video" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a><br>
@@ -68,7 +77,22 @@
                     <input type="hidden" class="form-control" name="video" id="field_video"
                         [(ngModel)]="internet.video" />
                     <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
-                        [(ngModel)]="internet.videoContentType" />
+                        [(ngModel)]="internet.videoContentType" />-->
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.video" for="videopath1">Video</label>&nbsp;
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.videonote" for="videopath1">Video</label>
+                    <div>
+                        <!--<img [hidden]="!film.videopath" [src]="fileManagementService.getCloud() + film.videopath" style="width: 150px;" id="videopath1"/>-->
+                        <video [hidden]="!internet.videopath" width="150px" id="videopath1" controls>
+                            <!--<img [hidden]="!film.imagepath" [src]="fileManagementService.getCloud() + film.imagepath" style="width: 150px;" id="imagepath1"/>-->
+                            <source src="{{fileManagementService.getCloud()}}{{internet.videopath}}">
+                            Your browser does not support the video tag.
+                        </video>
+                        <button [hidden]="!internet.videopath" type="button" (click)="clearInputVideo('videopath1', 'close2', 'file_video')" class="btn btn-secondary btn-xs pull-right" id="close2">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_video" (change)="selectVideoFile($event,'videopath1','file_video')" accept="video/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.internet.imagepath" for="field_imagepath">Imagepath</label>

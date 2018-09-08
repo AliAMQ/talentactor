@@ -23,7 +23,8 @@
             "audio": "Audio",
             "videopath": "Videopath",
             "audiopath": "Audiopath",
-            "profile": "Profile"
+            "profile": "Profile",
+            "audionote": "(mp3 is the only format supported by all browsers)"
         }
     }
 }

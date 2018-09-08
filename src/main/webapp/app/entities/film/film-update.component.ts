@@ -90,43 +90,34 @@ export class FilmUpdateComponent implements OnInit {
             this.isSaving = true;
             if (this.film.id !== undefined) {
                 if (this.selectedFiles !== undefined) {
-                    console.log('-------aaaaaa--------' + this.selectedFiles);
                     if (this.film.imagepath !== null) {
-                        console.log('-------bbbbbb--------' + this.film.imagepath);
                         this.fileManagementService.deleteFile(this.film.imagepath);
                     }
                     if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
                         this.film.imagepath = this.upload('imagepath1');
-                        console.log('-------cccccc--------' + this.film.imagepath);
                     } else {
                         this.film.imagepath = null;
                     }
                 } else {
                     if ((document.getElementById('imagepath1') as HTMLImageElement).hidden === true) {
                         if (this.film.imagepath !== null) {
-                            console.log('-------dddddddd--------' + this.film.imagepath);
                             this.fileManagementService.deleteFile(this.film.imagepath);
                             this.film.imagepath = null;
                         }
                     }
                 }
                 if (this.selectedFiles2 !== undefined) {
-                    console.log('-------11111--------' + this.film.videopath);
                     if (this.film.videopath !== null) {
                         this.fileManagementService.deleteFile(this.film.videopath);
-                        console.log('-------22222--------' + this.film.videopath);
                     }
                     if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
                         this.film.videopath = this.upload('videopath1');
-                        console.log('-------333333--------' + this.film.videopath);
                     } else {
-                        console.log('---------4444444------' + this.film.videopath);
                         this.film.videopath = null;
                     }
                 } else {
                     if ((document.getElementById('videopath1') as HTMLVideoElement).hidden === true) {
                         if (this.film.videopath !== null) {
-                            console.log('-------5555--------' + this.film.videopath);
                             this.fileManagementService.deleteFile(this.film.videopath);
                             this.film.videopath = null;
                         }
