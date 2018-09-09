@@ -66,6 +66,8 @@ export class ProfileUpdateComponent implements OnInit {
     settingsAccount: any;
     error: string;
     success: string;
+    selectedFiles2: FileList;
+    selectedFiles3: FileList;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -210,11 +212,55 @@ export class ProfileUpdateComponent implements OnInit {
                     }
                 }
             }
+            if (this.selectedFiles2 !== undefined) {
+                if (this.profile.videopath !== null) {
+                    this.fileManagementService.deleteFile(this.profile.videopath);
+                }
+                if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                    this.profile.videopath = this.upload('videopath1');
+                } else {
+                    this.profile.videopath = null;
+                }
+            } else {
+                if ((document.getElementById('videopath1') as HTMLVideoElement).hidden === true) {
+                    if (this.profile.videopath !== null) {
+                        this.fileManagementService.deleteFile(this.profile.videopath);
+                        this.profile.videopath = null;
+                    }
+                }
+            }
+            if (this.selectedFiles3 !== undefined) {
+                if (this.profile.audiopath !== null) {
+                    this.fileManagementService.deleteFile(this.profile.audiopath);
+                }
+                if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden !== true) {
+                    this.profile.audiopath = this.upload('audiopath1');
+                } else {
+                    this.profile.audiopath = null;
+                }
+            } else {
+                if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden === true) {
+                    if (this.profile.audiopath !== null) {
+                        this.fileManagementService.deleteFile(this.profile.audiopath);
+                        this.profile.audiopath = null;
+                    }
+                }
+            }
             this.subscribeToSaveResponse(this.profileService.update(this.profile));
         } else {
             if (this.selectedFiles !== undefined) {
                 if ((document.getElementById('imagepath1') as HTMLImageElement).hidden !== true) {
                     this.profile.imagepath = this.upload('imagepath1');
+                }
+            }
+            if (this.selectedFiles2 !== undefined) {
+                if ((document.getElementById('videopath1') as HTMLVideoElement).hidden !== true) {
+                    this.profile.videopath = this.upload('videopath1');
+                }
+            }
+            if (this.selectedFiles3 !== undefined) {
+                if ((document.getElementById('audiopath1') as HTMLAudioElement).hidden !== true) {
+                    this.profile.audiopath = this.upload('audiopath1');
                 }
             }
             this.subscribeToSaveResponse(this.profileService.create(this.profile));
@@ -330,10 +376,16 @@ export class ProfileUpdateComponent implements OnInit {
         }
     }
 
-    upload(image): string {
+    upload(media): string {
         let file;
-        if (image === 'imagepath1') {
+        if (media === 'imagepath1') {
             file = this.selectedFiles.item(0);
+        }
+        if (media === 'videopath1') {
+            file = this.selectedFiles2.item(0);
+        }
+        if (media === 'audiopath1') {
+            file = this.selectedFiles3.item(0);
         }
         return this.fileManagementService.uploadfile(file);
     }
@@ -341,6 +393,20 @@ export class ProfileUpdateComponent implements OnInit {
     clearInputImage(image, button, input) {
         (document.getElementById(image) as HTMLImageElement).src = '';
         (document.getElementById(image) as HTMLImageElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
+    }
+
+    clearInputVideo(video, button, input) {
+        (document.getElementById(video) as HTMLVideoElement).src = '';
+        (document.getElementById(video) as HTMLVideoElement).hidden = true;
+        (document.getElementById(button) as HTMLButtonElement).hidden = true;
+        (document.getElementById(input) as HTMLInputElement).value = null;
+    }
+
+    clearInputAudio(audio, button, input) {
+        (document.getElementById(audio) as HTMLAudioElement).src = '';
+        (document.getElementById(audio) as HTMLAudioElement).hidden = true;
         (document.getElementById(button) as HTMLButtonElement).hidden = true;
         (document.getElementById(input) as HTMLInputElement).value = null;
     }
@@ -364,5 +430,39 @@ export class ProfileUpdateComponent implements OnInit {
                 this.error = 'ERROR';
             }
         );
+    }
+
+    selectVideoFile(event, video, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(video) as HTMLVideoElement).src = reader.result;
+                (document.getElementById(video) as HTMLVideoElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (video === 'videopath1') {
+            this.selectedFiles2 = event.target.files;
+            (document.getElementById('close') as HTMLButtonElement).hidden = false;
+        }
+    }
+
+    selectAudioFile(event, audio, input) {
+        const reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            function() {
+                (document.getElementById(audio) as HTMLAudioElement).src = reader.result;
+                (document.getElementById(audio) as HTMLAudioElement).hidden = false;
+            },
+            false
+        );
+        reader.readAsDataURL((document.getElementById(input) as HTMLInputElement).files[0]);
+        if (audio === 'audiopath1') {
+            this.selectedFiles3 = event.target.files;
+            (document.getElementById('close2') as HTMLButtonElement).hidden = false;
+        }
     }
 }

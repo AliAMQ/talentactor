@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.video" for="field_video">Video</label>
+                    <!--<label class="form-control-label" jhiTranslate="talentactorApp.profile.video" for="field_video">Video</label>
                     <div>
                         <div *ngIf="profile.video" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(profile.videoContentType, profile.video)" jhiTranslate="entity.action.open">open</a><br>
@@ -163,10 +163,25 @@
                     <input type="hidden" class="form-control" name="video" id="field_video"
                         [(ngModel)]="profile.video" />
                     <input type="hidden" class="form-control" name="videoContentType" id="field_videoContentType"
-                        [(ngModel)]="profile.videoContentType" />
+                        [(ngModel)]="profile.videoContentType" />-->
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.video" for="videopath1">Video</label>&nbsp;
+                    <label class="form-control-label" jhiTranslate="talentactorApp.film.videonote" for="videopath1">Video</label>
+                    <div>
+                        <!--<img [hidden]="!film.videopath" [src]="fileManagementService.getCloud() + film.videopath" style="width: 150px;" id="videopath1"/>-->
+                        <video [hidden]="!profile.videopath" width="150px" id="videopath1" controls>
+                            <!--<img [hidden]="!film.imagepath" [src]="fileManagementService.getCloud() + film.imagepath" style="width: 150px;" id="imagepath1"/>-->
+                            <source src="{{fileManagementService.getCloud()}}{{profile.videopath}}">
+                            Your browser does not support the video tag.
+                        </video>
+                        <button [hidden]="!profile.videopath" type="button" (click)="clearInputVideo('videopath1', 'close2', 'file_video')" class="btn btn-secondary btn-xs pull-right" id="close2">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_video" (change)="selectVideoFile($event,'videopath1','file_video')" accept="video/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="talentactorApp.profile.audio" for="field_audio">Audio</label>
+                    <!--<label class="form-control-label" jhiTranslate="talentactorApp.profile.audio" for="field_audio">Audio</label>
                     <div>
                         <div *ngIf="profile.audio" class="form-text text-danger clearfix">
                             <a class="pull-left" (click)="openFile(profile.audioContentType, profile.audio)" jhiTranslate="entity.action.open">open</a><br>
@@ -181,7 +196,22 @@
                     <input type="hidden" class="form-control" name="audio" id="field_audio"
                         [(ngModel)]="profile.audio" />
                     <input type="hidden" class="form-control" name="audioContentType" id="field_audioContentType"
-                        [(ngModel)]="profile.audioContentType" />
+                        [(ngModel)]="profile.audioContentType" />-->
+                    <label class="form-control-label" jhiTranslate="talentactorApp.voice.audio" for="audiopath1">Audio</label>&nbsp;
+                    <label class="form-control-label" jhiTranslate="talentactorApp.voice.audionote" for="audiopath1">Audio</label>
+                    <div>
+                        <!--<img [hidden]="!film.videopath" [src]="fileManagementService.getCloud() + film.videopath" style="width: 150px;" id="videopath1"/>-->
+                        <video [hidden]="!profile.audiopath" width="150px" id="audiopath1" controls>
+                            <!--<img [hidden]="!film.imagepath" [src]="fileManagementService.getCloud() + film.imagepath" style="width: 150px;" id="imagepath1"/>-->
+                            <source src="{{fileManagementService.getCloud()}}{{profile.audiopath}}">
+                            Your browser does not support the audio tag.
+                        </video>
+                        <button [hidden]="!profile.audiopath" type="button" (click)="clearInputAudio('audiopath1', 'close3', 'file_audio')" class="btn btn-secondary btn-xs pull-right" id="close3">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span jhiTranslate="talentactorApp.profile.deleteimg"></span>
+                        </button>
+                        <input type="file" id="file_audio" (change)="selectAudioFile($event,'audiopath1','file_audio')" accept="audio/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
                 </div>
                 <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.profile.imagepath" for="field_imagepath">Imagepath</label>

@@ -204,7 +204,6 @@ export class VoiceUpdateComponent implements OnInit {
         }
         if (media === 'audiopath1') {
             file = this.selectedFiles2.item(0);
-            console.log('ddddddddd media:' + media + '-file:' + file);
         }
         return this.fileManagementService.uploadfile(file);
     }
