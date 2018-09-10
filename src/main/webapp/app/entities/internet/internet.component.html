@@ -33,8 +33,10 @@
                 <td>{{internet.director}}</td>
                 <td>{{internet.cameraman}}</td>
                 <td>
-                    <a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">
-                        <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
+                    <!--<a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">-->
+                    <a *ngIf="internet.imagepath" class="example-image-link" data-lightbox="example-set2" [href]="fileManagementService.getCloud() + internet.imagepath">
+                        <!--<img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>-->
+                        <img [src]="fileManagementService.getCloud() + internet.imagepath" style="max-height: 30px;" alt="internet image"/>
                     </a>
                 </td>
                 <!--<td>
@@ -76,12 +78,12 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="internets && internets.length">
+    <!--<div *ngIf="internets && internets.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
             <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
-    </div>
+    </div>-->
 </div>

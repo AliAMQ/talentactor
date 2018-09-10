@@ -31,8 +31,10 @@
                 <td><a href="#/theater/{{theater.id}}/view">{{theater.title}}</a></td>
                 <td>{{theater.director}}</td>
                 <td>
-                    <a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">
-                        <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
+                    <!--<a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">-->
+                    <a *ngIf="theater.imagepath" class="example-image-link" data-lightbox="example-set6" [href]="fileManagementService.getCloud() + theater.imagepath">
+                        <!--<img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>-->
+                        <img [src]="fileManagementService.getCloud() + theater.imagepath" style="max-height: 30px;" alt="print image"/>
                     </a>
                 </td>
                 <!--<td>
@@ -74,12 +76,12 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="theaters && theaters.length">
+    <!--<div *ngIf="theaters && theaters.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
             <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
-    </div>
+    </div>-->
 </div>

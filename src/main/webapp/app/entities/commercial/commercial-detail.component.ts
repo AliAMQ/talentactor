@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { ICommercial } from 'app/shared/model/commercial.model';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-commercial-detail',
@@ -11,7 +12,11 @@ import { ICommercial } from 'app/shared/model/commercial.model';
 export class CommercialDetailComponent implements OnInit {
     commercial: ICommercial;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ commercial }) => {

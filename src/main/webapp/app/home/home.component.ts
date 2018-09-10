@@ -7,6 +7,8 @@ import { LoginModalService, Principal, Account } from 'app/core';
 import { HttpResponse } from '@angular/common/http';
 import { ProjectService } from 'app/entities/project/project.service';
 import { IProject } from 'app/shared/model/project.model';
+import { FileManagementService } from '../shared/file/file-management.service';
+
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
@@ -22,7 +24,8 @@ export class HomeComponent implements OnInit {
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         private projectService: ProjectService,
-        private dataUtils: JhiDataUtils
+        private dataUtils: JhiDataUtils,
+        public fileManagementService: FileManagementService
     ) {}
 
     ngOnInit() {

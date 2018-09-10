@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { IVoice } from 'app/shared/model/voice.model';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-voice-detail',
@@ -11,7 +12,11 @@ import { IVoice } from 'app/shared/model/voice.model';
 export class VoiceDetailComponent implements OnInit {
     voice: IVoice;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ voice }) => {

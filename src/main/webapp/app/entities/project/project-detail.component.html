@@ -21,19 +21,23 @@
                     <table>
                         <tr>
                             <td width="30%">
-                                <div *ngIf="project.image">
-                                    <a (click)="openFile(project.imageContentType, project.image)">
-                                        <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-width: 100%;" alt="project image"/>
+                                <div *ngIf="project.imagepath">
+                                    <!--<a (click)="openFile(project.imageContentType, project.image)">-->
+                                    <a *ngIf="project.imagepath" class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + project.imagepath">
+                                        <!--<img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-width: 100%;" alt="project image"/>-->
+                                        <img [src]="fileManagementService.getCloud() + project.imagepath" style="max-width: 100%;" alt="project image"/>
                                     </a>
                                     <!--{{project.imageContentType}}, {{byteSize(project.image)}}-->
                                 </div>
                             </td>
                             <td width="70%">
-                                <div *ngIf="project.video">
+                                <div *ngIf="project.videopath">
                                     <!--<a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>-->
                                     <!--{{project.videoContentType}}, {{byteSize(project.video)}}-->
                                     <video style="max-width: 100%;" alt="User video" controls>
-                                        <source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">
+                                        <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">-->
+                                        <source src="{{fileManagementService.getCloud()}}{{project.videopath}}">
+                                        Your browser does not support the video tag.
                                     </video>
                                     <!--<a (click)="openFile(project.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
                                     {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}-->
@@ -114,12 +118,12 @@
                                 </td>-->
                                 <td class="text-right">
                                     <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn-group flex-btn-group-container">
-                                        <button type="submit"
+                                        <!--<button type="submit"
                                                 [routerLink]="['/role', role.id, 'view' ]"
                                                 class="btn btn-info btn-sm">
                                             <fa-icon [icon]="'eye'"></fa-icon>
                                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
+                                        </button>-->
                                         <button type="submit"
                                                 [routerLink]="['/role', role.id, 'edit']"
                                                 class="btn btn-primary btn-sm">

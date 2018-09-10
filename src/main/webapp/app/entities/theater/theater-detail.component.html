@@ -5,38 +5,40 @@
             <hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.theater.title">Title</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.theater.title">Title</span></dt>-->
                 <dd>
                     <span>{{theater.title}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.theater.image">Image</span></dt>-->
                 <dd>
-                    <div *ngIf="theater.image">
-                        <a (click)="openFile(theater.imageContentType, theater.image)">
-                            <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-width: 30%;" alt="theater image"/>
+                    <div *ngIf="theater.imagepath">
+                        <!--<a (click)="openFile(theater.imageContentType, theater.image)">-->
+                        <a class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + theater.imagepath">
+                            <!--<img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-width: 30%;" alt="theater image"/>-->
+                            <img [src]="fileManagementService.getCloud() + theater.imagepath" style="max-width: 30%;" alt="theater image"/>
                         </a>
                         <!--{{theater.imageContentType}}, {{byteSize(theater.image)}}-->
                     </div>
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.theater.video">Video</span></dt>-->
+                <dd>
+                        <!--<a (click)="openFile(theater.videoContentType, theater.video)" jhiTranslate="entity.action.open">open</a>
+                        {{theater.videoContentType}}, {{byteSize(theater.video)}}-->
+                        <div *ngIf="theater.videopath">
+                            <video style="max-width: 50%;" alt="User video" controls>
+                                <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + theater.video">-->
+                                <source src="{{fileManagementService.getCloud()}}{{theater.videopath}}">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.theater.director">Director</span></dt>
                 <dd>
                     <span>{{theater.director}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.theater.link">Link</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.theater.link">Link</span></dt>-->
                 <dd>
                     <span><a href="{{theater.link}}" target="_blank">Go to website</a></span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.theater.video">Video</span></dt>
-                <dd>
-                    <div *ngIf="theater.video">
-                        <!--<a (click)="openFile(theater.videoContentType, theater.video)" jhiTranslate="entity.action.open">open</a>
-                        {{theater.videoContentType}}, {{byteSize(theater.video)}}-->
-                        <div *ngIf="theater.video">
-                            <video style="max-width: 50%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + theater.video">
-                            </video>
-                        </div>
-                    </div>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.theater.imagepath">Imagepath</span></dt>
                 <dd>

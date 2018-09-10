@@ -84,11 +84,11 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.voice.audionote" for="audiopath1">Audio</label>
                     <div>
                         <!--<img [hidden]="!film.videopath" [src]="fileManagementService.getCloud() + film.videopath" style="width: 150px;" id="videopath1"/>-->
-                        <video [hidden]="!voice.audiopath" width="150px" id="audiopath1" controls>
+                        <audio [hidden]="!voice.audiopath" width="150px" id="audiopath1" controls>
                             <!--<img [hidden]="!film.imagepath" [src]="fileManagementService.getCloud() + film.imagepath" style="width: 150px;" id="imagepath1"/>-->
                             <source src="{{fileManagementService.getCloud()}}{{voice.audiopath}}">
                             Your browser does not support the audio tag.
-                        </video>
+                        </audio>
                         <button [hidden]="!voice.audiopath" type="button" (click)="clearInputAudio('audiopath1', 'close2', 'file_audio')" class="btn btn-secondary btn-xs pull-right" id="close2">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span jhiTranslate="talentactorApp.profile.deleteimg"></span>

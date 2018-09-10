@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { IPrint } from 'app/shared/model/print.model';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-print-detail',
@@ -11,7 +12,11 @@ import { IPrint } from 'app/shared/model/print.model';
 export class PrintDetailComponent implements OnInit {
     print: IPrint;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ print }) => {

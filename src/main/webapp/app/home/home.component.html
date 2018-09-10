@@ -41,8 +41,8 @@
                 <tr>
                     <td width="30%">
                         <div *ngIf="project.image">
-                            <a (click)="openFile(project.imageContentType, project.image)">
-                                <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-width: 100%;" alt="project image"/>
+                            <a *ngIf="project.imagepath" class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + project.imagepath">
+                                <img [src]="fileManagementService.getCloud() + project.imagepath" style="max-width: 100%;" alt="project image"/>
                             </a>
                             <!--{{project.imageContentType}}, {{byteSize(project.image)}}-->
                         </div>
@@ -53,7 +53,9 @@
                             <!--<a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>-->
                             <!--{{project.videoContentType}}, {{byteSize(project.video)}}-->
                             <video style="max-width: 100%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">
+                                <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + project.video">-->
+                                <source src="{{fileManagementService.getCloud()}}{{project.videopath}}">
+                                Your browser does not support the video tag.
                             </video>
                             <!--<a (click)="openFile(project.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
                             {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}-->

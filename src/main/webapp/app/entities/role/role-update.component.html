@@ -4,11 +4,11 @@
             <h2 id="jhi-role-heading" jhiTranslate="talentactorApp.role.home.createOrEditLabel">Create or edit a Role</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!role.id">
+                <!--<div class="form-group" [hidden]="!role.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="role.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.role.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
@@ -30,14 +30,14 @@
                     <label class="form-control-label" jhiTranslate="talentactorApp.role.profile" for="field_profile">Profile</label>
                     <select class="form-control" id="field_profile" name="profile" [(ngModel)]="role.profileId" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.id}}</option>
+                        <option [ngValue]="profileOption.id" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.username}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="talentactorApp.role.project" for="field_project">Project</label>
                     <select class="form-control" id="field_project" name="project" [(ngModel)]="role.projectId" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="projectOption.id" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.id}}</option>
+                        <option [ngValue]="projectOption.id" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.title}}</option>
                     </select>
                 </div>
             </div>

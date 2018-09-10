@@ -9,6 +9,7 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { ProjectService } from './project.service';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-project',
@@ -38,7 +39,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        public fileManagementService: FileManagementService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {

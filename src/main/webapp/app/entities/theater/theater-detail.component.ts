@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { ITheater } from 'app/shared/model/theater.model';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-theater-detail',
@@ -11,7 +12,11 @@ import { ITheater } from 'app/shared/model/theater.model';
 export class TheaterDetailComponent implements OnInit {
     theater: ITheater;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ theater }) => {

@@ -5,18 +5,31 @@
             <!--<hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.internet.title">Title</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.internet.title">Title</span></dt>-->
                 <dd>
                     <span>{{internet.title}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.internet.image">Image</span></dt>-->
                 <dd>
-                    <div *ngIf="internet.image">
-                        <a (click)="openFile(internet.imageContentType, internet.image)">
-                            <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 30%;" alt="internet image"/>
+                    <div *ngIf="internet.imagepath">
+                        <!--<a (click)="openFile(internet.imageContentType, internet.image)">-->
+                        <a class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + internet.imagepath">
+                            <!--<img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-width: 30%;" alt="internet image"/>-->
+                            <img [src]="fileManagementService.getCloud() + internet.imagepath" style="max-width: 30%;" alt="internet image"/>
                         </a>
                         <!--{{internet.imageContentType}}, {{byteSize(internet.image)}}-->
                     </div>
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.internet.video">Video</span></dt>-->
+                <dd>
+                        <!--<a (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
+                        {{internet.videoContentType}}, {{byteSize(internet.video)}}-->
+                        <div *ngIf="internet.videopath">
+                            <video style="max-width: 50%;" alt="User video" controls>
+                                <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + internet.video">-->
+                                <source src="{{fileManagementService.getCloud()}}{{internet.videopath}}">
+                            </video>
+                        </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.internet.director">Director</span></dt>
                 <dd>
@@ -26,21 +39,9 @@
                 <dd>
                     <span>{{internet.cameraman}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.internet.link">Link</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.internet.link">Link</span></dt>-->
                 <dd>
                     <span><a href="{{internet.link}}" target="_blank">Go to website</a></span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.internet.video">Video</span></dt>
-                <dd>
-                    <div *ngIf="internet.video">
-                        <!--<a (click)="openFile(internet.videoContentType, internet.video)" jhiTranslate="entity.action.open">open</a>
-                        {{internet.videoContentType}}, {{byteSize(internet.video)}}-->
-                        <div *ngIf="internet.video">
-                            <video style="max-width: 50%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + internet.video">
-                            </video>
-                        </div>
-                    </div>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.internet.imagepath">Imagepath</span></dt>
                 <dd>

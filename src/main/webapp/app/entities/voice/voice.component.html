@@ -31,9 +31,11 @@
                 <td><a href="#/voice/{{voice.id}}/view">{{voice.title}}</a></td>
                 <td>{{voice.director}}</td>
                 <td>
-                    <div *ngIf="voice.audio">
+                    <div *ngIf="voice.audiopath">
                         <audio style="max-width: 100%;" alt="User Audio" controls>
-                            <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
+                            <!--<source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">-->
+                            <source src="{{fileManagementService.getCloud()}}{{voice.audiopath}}">
+                            Your browser does not support the audio tag.
                         </audio>
                     </div>
                 </td>
@@ -77,12 +79,12 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="voices && voices.length">
+    <!--<div *ngIf="voices && voices.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
             <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
-    </div>
+    </div>-->
 </div>

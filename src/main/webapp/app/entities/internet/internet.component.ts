@@ -12,6 +12,7 @@ import { InternetService } from './internet.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from '../profile/profile.service';
 import { ITelevision } from 'app/shared/model/television.model';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-internet',
@@ -43,7 +44,8 @@ export class InternetComponent implements OnInit, OnDestroy {
         private dataUtils: JhiDataUtils,
         private router: Router,
         private eventManager: JhiEventManager,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        public fileManagementService: FileManagementService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {

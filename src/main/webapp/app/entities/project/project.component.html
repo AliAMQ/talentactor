@@ -31,8 +31,9 @@
                 <td width="20%"><a [routerLink]="['/project', project.id, 'view' ]">{{project.title}}</a></td>
                 <!--<td>{{project.title}}</td>-->
                 <td>
-                    <a *ngIf="project.image" (click)="openFile(project.imageContentType, project.image)">
-                        <img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-height: 100px;" alt="project image"/>
+                    <a *ngIf="project.imagepath" class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + project.imagepath">
+                        <!--<img [src]="'data:' + project.imageContentType + ';base64,' + project.image" style="max-height: 100px;" alt="project image"/>-->
+                        <img [hidden]="!project.imagepath" [src]="fileManagementService.getCloud() + project.imagepath" style="max-height: 100px;" alt="project image"/>
                     </a>
                     <!--<span *ngIf="project.image">{{project.imageContentType}}, {{byteSize(project.image)}}</span>-->
                 </td>
@@ -46,12 +47,12 @@
                 <td>{{project.videopath}}</td>-->
                 <td class="text-right">
                     <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn-group flex-btn-group-container">
-                        <button type="submit"
+                        <!--<button type="submit"
                                 [routerLink]="['/project', project.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
+                        </button>-->
                         <button type="submit"
                                 [routerLink]="['/project', project.id, 'edit']"
                                 class="btn btn-primary btn-sm">

@@ -5,18 +5,31 @@
             <!--<hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.commercial.title">Title</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.commercial.title">Title</span></dt>-->
                 <dd>
                     <span>{{commercial.title}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.commercial.image">Image</span></dt>-->
                 <dd>
-                    <div *ngIf="commercial.image">
-                        <a (click)="openFile(commercial.imageContentType, commercial.image)">
-                            <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-width: 30%;" alt="commercial image"/>
+                    <div *ngIf="commercial.imagepath">
+                        <!--<a (click)="openFile(commercial.imageContentType, commercial.image)">-->
+                        <a class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + commercial.imagepath">
+                            <!--<img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-width: 30%;" alt="commercial image"/>-->
+                            <img [src]="fileManagementService.getCloud() + commercial.imagepath" style="max-width: 30%;" alt="commercial image"/>
                         </a>
                         <!--{{commercial.imageContentType}}, {{byteSize(commercial.image)}}-->
                     </div>
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.commercial.video">Video</span></dt>-->
+                <dd>
+                        <!--<a (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>-->
+                        <!--{{commercial.videoContentType}}, {{byteSize(commercial.video)}}-->
+                        <div *ngIf="commercial.videopath">
+                            <video style="max-width: 50%;" alt="User video" controls>
+                                <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + commercial.video">-->
+                                <source src="{{fileManagementService.getCloud()}}{{commercial.videopath}}">
+                            </video>
+                        </div>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.commercial.director">Director</span></dt>
                 <dd>
@@ -26,21 +39,9 @@
                 <dd>
                     <span>{{commercial.cameraman}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.commercial.link">Link</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.commercial.link">Link</span></dt>-->
                 <dd>
                     <span><a href="{{commercial.link}}" target="_blank">Go to website</a></span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.commercial.video">Video</span></dt>
-                <dd>
-                    <div *ngIf="commercial.video">
-                        <!--<a (click)="openFile(commercial.videoContentType, commercial.video)" jhiTranslate="entity.action.open">open</a>-->
-                        <!--{{commercial.videoContentType}}, {{byteSize(commercial.video)}}-->
-                        <div *ngIf="commercial.video">
-                            <video style="max-width: 50%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + commercial.video">
-                            </video>
-                        </div>
-                    </div>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.commercial.imagepath">Imagepath</span></dt>
                 <dd>

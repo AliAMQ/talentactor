@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { IFilm } from 'app/shared/model/film.model';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-film-detail',
@@ -11,7 +12,11 @@ import { IFilm } from 'app/shared/model/film.model';
 export class FilmDetailComponent implements OnInit {
     film: IFilm;
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ film }) => {

@@ -24,12 +24,14 @@
                             <td width="45%">
                                 <div *ngIf="profile.video">
                                     <video style="max-width: 100%;" alt="User video" controls>
-                                        <source type="video/mp4" [src]="'data:video/mp4;base64,' + profile.video">
+                                        <source src="{{fileManagementService.getCloud()}}{{profile.videopath}}">
+                                        Your browser does not support the video tag.
                                     </video>
                                     <br>
                                     <br>
                                     <audio style="max-width: 100%;" alt="User Audio" controls>
-                                        <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + profile.audio">
+                                        <source src="{{fileManagementService.getCloud()}}{{profile.audiopath}}">
+                                        Your browser does not support the audio tag.
                                     </audio>
                                     <br>
                                     <br>

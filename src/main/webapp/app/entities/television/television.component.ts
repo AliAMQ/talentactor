@@ -11,6 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/shared';
 import { TelevisionService } from './television.service';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from '../profile/profile.service';
+import { FileManagementService } from 'app/shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-television',
@@ -42,7 +43,8 @@ export class TelevisionComponent implements OnInit, OnDestroy {
         private dataUtils: JhiDataUtils,
         private router: Router,
         private eventManager: JhiEventManager,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        public fileManagementService: FileManagementService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {

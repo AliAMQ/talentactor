@@ -12,6 +12,7 @@ import { FilmService } from './film.service';
 import { IRole } from 'app/shared/model/role.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from '../profile/profile.service';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-film',
@@ -43,7 +44,8 @@ export class FilmComponent implements OnInit, OnDestroy {
         private dataUtils: JhiDataUtils,
         private router: Router,
         private eventManager: JhiEventManager,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        public fileManagementService: FileManagementService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {

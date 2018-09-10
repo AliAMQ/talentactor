@@ -5,16 +5,18 @@
             <hr>-->
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="talentactorApp.voice.title">Title</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.voice.title">Title</span></dt>-->
                 <dd>
                     <span>{{voice.title}}</span>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.audio">Audio</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.voice.audio">Audio</span></dt>-->
                 <dd>
                     <div *ngIf="voice.audio">
-                        <div *ngIf="voice.audio">
+                        <div *ngIf="voice.audiopath">
                             <audio style="max-width: 100%;" alt="User Audio" controls>
-                                <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
+                                <!--<source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">-->
+                                <source src="{{fileManagementService.getCloud()}}{{voice.audiopath}}">
+                                Your browser does not support the audio tag.
                             </audio>
                             <!--<a (click)="openFile(userExtra.audioContentType, userExtra.audio)" jhiTranslate="entity.action.open">open</a>
                             {{userExtra.audioContentType}}, {{byteSize(userExtra.audio)}}-->
@@ -23,27 +25,29 @@
                         {{voice.audioContentType}}, {{byteSize(voice.audio)}}-->
                     </div>
                 </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.director">Director</span></dt>
-                <dd>
-                    <span>{{voice.director}}</span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.link">Link</span></dt>
-                <dd>
-                    <span><a href="{{voice.link}}" target="_blank">Go to website</a></span>
-                </dd>
-                <dt><span jhiTranslate="talentactorApp.voice.video">Video</span></dt>
+                <!--<dt><span jhiTranslate="talentactorApp.voice.video">Video</span></dt>-->
                 <dd>
                     <div *ngIf="voice.video">
                         <!--<a (click)="openFile(voice.videoContentType, voice.video)" jhiTranslate="entity.action.open">open</a>-->
                         <!--{{voice.videoContentType}}, {{byteSize(voice.video)}}-->
-                        <div *ngIf="voice.video">
+                        <div *ngIf="voice.videopath">
                             <video style="max-width: 100%;" alt="User video" controls>
-                                <source type="video/mp4" [src]="'data:video/mp4;base64,' + voice.video">
+                                <!--<source type="video/mp4" [src]="'data:video/mp4;base64,' + voice.video">-->
+                                <source src="{{fileManagementService.getCloud()}}{{voice.videopath}}">
+                                Your browser does not support the video tag.
                             </video>
                             <!--<a (click)="openFile(userExtra.videoContentType, userExtra.video)" jhiTranslate="entity.action.open">open</a>
                             {{userExtra.videoContentType}}, {{byteSize(userExtra.video)}}-->
                         </div>
                     </div>
+                </dd>
+                <dt><span jhiTranslate="talentactorApp.voice.director">Director</span></dt>
+                <dd>
+                    <span>{{voice.director}}</span>
+                </dd>
+                <!--<dt><span jhiTranslate="talentactorApp.voice.link">Link</span></dt>-->
+                <dd>
+                    <span><a href="{{voice.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span></dt>
                 <dd>

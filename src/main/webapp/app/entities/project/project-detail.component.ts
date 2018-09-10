@@ -7,6 +7,7 @@ import { IProject } from 'app/shared/model/project.model';
 import { IRole } from 'app/shared/model/role.model';
 import { RoleService } from 'app/entities/role/role.service';
 import { HttpResponse } from '@angular/common/http';
+import { FileManagementService } from '../../shared/file/file-management.service';
 
 @Component({
     selector: 'jhi-project-detail',
@@ -16,7 +17,12 @@ export class ProjectDetailComponent implements OnInit {
     project: IProject;
     roles: IRole[];
 
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute, private roleService: RoleService) {}
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private activatedRoute: ActivatedRoute,
+        private roleService: RoleService,
+        public fileManagementService: FileManagementService
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ project }) => {
