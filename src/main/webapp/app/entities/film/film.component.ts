@@ -9,7 +9,6 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { FilmService } from './film.service';
-import { IRole } from 'app/shared/model/role.model';
 import { IProfile } from 'app/shared/model/profile.model';
 import { ProfileService } from '../profile/profile.service';
 import { FileManagementService } from '../../shared/file/file-management.service';

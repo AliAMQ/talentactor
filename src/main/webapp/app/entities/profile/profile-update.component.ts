@@ -275,6 +275,7 @@ export class ProfileUpdateComponent implements OnInit {
     private onSaveSuccess() {
         this.isSaving = false;
         global.setTimeout(this.previousState, 1000);
+        // global.setTimeout(() => {}, 1000);
     }
 
     private onSaveError() {

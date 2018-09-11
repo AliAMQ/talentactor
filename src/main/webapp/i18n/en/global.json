@@ -34,7 +34,7 @@
             },
             "account": {
                 "main": "Account",
-                "settings": "Settings",
+                "settings": "Profile",
                 "password": "Password",
                 "sessions": "Sessions",
                 "login": "Sign in",

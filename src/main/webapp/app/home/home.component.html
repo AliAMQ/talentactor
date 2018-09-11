@@ -12,13 +12,13 @@
                 <span *ngIf="account" jhiTranslate="home.logged.message"
                     translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
                 <span jhiTranslate="home.logged.message2">Everything</span>
-                <a class="alert-link" routerLink="settings">
+                <a class="alert-link" routerLink="profile-detail">
                     <span jhiTranslate="global.menu.account.settings">Settings</span>
                 </a>
-                <span jhiTranslate="home.logged.message3">And</span>
+                <!--<span jhiTranslate="home.logged.message3">And</span>
                 <a class="alert-link" routerLink="role-my">
                     <span jhiTranslate="home.roles">Roles</span>
-                </a>
+                </a>-->
             </div>
 
             <div class="alert alert-warning" *ngSwitchCase="false">
@@ -40,7 +40,7 @@
             <table width="70%">
                 <tr>
                     <td width="30%">
-                        <div *ngIf="project.image">
+                        <div *ngIf="project.imagepath">
                             <a *ngIf="project.imagepath" class="example-image-link" data-lightbox="example-set" [href]="fileManagementService.getCloud() + project.imagepath">
                                 <img [src]="fileManagementService.getCloud() + project.imagepath" style="max-width: 100%;" alt="project image"/>
                             </a>
@@ -49,7 +49,7 @@
                     </td>
                     <td width="2%"></td>
                     <td width="68%">
-                        <div *ngIf="project.video">
+                        <div *ngIf="project.videopath">
                             <!--<a (click)="openFile(project.videoContentType, project.video)" jhiTranslate="entity.action.open">open</a>-->
                             <!--{{project.videoContentType}}, {{byteSize(project.video)}}-->
                             <video style="max-width: 100%;" alt="User video" controls>

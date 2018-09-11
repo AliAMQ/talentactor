@@ -3,7 +3,7 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-weapon-heading" jhiTranslate="talentactorApp.weapon.home.createOrEditLabel">Create or edit a Weapon</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
+                <!--<jhi-alert-error></jhi-alert-error>-->
                 <div class="form-group" [hidden]="!weapon.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"

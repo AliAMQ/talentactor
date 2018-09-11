@@ -3,7 +3,7 @@
         <div *ngIf="film">
             <!--<h2><span jhiTranslate="talentactorApp.film.detail.title">Film</span> {{film.id}}</h2>
             <hr>-->
-            <jhi-alert-error></jhi-alert-error>
+            <!--<jhi-alert-error></jhi-alert-error>-->
             <dl class="row-md jh-entity-details">
                 <!--<dt><span jhiTranslate="talentactorApp.film.title">Title</span></dt>-->
                 <dd>
@@ -40,7 +40,7 @@
                     <span>{{film.cameraman}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.film.link">Link</span></dt>-->
-                <dd>
+                <dd *ngIf="film.link">
                     <span><a href="{{film.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.film.imagepath">Imagepath</span></dt>

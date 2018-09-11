@@ -5,31 +5,26 @@
             <h4><span jhiTranslate="talentactorApp.profile.detail.login">Profile</span> {{login}}</h4>
             <h5><span>{{email}}</span></h5>
             <hr>
-            <jhi-alert-error></jhi-alert-error>
+            <!--<jhi-alert-error></jhi-alert-error>-->
             <dl class="row-md jh-entity-details">
                 <dd>
                     <table>
                         <tr>
                             <td width="45%">
-                                <!--<div *ngIf="profile.image">
-                                    <a (click)="openFile(profile.imageContentType, profile.image)">
-                                        <img [src]="'data:' + profile.imageContentType + ';base64,' + profile.image" style="max-width: 100%;" alt="profile image"/>
-                                    </a>
-                                </div>-->
                                 <div *ngIf="profile.imagepath">
                                     <img [src]="fileManagementService.getCloud() + profile.imagepath" style="max-width: 100%;" name="imageobj" id="imageobj" alt="صفحه را refresh کنید"/>
                                 </div>
                             </td>
                             <td width="5%"></td>
                             <td width="45%">
-                                <div *ngIf="profile.video">
-                                    <video style="max-width: 100%;" alt="User video" controls>
+                                <div>
+                                    <video *ngIf="profile.videopath" style="max-width: 100%;" alt="User video" controls>
                                         <source src="{{fileManagementService.getCloud()}}{{profile.videopath}}">
                                         Your browser does not support the video tag.
                                     </video>
                                     <br>
                                     <br>
-                                    <audio style="max-width: 100%;" alt="User Audio" controls>
+                                    <audio *ngIf="profile.audiopath" style="max-width: 100%;" alt="User Audio" controls>
                                         <source src="{{fileManagementService.getCloud()}}{{profile.audiopath}}">
                                         Your browser does not support the audio tag.
                                     </audio>
@@ -43,445 +38,75 @@
                         </tr>
                     </table>
                 </dd>
-                <!--Film list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.film">Film</span></dt>-->
-                <!--<dd>
-                    <div class="table-responsive" *ngIf="films">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th><span jhiTranslate="talentactorApp.film.title">Title</span></th>
-                            <th><span jhiTranslate="talentactorApp.film.director">Director</span></th>
-                            <th><span jhiTranslate="talentactorApp.film.cameraman">Cameraman</span></th>
-                            <th><span jhiTranslate="talentactorApp.film.image">Image</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let film of films ;">
-                            <td><a href="#/film/{{film.id}}/view">{{film.title}}</a></td>
-                            <td>{{film.director}}</td>
-                            <td>{{film.cameraman}}</td>
-                            <td>
-                                <a *ngIf="film.image" (click)="openFile(film.imageContentType, film.image)">
-                                    <img [src]="'data:' + film.imageContentType + ';base64,' + film.image" style="max-height: 30px;" alt="film image"/>
-                                </a>
-                            </td>
-                            &lt;!&ndash;<td class="text-right">
-                                <div class="btn-group flex-btn-group-container">
-                                    <button type="submit"
-                                            [routerLink]="['/film', film.id, 'view' ]"
-                                            class="btn btn-info btn-sm">
-                                        <fa-icon [icon]="'eye'"></fa-icon>
-                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                    </button>
-                                    <button type="submit"
-                                            [routerLink]="['/film', film.id, 'edit']"
-                                            class="btn btn-primary btn-sm">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                    </button>
-                                    <button type="submit"
-                                            [routerLink]="['/', { outlets: { popup: 'film/'+ film.id + '/delete'} }]"
-                                            replaceUrl="true"
-                                            queryParamsHandling="merge"
-                                            class="btn btn-danger btn-sm">
-                                        <fa-icon [icon]="'times'"></fa-icon>
-                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                    </button>
-                                </div>
-                            </td>&ndash;&gt;
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </dd>-->
                 <jhi-film></jhi-film>
-                <!--Film list-End-->
-                <!--Television list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.television">Television</span></dt>-->
-                <dd>
-                    <!--<div class="table-responsive" *ngIf="televisions">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.television.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.television.director">Director</span></th>
-                                <th><span jhiTranslate="talentactorApp.television.cameraman">Cameraman</span></th>
-                                <th><span jhiTranslate="talentactorApp.television.image">Image</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let television of televisions ;">
-                                <td><a href="#/television/{{television.id}}/view">{{television.title}}</a></td>
-                                <td>{{television.director}}</td>
-                                <td>{{television.cameraman}}</td>
-                                <td>
-                                    <a *ngIf="television.image" (click)="openFile(television.imageContentType, television.image)">
-                                        <img [src]="'data:' + television.imageContentType + ';base64,' + television.image" style="max-height: 30px;" alt="television image"/>
-                                    </a>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/television', television.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/television', television.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'television/'+ television.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>-->
-                    <jhi-television></jhi-television>
-                </dd>
-                <!--Television list-End-->
-                <!--Internet list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.internet">Internet</span></dt>
-                <dd>
-                    <div class="table-responsive" *ngIf="internets">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.internet.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.internet.director">Director</span></th>
-                                <th><span jhiTranslate="talentactorApp.internet.cameraman">Cameraman</span></th>
-                                <th><span jhiTranslate="talentactorApp.internet.image">Image</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let internet of internets ;">
-                                <td><a href="#/internet/{{internet.id}}/view">{{internet.title}}</a></td>
-                                <td>{{internet.director}}</td>
-                                <td>{{internet.cameraman}}</td>
-                                <td>
-                                    <a *ngIf="internet.image" (click)="openFile(internet.imageContentType, internet.image)">
-                                        <img [src]="'data:' + internet.imageContentType + ';base64,' + internet.image" style="max-height: 30px;" alt="internet image"/>
-                                    </a>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/internet', internet.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/internet', internet.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'internet/'+ internet.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>-->
+                <jhi-television></jhi-television>
                 <jhi-internet></jhi-internet>
-                <!--Internet list-End-->
-                <!--Commercial list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.commercial">Commercial</span></dt>
-                <dd>
-                    <div class="table-responsive" *ngIf="commercials">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.commercial.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.commercial.director">Director</span></th>
-                                <th><span jhiTranslate="talentactorApp.commercial.cameraman">Cameraman</span></th>
-                                <th><span jhiTranslate="talentactorApp.commercial.image">Image</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let commercial of commercials ;">
-                                <td><a href="#/commercial/{{commercial.id}}/view">{{commercial.title}}</a></td>
-                                <td>{{commercial.director}}</td>
-                                <td>{{commercial.cameraman}}</td>
-                                <td>
-                                    <a *ngIf="commercial.image" (click)="openFile(commercial.imageContentType, commercial.image)">
-                                        <img [src]="'data:' + commercial.imageContentType + ';base64,' + commercial.image" style="max-height: 30px;" alt="commercial image"/>
-                                    </a>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/commercial', commercial.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/commercial', commercial.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'commercial/'+ commercial.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>-->
                 <jhi-commercial></jhi-commercial>
-                <!--Commercial list-End-->
-                <!--Print list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.print">Print</span></dt>
-                <dd>
-                    <div class="table-responsive" *ngIf="prints">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.print.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.print.photographer">photographer</span></th>
-                                <th><span jhiTranslate="talentactorApp.print.hair">hair</span></th>
-                                <th><span jhiTranslate="talentactorApp.print.image">Image</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let print of prints ;">
-                                <td><a href="#/print/{{print.id}}/view">{{print.title}}</a></td>
-                                <td>{{print.photographer}}</td>
-                                <td>{{print.hair}}</td>
-                                <td>
-                                    <a *ngIf="print.image" (click)="openFile(print.imageContentType, print.image)">
-                                        <img [src]="'data:' + print.imageContentType + ';base64,' + print.image" style="max-height: 30px;" alt="print image"/>
-                                    </a>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/print', print.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/print', print.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'print/'+ print.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>-->
                 <jhi-print></jhi-print>
-                <!--print list-End-->
-                <!--Voice list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.voice">Voice</span></dt>
-                <dd>
-                    <div class="table-responsive" *ngIf="voices">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.voice.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.voice.director">director</span></th>
-                                <th><span jhiTranslate="talentactorApp.voice.audio">audio</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let voice of voices ;">
-                                <td><a href="#/voice/{{voice.id}}/view">{{voice.title}}</a></td>
-                                <td>{{voice.director}}</td>
-                                <td>
-                                    <div *ngIf="voice.audio">
-                                        <audio style="max-width: 100%;" alt="User Audio" controls>
-                                            <source type="audio/mp3" [src]="'data:audio/mp3;base64,' + voice.audio">
-                                        </audio>
-                                    </div>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/voice', voice.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/voice', voice.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'voice/'+ voice.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>-->
                 <jhi-voice></jhi-voice>
-                <!--Voice list-End-->
-                <!--Theater list-Begin-->
-                <!--<dt><span jhiTranslate="talentactorApp.profile.theater">Theater</span></dt>
-                <dd>
-                    <div class="table-responsive" *ngIf="theaters">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><span jhiTranslate="talentactorApp.theater.title">Title</span></th>
-                                <th><span jhiTranslate="talentactorApp.theater.director">director</span></th>
-                                <th><span jhiTranslate="talentactorApp.theater.image">Image</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let theater of theaters ;">
-                                <td><a href="#/theater/{{theater.id}}/view">{{theater.title}}</a></td>
-                                <td>{{theater.director}}</td>
-                                <td>
-                                    <a *ngIf="theater.image" (click)="openFile(theater.imageContentType, theater.image)">
-                                        <img [src]="'data:' + theater.imageContentType + ';base64,' + theater.image" style="max-height: 30px;" alt="print image"/>
-                                    </a>
-                                </td>
-                                &lt;!&ndash;<td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit"
-                                                [routerLink]="['/theater', theater.id, 'view' ]"
-                                                class="btn btn-info btn-sm">
-                                            <fa-icon [icon]="'eye'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/theater', theater.id, 'edit']"
-                                                class="btn btn-primary btn-sm">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                                        </button>
-                                        <button type="submit"
-                                                [routerLink]="['/', { outlets: { popup: 'theater/'+ theater.id + '/delete'} }]"
-                                                replaceUrl="true"
-                                                queryParamsHandling="merge"
-                                                class="btn btn-danger btn-sm">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>&ndash;&gt;
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>-->
                 <jhi-theater></jhi-theater>
-                <!--Theater list-End-->
                 <jhi-role-my></jhi-role-my>
                 <dt><span jhiTranslate="talentactorApp.profile.sport">Sport</span></dt>
                 <dd>
                     <span *ngFor="let sport of profile.sports; let last = last">
-                        <a [routerLink]="['/sport', sport?.id, 'view' ]">{{sport.title}}</a>{{last ? '' : ', '}}
+                        {{sport.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.swimming">Swimming</span></dt>
                 <dd>
                     <span *ngFor="let swimming of profile.swimmings; let last = last">
-                        <a [routerLink]="['/swimming', swimming?.id, 'view' ]">{{swimming.title}}</a>{{last ? '' : ', '}}
+                        {{swimming.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.combat">Combat</span></dt>
                 <dd>
                     <span *ngFor="let combat of profile.combats; let last = last">
-                        <a [routerLink]="['/combat', combat?.id, 'view' ]">{{combat.title}}</a>{{last ? '' : ', '}}
+                        {{combat.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.language">Language</span></dt>
                 <dd>
                     <span *ngFor="let language of profile.languages; let last = last">
-                        <a [routerLink]="['/language', language?.id, 'view' ]">{{language.title}}</a>{{last ? '' : ', '}}
+                        {{language.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.instrument">Instrument</span></dt>
                 <dd>
                     <span *ngFor="let instrument of profile.instruments; let last = last">
-                        <a [routerLink]="['/instrument', instrument?.id, 'view' ]">{{instrument.title}}</a>{{last ? '' : ', '}}
+                        {{instrument.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.weapon">Weapon</span></dt>
                 <dd>
                     <span *ngFor="let weapon of profile.weapons; let last = last">
-                        <a [routerLink]="['/weapon', weapon?.id, 'view' ]">{{weapon.title}}</a>{{last ? '' : ', '}}
+                        {{weapon.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.cycling">Cycling</span></dt>
                 <dd>
                     <span *ngFor="let cycling of profile.cyclings; let last = last">
-                        <a [routerLink]="['/cycling', cycling?.id, 'view' ]">{{cycling.title}}</a>{{last ? '' : ', '}}
+                        {{cycling.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.circus">Circus</span></dt>
                 <dd>
                     <span *ngFor="let circus of profile.circuses; let last = last">
-                        <a [routerLink]="['/circus', circus?.id, 'view' ]">{{circus.title}}</a>{{last ? '' : ', '}}
+                        {{circus.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.horse">Horse</span></dt>
                 <dd>
                     <span *ngFor="let horse of profile.horses; let last = last">
-                        <a [routerLink]="['/horse', horse?.id, 'view' ]">{{horse.title}}</a>{{last ? '' : ', '}}
+                        {{horse.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span jhiTranslate="talentactorApp.profile.skill">Skill</span></dt>
                 <dd>
                     <span *ngFor="let skill of profile.skills; let last = last">
-                        <a [routerLink]="['/skill', skill?.id, 'view' ]">{{skill.title}}</a>{{last ? '' : ', '}}
+                        {{skill.title}}{{last ? '' : ', '}}
                     </span>
                 </dd>
             </dl>
-
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">

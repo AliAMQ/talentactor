@@ -3,7 +3,7 @@
         <div *ngIf="voice">
             <!--<h2><span jhiTranslate="talentactorApp.voice.detail.title">Voice</span> {{voice.id}}</h2>
             <hr>-->
-            <jhi-alert-error></jhi-alert-error>
+            <!--<jhi-alert-error></jhi-alert-error>-->
             <dl class="row-md jh-entity-details">
                 <!--<dt><span jhiTranslate="talentactorApp.voice.title">Title</span></dt>-->
                 <dd>
@@ -46,7 +46,7 @@
                     <span>{{voice.director}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.voice.link">Link</span></dt>-->
-                <dd>
+                <dd *ngIf="voice.link">
                     <span><a href="{{voice.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.voice.videopath">Videopath</span></dt>

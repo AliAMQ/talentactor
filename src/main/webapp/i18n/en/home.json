@@ -4,7 +4,7 @@
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as \"{{username}}\".",
-            "message2": "Here is everything about your profile",
+            "message2": "Here is everything about your",
             "message3": "and here are your"
         },
         "question": "If you have any question on JHipster:",

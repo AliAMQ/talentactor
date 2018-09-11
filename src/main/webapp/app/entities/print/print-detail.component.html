@@ -3,7 +3,7 @@
         <div *ngIf="print">
             <!--<h2><span jhiTranslate="talentactorApp.print.detail.title">Print</span> {{print.id}}</h2>-->
             <!--<hr>-->
-            <jhi-alert-error></jhi-alert-error>
+            <!--<jhi-alert-error></jhi-alert-error>-->
             <dl class="row-md jh-entity-details">
                 <!--<dt><span jhiTranslate="talentactorApp.print.title">Title</span></dt>-->
                 <dd>
@@ -29,7 +29,7 @@
                     <span>{{print.hair}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.print.link">Link</span></dt>-->
-                <dd>
+                <dd *ngIf="print.link">
                     <span><a href="{{print.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.print.imagepath">Imagepath</span></dt>

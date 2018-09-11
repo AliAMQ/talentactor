@@ -40,7 +40,7 @@
                     <span>{{television.cameraman}}</span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.television.link">Link</span></dt>-->
-                <dd>
+                <dd *ngIf="television.link">
                     <span><a href="{{television.link}}" target="_blank">Go to website</a></span>
                 </dd>
                 <!--<dt><span jhiTranslate="talentactorApp.television.imagepath">Imagepath</span></dt>

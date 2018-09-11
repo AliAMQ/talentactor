@@ -63,20 +63,20 @@ export class VoiceComponent implements OnInit, OnDestroy {
         if (typeof this.page === 'undefined') {
             this.page = 1;
         }
-        this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
-            this.profileid = res.body.id;
-            this.voiceService
-                .query({
-                    page: this.page - 1,
-                    size: this.itemsPerPage,
-                    sort: this.sort(),
-                    'profileId.equals': this.profileid
-                })
-                .subscribe(
-                    (res1: HttpResponse<IVoice[]>) => this.paginateVoices(res1.body, res1.headers),
-                    (res1: HttpErrorResponse) => this.onError(res1.message)
-                );
-        });
+        /*this.profileService.findByUserId(this.principal.getId()).subscribe((res: HttpResponse<IProfile>) => {
+            this.profileid = res.body.id;*/
+        this.voiceService
+            .query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                'profileId.equals': this.profileid
+            })
+            .subscribe(
+                (res1: HttpResponse<IVoice[]>) => this.paginateVoices(res1.body, res1.headers),
+                (res1: HttpErrorResponse) => this.onError(res1.message)
+            );
+        // });
     }
 
     loadPage(page: number) {
