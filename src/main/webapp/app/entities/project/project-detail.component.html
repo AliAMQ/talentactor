@@ -146,7 +146,7 @@
                     </div>
                 </dd>
                 <!--Roles list-End-->
-                <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
+                <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
                     <fa-icon [icon]="'plus'"></fa-icon>
                     <span  jhiTranslate="talentactorApp.role.home.createLabel">
                                     Create new Role

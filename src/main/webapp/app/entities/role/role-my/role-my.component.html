@@ -1,14 +1,14 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="global.title">Roles</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-role" [routerLink]="['/role/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="talentactorApp.role.home.createLabel">
             Create new Role
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
+    <!--<jhi-alert></jhi-alert>-->
     <br/>
     <div class="table-responsive" *ngIf="roles">
         <table class="table table-striped">
@@ -19,7 +19,7 @@
                 <th jhiSortBy="description"><span jhiTranslate="talentactorApp.role.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <!--<th jhiSortBy="profileId"><span jhiTranslate="talentactorApp.role.profile">Profile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
                 <th></th>
-                <th></th>
+                <th *jhiHasAnyAuthority="'ROLE_ADMIN'"></th>
             </tr>
             </thead>
             <tbody>
@@ -37,7 +37,7 @@
                         <a [routerLink]="['../../../project', role.projectId , 'view' ]" ><span jhiTranslate="talentactorApp.role.goproject">Project</span></a>
                     </div>
                 </td>
-                <td class="text-right">
+                <td *jhiHasAnyAuthority="'ROLE_ADMIN'" class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <!--<button type="submit"
                                 [routerLink]="['/role', role.id, 'view' ]"
